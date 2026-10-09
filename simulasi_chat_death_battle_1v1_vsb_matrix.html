@@ -339,10 +339,31 @@ async function runBattle(){
  finally{run.disabled=false;run.classList.remove('opacity-60')}
 }
 run.addEventListener('click',runBattle);
+document.getElementById('btn-copy-battle-answer')?.addEventListener
 document.getElementById('btn-copy-battle-answer')?.addEventListener('click',async function(){
  if(!latestAnswer){showStatus('error','Belum ada hasil untuk disalin.');return}
- try{await navigator.clipboard.writeText(latestAnswer);showStatus('success','Hasil analisis berhasil disalin.')}catch(_){showStatus('error','Clipboard tidak tersedia. Salin teks hasil secara manual.')}
+ try{
+  if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function')await navigator.clipboard.writeText(latestAnswer);
+  else{
+   const temp=document.createElement('textarea');temp.value=latestAnswer;temp.setAttribute('readonly','');temp.style.position='fixed';temp.style.opacity='0';document.body.appendChild(temp);temp.select();
+   const copied=document.execCommand('copy');temp.remove();if(!copied)throw new Error('Clipboard tidak tersedia');
+  }
+  showStatus('success','Hasil analisis berhasil disalin.');
+ }catch(_){showStatus('error','Clipboard tidak tersedia. Salin teks hasil secara manual.')}
 });
+document.getElementById('btn-new-sim')?.addEventListener('click',function(){
+ sessionId=null;latestAnswer='';
+ ['battle-character-a','battle-character-b','battle-version-a','battle-version-b','battle-custom-instructions'].forEach(id=>{const input=document.getElementById(id);if(input)input.value=''});
+ document.getElementById('battle-rules').value='Standard Battle Assumptions: arena netral tanpa bantuan pihak ketiga; kedua karakter menggunakan perlengkapan standar untuk versi yang dipilih; kondisi menang KO, mati, atau tidak mampu bertarung. Jangan menyamakan statistik tanpa dasar sumber.';
+ result.classList.add('hidden');answer.textContent='';sources.replaceChildren();quota.textContent='';
+ const url=new URL(window.location.href);url.searchParams.delete('sessionId');window.history.replaceState({},'',url);
+ showStatus('info','Battle baru siap. Masukkan kedua karakter dan jalankan analisis.');
+ document.getElementById('battle-character-a').focus();
+});
+document.getElementById('btn-doc-sba')?.addEventListener('click',function(){
+ const field=document.getElementById('battle-rules');if(field){field.scrollIntoView({behavior:'smooth',block:'center'});field.focus();}
+});
+
 if(sessionId){clientReady().then(async function(client){
  if(!client)return;
  const {data:authData}=await client.auth.getUser();
@@ -361,7 +382,7 @@ if(sessionId){clientReady().then(async function(client){
  const rows=r.data||[];
  if(rows.length){answer.textContent=rows.map(m=>(m.role==='user'?'Anda':'AI')+':\n'+m.content).join('\n\n');latestAnswer=rows.filter(m=>m.role==='assistant').map(m=>m.content).join('\n\n');result.classList.remove('hidden');showStatus('success','Riwayat battle berhasil dimuat. Kirim ulang untuk melanjutkan analisis.')}
  }).catch(function(){showStatus('error','Riwayat battle tidak dapat dimuat.')})}
-['battle-character-a','battle-character-b','battle-version-a','battle-version-b'].forEach(function(id){
+['battle-character-a','battle-character-b','battle-version-a','battle-version-b','battle-rules','battle-custom-instructions'].forEach(function(id){
  document.getElementById(id)?.addEventListener('change',function(){
   if(!sessionId)return;
   sessionId=null;
