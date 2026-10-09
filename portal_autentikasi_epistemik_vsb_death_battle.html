@@ -543,7 +543,7 @@
     }
     setFormBusy(form, true, 'Memvalidasi kode...');
     try {
-      const { data, error } = await authClient.auth.verifyOtp({ email, token, type: 'email' });
+      const { data, error } = await authClient.auth.verifyOtp({ email, token, type: 'signup' });
       if (error) throw error;
       if (!data.user?.email_confirmed_at && !data.session?.user?.email_confirmed_at) {
         showAuthStatus('info', 'Kode diterima, tetapi status konfirmasi belum terlihat. Coba masuk kembali setelah beberapa saat.');
