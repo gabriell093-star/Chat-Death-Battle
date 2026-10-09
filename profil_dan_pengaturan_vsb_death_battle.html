@@ -819,4 +819,120 @@ if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)')
   guard().catch(function () { redirectToLogin(); });
 })();
 </script>
+<script id="cdb-profile-live-integration">
+(function(){
+'use strict';
+function safeText(el,value){if(el)el.value=value==null?'':String(value)}
+function showProfileMessage(kind,message){
+ const box=document.getElementById('saveToast');
+ if(!box)return;
+ box.classList.remove('hidden');
+ const title=box.querySelector('h4');
+ const body=box.querySelector('p');
+ if(title)title.textContent=kind==='error'?'Gagal menyimpan':'Perubahan tersimpan';
+ if(body)body.textContent=message;
+}
+async function getClientUser(){
+ const client=window.CDB_AUTH_CLIENT;
+ if(!client)throw new Error('Sesi autentikasi belum siap. Muat ulang halaman.');
+ const {data,error}=await client.auth.getUser();
+ if(error||!data.user||!data.user.email_confirmed_at)throw new Error('Sesi berakhir atau email belum diverifikasi.');
+ return {client,user:data.user};
+}
+async function loadProfile(){
+ try{
+  const {client,user}=await getClientUser();
+  safeText(document.getElementById('userEmail'),user.email);
+  const {data,error}=await client.from('profiles').select('display_name,preferred_language,theme,specialty,timezone,answer_style').eq('id',user.id).maybeSingle();
+  if(error)throw error;
+  if(data){
+   safeText(document.getElementById('displayName'),data.display_name||user.user_metadata?.display_name||'');
+   const specialty=document.getElementById('epistemicSpecialty');
+   if(specialty&&data.specialty)specialty.value=data.specialty;
+   safeText(document.getElementById('timezone'),data.timezone||'Asia/Jakarta');
+   if(data.preferred_language&&localStorage.getItem('cdb_language')!==data.preferred_language){
+    try{localStorage.setItem('cdb_language',data.preferred_language)}catch(_){}
+    const top=Array.from(document.querySelectorAll('button')).find(b=>b.textContent.trim()===data.preferred_language.toUpperCase());
+    if(top)top.click();
+   }
+   if(data.theme&&localStorage.getItem('cdb_theme')!==data.theme){
+    try{localStorage.setItem('cdb_theme',data.theme)}catch(_){}
+    const icon={light:'light_mode',dark:'dark_mode',system:'desktop_windows'}[data.theme];
+    const top=Array.from(document.querySelectorAll('button')).find(b=>b.querySelector('.material-symbols-outlined')?.textContent.trim()===icon);
+    if(top)top.click();
+   }
+  }else{
+   safeText(document.getElementById('displayName'),user.user_metadata?.display_name||'');
+  }
+  if(typeof window.switchVerification==='function')window.switchVerification(!!user.email_confirmed_at);
+ }catch(error){showProfileMessage('error',error.message||'Gagal memuat profil dari akun.')}
+}
+window.handleProfileSubmit=async function(event){
+ event.preventDefault();
+ const name=document.getElementById('displayName')?.value.trim()||'';
+ if(name.length<3||name.length>32){showProfileMessage('error','Nama tampilan harus berisi 3–32 karakter.');return;}
+ try{
+  const {client,user}=await getClientUser();
+  const lang=(localStorage.getItem('cdb_language')||'id')==='en'?'en':'id';
+  const theme=['light','dark','system'].includes(localStorage.getItem('cdb_theme'))?localStorage.getItem('cdb_theme'):'system';
+  const specialty=document.getElementById('epistemicSpecialty')?.value||'tier-1a';
+  const {error}=await client.from('profiles').update({
+   display_name:name,preferred_language:lang,theme:theme,specialty:specialty,timezone:'Asia/Jakarta'
+  }).eq('id',user.id);
+  if(error)throw error;
+  showProfileMessage('success','Nama tampilan dan preferensi berhasil disimpan ke Supabase.');
+ }catch(error){showProfileMessage('error',error.message||'Gagal menyimpan profil.')}
+};
+window.handlePasswordChange=async function(event){
+ event.preventDefault();
+ const current=document.getElementById('currentPassword')?.value||'';
+ const p1=document.getElementById('newPassword')?.value||'';
+ const p2=document.getElementById('confirmPassword')?.value||'';
+ if(p1.length<8){alert('Kata sandi baru minimal 8 karakter.');return;}
+ if(p1!==p2){alert('Kata sandi baru dan konfirmasi tidak cocok.');return;}
+ try{
+  const {client,user}=await getClientUser();
+  const {error:reauthError}=await client.auth.signInWithPassword({email:user.email,password:current});
+  if(reauthError)throw new Error('Kata sandi saat ini tidak sesuai.');
+  const {error}=await client.auth.updateUser({password:p1});
+  if(error)throw error;
+  safeText(document.getElementById('currentPassword'),'');
+  safeText(document.getElementById('newPassword'),'');
+  safeText(document.getElementById('confirmPassword'),'');
+  showProfileMessage('success','Kata sandi berhasil diperbarui.');
+ }catch(error){showProfileMessage('error',error.message||'Gagal memperbarui kata sandi.')}
+};
+window.resendEmailVerification=async function(){
+ try{
+  const {client,user}=await getClientUser();
+  const {error}=await client.auth.resend({type:'signup',email:user.email});
+  if(error)throw error;
+  showProfileMessage('success','Email verifikasi dikirim ulang jika akun masih memerlukannya.');
+ }catch(error){showProfileMessage('error',error.message||'Gagal mengirim ulang email verifikasi.')}
+};
+window.setLanguage=async function(lang){
+ const valid=lang==='en'?'en':'id';
+ try{localStorage.setItem('cdb_language',valid)}catch(_){}
+ const top=Array.from(document.querySelectorAll('button')).find(b=>b.textContent.trim()===valid.toUpperCase());
+ if(top)top.click();
+ const idBtn=document.getElementById('langIdBtn'),enBtn=document.getElementById('langEnBtn');
+ if(idBtn)idBtn.classList.toggle('ring-2',valid==='id');
+ if(enBtn)enBtn.classList.toggle('ring-2',valid==='en');
+ try{const {client,user}=await getClientUser();const {error}=await client.from('profiles').update({preferred_language:valid}).eq('id',user.id);if(error)throw error;}catch(error){showProfileMessage('error',error.message||'Preferensi bahasa belum dapat disimpan.')}
+};
+window.selectTheme=async function(mode){
+ const valid=['light','dark','system'].includes(mode)?mode:'system';
+ try{localStorage.setItem('cdb_theme',valid)}catch(_){}
+ const icon={light:'light_mode',dark:'dark_mode',system:'desktop_windows'}[valid];
+ const top=Array.from(document.querySelectorAll('button')).find(b=>b.querySelector('.material-symbols-outlined')?.textContent.trim()===icon);
+ if(top)top.click();
+ ['light','dark','system'].forEach(function(theme){
+  const b=document.getElementById({light:'themeLightBtn',dark:'themeDarkBtn',system:'themeSystemBtn'}[theme]);
+  if(b){b.classList.toggle('ring-2',theme===valid);b.classList.toggle('opacity-70',theme!==valid)}
+ });
+ try{const {client,user}=await getClientUser();const {error}=await client.from('profiles').update({theme:valid}).eq('id',user.id);if(error)throw error;}catch(error){showProfileMessage('error',error.message||'Preferensi tema belum dapat disimpan.')}
+};
+loadProfile();
+})();
+</script>
 </body></html>
