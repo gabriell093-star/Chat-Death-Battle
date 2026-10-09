@@ -361,7 +361,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
   }
 
   function redirectToConsultLogin() {
-    const next = window.location.pathname.replace(/^\\/+/, '') + window.location.search;
+    const next = window.location.pathname.split('/').filter(Boolean).pop() + window.location.search;
     window.location.replace('portal_autentikasi_epistemik_vsb_death_battle.html?next=' + encodeURIComponent(next));
   }
 
