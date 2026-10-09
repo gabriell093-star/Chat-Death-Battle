@@ -341,6 +341,11 @@
   let cooldownInterval = null;
   let redirectPending = false;
   let passwordRecoveryMode = false;
+  let authOperationInFlight = false;
+  const AUTH_EMAIL_COOLDOWN_KEY = 'cdb_auth_email_cooldown_until';
+  const AUTH_GENERAL_COOLDOWN_KEY = 'cdb_auth_general_cooldown_until';
+  const AUTH_EMAIL_COOLDOWN_MS = 15 * 60 * 1000;
+  const AUTH_GENERAL_COOLDOWN_MS = 5 * 60 * 1000;
 
   function showAuthStatus(kind, message) {
     const el = document.getElementById('auth-status');
@@ -362,6 +367,77 @@
       el.classList.add('hidden');
       el.textContent = '';
     }
+  }
+
+
+  function authCooldownGroup(action) {
+    return ['register', 'resend', 'recover'].includes(action) ? 'email' : 'general';
+  }
+
+  function authCooldownKey(group) {
+    return group === 'email' ? AUTH_EMAIL_COOLDOWN_KEY : AUTH_GENERAL_COOLDOWN_KEY;
+  }
+
+  function readAuthCooldown(group) {
+    try { return Number(window.localStorage.getItem(authCooldownKey(group)) || 0); }
+    catch (_) { return 0; }
+  }
+
+  function writeAuthCooldown(group, until) {
+    try { window.localStorage.setItem(authCooldownKey(group), String(until)); }
+    catch (_) {}
+  }
+
+  function isRateLimitError(error) {
+    const message = (String(error?.message || '') + ' ' + String(error?.code || '')).toLowerCase();
+    const status = Number(error?.status || error?.statusCode || 0);
+    return status === 429 || /too many requests|rate.?limit|over_email_send_rate_limit|over_request_rate_limit|email rate limit/.test(message);
+  }
+
+  function authCooldownMessage(group, until) {
+    const minutes = Math.max(1, Math.ceil((until - Date.now()) / 60000));
+    if (group === 'email') {
+      return 'Supabase sedang membatasi pengiriman email pendaftaran/verifikasi. Permintaan email dihentikan sementara di perangkat ini selama sekitar ' + minutes + ' menit. Jangan mengulang pendaftaran atau kirim ulang berkali-kali. Jika masih terjadi setelah jeda, project memerlukan SMTP khusus karena email bawaan Supabase memiliki kuota rendah.';
+    }
+    return 'Supabase sedang membatasi permintaan autentikasi dari perangkat atau jaringan ini. Tunggu sekitar ' + minutes + ' menit sebelum mencoba lagi; jangan menekan tombol berulang.';
+  }
+
+  function beginAuthRequest(form, action, busyText) {
+    if (authOperationInFlight || (form && form.dataset.authSubmitting === 'true')) {
+      showAuthStatus('info', 'Permintaan sebelumnya masih diproses. Tunggu sampai selesai sebelum mencoba lagi.');
+      return false;
+    }
+    const group = authCooldownGroup(action);
+    const until = readAuthCooldown(group);
+    if (until > Date.now()) {
+      showAuthStatus('error', authCooldownMessage(group, until));
+      return false;
+    }
+    authOperationInFlight = true;
+    if (form) {
+      form.dataset.authSubmitting = 'true';
+      setFormBusy(form, true, busyText);
+    }
+    return true;
+  }
+
+  function finishAuthRequest(form) {
+    authOperationInFlight = false;
+    if (form) {
+      delete form.dataset.authSubmitting;
+      setFormBusy(form, false);
+    }
+  }
+
+  function showAuthFailure(error, action) {
+    if (!isRateLimitError(error)) {
+      showAuthStatus('error', friendlyAuthError(error));
+      return;
+    }
+    const group = authCooldownGroup(action);
+    const until = Date.now() + (group === 'email' ? AUTH_EMAIL_COOLDOWN_MS : AUTH_GENERAL_COOLDOWN_MS);
+    writeAuthCooldown(group, until);
+    showAuthStatus('error', authCooldownMessage(group, until));
   }
 
   function authRedirectUrl() {
@@ -481,7 +557,7 @@
     }
     const email = emailInputValue('login-email');
     const password = document.getElementById('login-pass').value;
-    setFormBusy(form, true, 'Memeriksa akun...');
+    if (!beginAuthRequest(form, 'login', 'Memeriksa akun...')) return;
     try {
       const { data, error } = await authClient.auth.signInWithPassword({ email, password });
       if (error) throw error;
@@ -495,9 +571,9 @@
       }
       scheduleWorkspaceRedirect('Login berhasil. Membuka workspace...');
     } catch (error) {
-      showAuthStatus('error', friendlyAuthError(error));
+      showAuthFailure(error, 'login');
     } finally {
-      setFormBusy(form, false);
+      finishAuthRequest(form);
     }
   }
 
@@ -526,7 +602,7 @@
       showAuthStatus('error', 'Jangan buka file HTML langsung dari penyimpanan. Jalankan situs melalui HTTPS, Vercel, GitHub Pages, atau localhost terlebih dahulu agar tautan verifikasi memiliki alamat yang valid.');
       return;
     }
-    setFormBusy(form, true, 'Membuat akun...');
+    if (!beginAuthRequest(form, 'register', 'Membuat akun...')) return;
     try {
       const { data, error } = await authClient.auth.signUp({
         email,
@@ -546,9 +622,9 @@
         showAuthStatus('success', 'Permintaan pendaftaran diterima. Buka email dari Supabase dan klik tautan verifikasi. Jika email berisi kode 6 digit, masukkan pada tab Verifikasi Email. Akun belum dapat memakai fitur AI sebelum terverifikasi.');
       }
     } catch (error) {
-      showAuthStatus('error', friendlyAuthError(error));
+      showAuthFailure(error, 'register');
     } finally {
-      setFormBusy(form, false);
+      finishAuthRequest(form);
     }
   }
 
@@ -583,7 +659,11 @@
       showAuthStatus('error', 'Masukkan seluruh 6 digit kode dari email. Jika email hanya menyediakan tautan, klik tautan itu langsung.');
       return;
     }
-    setFormBusy(form, true, 'Memvalidasi kode...');
+    if (!authClient) {
+      showAuthStatus('error', 'Layanan autentikasi belum siap. Muat ulang halaman dan coba lagi.');
+      return;
+    }
+    if (!beginAuthRequest(form, 'verify', 'Memvalidasi kode...')) return;
     try {
       const { data, error } = await authClient.auth.verifyOtp({ email, token, type: 'signup' });
       if (error) throw error;
@@ -593,9 +673,9 @@
       }
       scheduleWorkspaceRedirect('Email berhasil diverifikasi. Membuka workspace...');
     } catch (error) {
-      showAuthStatus('error', friendlyAuthError(error));
+      showAuthFailure(error, 'verify');
     } finally {
-      setFormBusy(form, false);
+      finishAuthRequest(form);
     }
   }
 
@@ -617,6 +697,7 @@
       return;
     }
     if (button?.disabled) return;
+    if (!beginAuthRequest(null, 'resend', '')) return;
     if (button) button.disabled = true;
     if (label) label.textContent = 'Mengirim email...';
     try {
@@ -642,9 +723,11 @@
         }
       }, 1000);
     } catch (error) {
-      showAuthStatus('error', friendlyAuthError(error));
+      showAuthFailure(error, 'resend');
       if (button) button.disabled = false;
       if (label) label.textContent = 'Kirim Ulang Email Verifikasi';
+    } finally {
+      finishAuthRequest(null);
     }
   }
 
@@ -663,7 +746,7 @@
       showAuthStatus('error', 'Buka situs melalui HTTPS atau localhost agar tautan pemulihan kembali ke halaman ini.');
       return;
     }
-    setFormBusy(form, true, 'Mengirim instruksi...');
+    if (!beginAuthRequest(form, 'recover', 'Mengirim instruksi...')) return;
     try {
       const { error } = await authClient.auth.resetPasswordForEmail(email, { redirectTo });
       if (error) throw error;
@@ -672,9 +755,9 @@
       box?.classList.add('flex');
       showAuthStatus('success', 'Jika alamat itu terdaftar, email pemulihan akan dikirim. Buka tautannya untuk membuat kata sandi baru.');
     } catch (error) {
-      showAuthStatus('error', friendlyAuthError(error));
+      showAuthFailure(error, 'recover');
     } finally {
-      setFormBusy(form, false);
+      finishAuthRequest(form);
     }
   }
 
@@ -712,7 +795,7 @@
       showAuthStatus('error', 'Konfirmasi kata sandi baru tidak cocok.');
       return;
     }
-    setFormBusy(form, true, 'Menyimpan...');
+    if (!beginAuthRequest(form, 'password', 'Menyimpan...')) return;
     try {
       const { error } = await authClient.auth.updateUser({ password });
       if (error) throw error;
@@ -723,9 +806,9 @@
       document.getElementById('login-email').value = window.sessionStorage.getItem('cdb_recover_email') || emailInputValue('recover-email');
       showAuthStatus('success', 'Kata sandi berhasil diperbarui. Masuk kembali dengan kata sandi baru.');
     } catch (error) {
-      showAuthStatus('error', friendlyAuthError(error));
+      showAuthFailure(error, 'password');
     } finally {
-      if (document.body.contains(form)) setFormBusy(form, false);
+      finishAuthRequest(form);
     }
   }
 
