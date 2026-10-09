@@ -718,6 +718,18 @@ if(!Object.prototype.hasOwnProperty.call(node,'__cdbOriginalText'))Object.define
 const original=node.__cdbOriginalText,trimmed=original.trim(),translated=lang==='en'?(TEXT[trimmed]||trimmed):trimmed;node.nodeValue=original.replace(trimmed,translated)}
 document.querySelectorAll('input[placeholder],textarea[placeholder],button[title],a[aria-label],button[aria-label]').forEach(function(el){['placeholder','title','aria-label'].forEach(function(attr){if(!el.hasAttribute(attr))return;const key='cdbOriginal'+attr.charAt(0).toUpperCase()+attr.slice(1).replace(/-([a-z])/g,function(_,ch){return ch.toUpperCase()});if(typeof el.dataset[key]==='undefined')el.dataset[key]=el.getAttribute(attr);const orig=el.dataset[key];el.setAttribute(attr,lang==='en'?(TEXT[orig]||orig):orig)})});
 document.querySelectorAll('button').forEach(function(b){const label=b.textContent.trim();if(label==='ID'||label==='EN'){const active=label===lang.toUpperCase();b.dataset.cdbActive=String(active);b.setAttribute('aria-pressed',String(active))}});
+const aiOutput=document.getElementById('cdb-ai-output');
+if(aiOutput){
+  const aiHeading=aiOutput.querySelector('h2');
+  if(aiHeading)aiHeading.textContent=lang==='en'?'AI Answer':'Jawaban AI';
+  const copyButton=aiOutput.querySelector('button[data-cdb-copy-answer]');
+  if(copyButton){
+    const copied=copyButton.dataset.cdbCopied==='true';
+    copyButton.innerHTML='<span class="material-symbols-outlined text-[16px]">'+(copied?'check':'content_copy')+'</span><span>'+(copied?(lang==='en'?'Copied':'Tersalin'):(lang==='en'?'Copy Answer':'Salin Jawaban'))+'</span>';
+  }
+  const sourceHeading=aiOutput.querySelector('h3');
+  if(sourceHeading)sourceHeading.textContent=lang==='en'?'VS Battles Wiki Sources':'Sumber VS Battles Wiki';
+}
 }
 document.querySelectorAll('button').forEach(function(b){const label=b.textContent.trim();if(label==='ID'||label==='EN')b.addEventListener('click',function(){const lang=label.toLowerCase();write(LANGUAGE_KEY,lang);applyLanguage(lang)});
 const icon=b.querySelector('.material-symbols-outlined');if(!icon)return;const name=icon.textContent.trim();if(['light_mode','dark_mode','desktop_windows'].includes(name))b.addEventListener('click',function(){const choice=name==='light_mode'?'light':name==='dark_mode'?'dark':'system';write(THEME_KEY,choice);applyTheme(choice)})});
