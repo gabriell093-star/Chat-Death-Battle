@@ -117,7 +117,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
   <h2 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Hasil analisis AI</h2>
   <button id="btn-copy-battle-answer" type="button" class="rounded-lg bg-surface-container px-3 py-2 text-sm font-semibold text-ocean-blue">Salin hasil</button>
  </div>
- <p id="cdb-battle-answer" class="whitespace-pre-wrap break-words text-body-md text-on-surface leading-relaxed"></p>
+ <div id="cdb-battle-answer" class="text-body-md text-on-surface leading-relaxed"></div>
  <div id="cdb-battle-sources" class="flex flex-col gap-2"></div>
  <p id="cdb-battle-quota" class="text-xs text-slate-blue"></p>
 </section>
@@ -280,12 +280,12 @@ if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)')
     });
     window.CDB_AUTH_CLIENT = client;
     const { data, error } = await client.auth.getSession();
-    if (error || !data.session || !data.session.user || !data.session.user.email_confirmed_at) {
+    if (error || !data.session || !data.session.user) {
       redirectToLogin();
       return;
     }
     client.auth.onAuthStateChange(function (event, session) {
-      if (event === 'SIGNED_OUT' || (session && !session.user.email_confirmed_at)) redirectToLogin();
+      if (event === 'SIGNED_OUT') redirectToLogin();
     });
     window.dispatchEvent(new CustomEvent('cdb-auth-ready', { detail: { client: client, user: data.session.user } }));
   }
@@ -309,8 +309,34 @@ let latestAnswer='';
 function showStatus(kind,message){if(!status)return;status.textContent=message;status.className='mx-space-md mt-space-md rounded-xl p-space-sm text-body-sm '+(kind==='error'?'bg-error-container text-on-error-container':kind==='success'?'bg-mint-mist text-secondary':'bg-surface-container text-ocean-blue');}
 function authRedirect(){const next=window.location.pathname.replace(/^\/+/, '')+window.location.search;window.location.replace('portal_autentikasi_epistemik_vsb_death_battle.html?next='+encodeURIComponent(next));}
 function safeLink(source){if(!source||typeof source.url!=='string'||!source.url.startsWith('https://vsbattles.fandom.com/'))return null;const a=document.createElement('a');a.href=source.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=source.title||'VS Battles Wiki';a.className='underline text-ocean-blue';return a;}
+function renderStructuredAnswer(container, raw) {
+  if (!container) return;
+  container.replaceChildren();
+  const lines = String(raw || '').replace(/\r\n?/g, '\n').split('\n');
+  const addInline = function (parent, value) {
+    const re = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
+    let from = 0, match;
+    while ((match = re.exec(value)) !== null) {
+      if (match.index > from) parent.appendChild(document.createTextNode(value.slice(from, match.index)));
+      const token = match[0], bold = token.startsWith('**');
+      const node = document.createElement(bold ? 'strong' : 'em'); node.textContent = token.slice(bold ? 2 : 1, token.length - (bold ? 2 : 1));
+      parent.appendChild(node); from = re.lastIndex;
+    }
+    if (from < value.length) parent.appendChild(document.createTextNode(value.slice(from)));
+  };
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i].trim(); if (!line) { i++; continue; }
+    if (/^(?:---+|___+|\*\*\*+)\s*$/.test(line)) { const hr=document.createElement('hr');hr.className='my-3 border-outline-variant';container.appendChild(hr);i++;continue; }
+    const heading=line.match(/^(#{1,3})\s+(.+)$/);
+    if(heading){const el=document.createElement(heading[1].length===1?'h2':heading[1].length===2?'h3':'h4');el.className='mt-4 mb-2 font-bold text-ocean-blue leading-snug';addInline(el,heading[2]);container.appendChild(el);i++;continue;}
+    const bullet=line.match(/^[-*]\s+(.+)$/),ordered=line.match(/^\d+[.)]\s+(.+)$/);
+    if(bullet||ordered){const list=document.createElement(ordered?'ol':'ul');list.className=(ordered?'list-decimal':'list-disc')+' pl-5 mb-3 space-y-1';while(i<lines.length){const row=lines[i].trim();const item=ordered?row.match(/^\d+[.)]\s+(.+)$/):row.match(/^[-*]\s+(.+)$/);if(!item)break;const li=document.createElement('li');addInline(li,item[1]);list.appendChild(li);i++;}container.appendChild(list);continue;}
+    const p=document.createElement('p');p.className='mb-3 last:mb-0 leading-relaxed';const block=[];while(i<lines.length&&lines[i].trim()&&!/^(#{1,3})\s+/.test(lines[i].trim())&&!/^[-*]\s+/.test(lines[i].trim())&&!/^\d+[.)]\s+/.test(lines[i].trim())&&!/^(?:---+|___+|\*\*\*+)\s*$/.test(lines[i].trim())){block.push(lines[i].trim());i++;}addInline(p,block.join(' '));container.appendChild(p);
+  }
+}
 function renderResult(payload){
- latestAnswer=String(payload.answer||'');answer.textContent=latestAnswer;sources.replaceChildren();
+ latestAnswer=String(payload.answer||'');renderStructuredAnswer(answer, latestAnswer);sources.replaceChildren();
  const list=document.createElement('div');list.className='flex flex-col gap-2';
  (Array.isArray(payload.sources)?payload.sources:[]).forEach(function(s){const link=safeLink(s);if(link){const row=document.createElement('div');row.className='text-sm';row.append(link);list.append(row)}});
  if(list.children.length){const label=document.createElement('h3');label.className='font-label-md text-label-md text-ocean-blue font-bold';label.textContent=window.CDB_SITE_LANGUAGE==='en'?'VS Battles Wiki sources':'Sumber VS Battles Wiki';sources.append(label,list)}
@@ -331,7 +357,7 @@ async function runBattle(){
  run.disabled=true;run.classList.add('opacity-60');
  try{
   const {data,error}=await client.auth.getSession();
-  if(error||!data.session||!data.session.user?.email_confirmed_at){authRedirect();return}
+  if(error||!data.session||!data.session.user){authRedirect();return}
   showStatus('info','Mengambil sumber VSB Wiki dan menyusun analisis battle…');
   const message='Analisis battle untuk '+a+' ('+(av||'versi tidak ditentukan')+') melawan '+b+' ('+(bv||'versi tidak ditentukan')+'). '+(custom||'Bandingkan bukti AP, speed, durability, abilities, resistances, dan win condition. Jangan mengarang statistik atau kemenangan.')+' Jawab dengan pemisahan sumber, inferensi, asumsi, dan keterbatasan.';
   const res=await fetch(ENDPOINT,{method:'POST',headers:{'Authorization':'Bearer '+data.session.access_token,'apikey':KEY,'Content-Type':'application/json'},body:JSON.stringify({message,mode:'battle',language:window.CDB_SITE_LANGUAGE==='en'?'en':'id',characterA:a,characterAVersion:av,characterB:b,characterBVersion:bv,rules:{standard_battle_assumptions:rulesText,custom_instructions:custom},sessionId})});
@@ -370,7 +396,7 @@ document.getElementById('btn-doc-sba')?.addEventListener('click',function(){
 if(sessionId){clientReady().then(async function(client){
  if(!client)return;
  const {data:authData}=await client.auth.getUser();
- if(!authData?.user?.email_confirmed_at){authRedirect();return}
+ if(!authData?.user){authRedirect();return}
  const sessionResult=await client.from('chat_sessions').select('id,title,character_a,character_a_version,character_b,character_b_version,battle_rules').eq('id',sessionId).maybeSingle();
  if(sessionResult.error||!sessionResult.data){showStatus('error','Sesi battle tidak ditemukan atau tidak dapat diakses.');return}
  const s=sessionResult.data;
