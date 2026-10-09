@@ -159,17 +159,17 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 <div class="flex flex-wrap items-center gap-space-2xs">
 <button class="activity-filter-tab px-space-sm py-space-2xs rounded-[14px] bg-ocean-blue text-glacier-white font-label-md text-label-md shadow-md transition-all flex items-center gap-space-3xs" id="tab-all" onclick="switchAuditTab('all')">
 <span>Semua Aktivitas</span>
-<span class="px-space-3xs py-0.5 rounded-full bg-surface-container-highest/20 font-caption-meta text-caption-meta">6</span>
+<span class="px-space-3xs py-0.5 rounded-full bg-surface-container-highest/20 font-caption-meta text-caption-meta"><span id="history-tab-count-all">0</span></span>
 </button>
 <button class="activity-filter-tab px-space-sm py-space-2xs rounded-[14px] bg-surface-container-low text-on-surface-variant font-label-md text-label-md hover:bg-surface-container hover:text-ocean-blue transition-all flex items-center gap-space-3xs" id="tab-feat" onclick="switchAuditTab('feat')">
 <span class="material-symbols-outlined text-[16px]">smart_toy</span>
 <span>Konsultasi AI Feat</span>
-<span class="px-space-3xs py-0.5 rounded-full bg-surface-container-high font-caption-meta text-caption-meta text-slate-blue">4</span>
+<span class="px-space-3xs py-0.5 rounded-full bg-surface-container-high font-caption-meta text-caption-meta text-slate-blue"><span id="history-tab-count-feat">0</span></span>
 </button>
 <button class="activity-filter-tab px-space-sm py-space-2xs rounded-[14px] bg-surface-container-low text-on-surface-variant font-label-md text-label-md hover:bg-surface-container hover:text-ocean-blue transition-all flex items-center gap-space-3xs" id="tab-battle" onclick="switchAuditTab('battle')">
 <span class="material-symbols-outlined text-[16px]">swords</span>
 <span>Simulasi Death Battle</span>
-<span class="px-space-3xs py-0.5 rounded-full bg-surface-container-high font-caption-meta text-caption-meta text-slate-blue">2</span>
+<span class="px-space-3xs py-0.5 rounded-full bg-surface-container-high font-caption-meta text-caption-meta text-slate-blue"><span id="history-tab-count-battle">0</span></span>
 </button>
 </div>
 <!-- Filter Waktu, Urutan & Quick Action Buttons -->
@@ -184,14 +184,11 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 </div>
 <!-- Secondary Actions -->
 <div class="flex items-center gap-space-2xs">
-<button class="px-space-xs py-space-2xs rounded-[12px] bg-surface-container-high text-ocean-blue hover:bg-ice-effect font-label-sm text-label-sm transition-all flex items-center gap-space-3xs shadow-sm" title="Ekspor Log Riwayat (.json / .csv)" type="button">
+<button id="history-export-json" class="px-space-xs py-space-2xs rounded-[12px] bg-surface-container-high text-ocean-blue hover:bg-ice-effect font-label-sm text-label-sm transition-all flex items-center gap-space-3xs shadow-sm" title="Ekspor Log Riwayat (.json / .csv)" type="button">
 <span class="material-symbols-outlined text-[16px]">download</span>
 <span class="hidden sm:inline">Ekspor Log (.json)</span>
 </button>
-<button class="px-space-xs py-space-2xs rounded-[12px] bg-error-container text-on-error-container hover:bg-status-error hover:text-on-error font-label-sm text-label-sm transition-all flex items-center gap-space-3xs shadow-sm" onclick="if(confirm('Apakah Anda yakin ingin membersihkan riwayat terpilih? Tindakan ini membutuhkan otorisasi Tier 1-A Auditor.')) alert('Riwayat diamankan di bawah enkripsi profil Ellias.');" title="Hapus Riwayat Terpilih" type="button">
-<span class="material-symbols-outlined text-[16px]">delete_sweep</span>
-<span class="hidden sm:inline">Hapus Riwayat Terpilih</span>
-</button>
+
 </div>
 </div>
 </div>
@@ -302,6 +299,7 @@ if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)')
 (function(){
 'use strict';
 const list=document.getElementById('activity-history-container');
+window.CDB_HISTORY_EXPORT={sessions:[],messages:[]};
 if(!list)return;
 function show(id,yes){const el=document.getElementById(id);if(el)el.classList.toggle('hidden',!yes)}
 function make(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e}
@@ -316,8 +314,10 @@ async function loadHistory(){
   const {data:sessions,error}=await client.from('chat_sessions').select('id,title,mode,character_a,character_a_version,character_b,character_b_version,created_at,updated_at').order('updated_at',{ascending:false}).limit(100);
   if(error)throw error;
   const rows=sessions||[],ids=rows.map(x=>x.id);
+  window.CDB_HISTORY_EXPORT.sessions=rows;
   let messages=[];
   if(ids.length){const r=await client.from('chat_messages').select('session_id,role,content,created_at').in('session_id',ids).order('created_at',{ascending:false}).limit(300);if(r.error)throw r.error;messages=r.data||[]}
+  window.CDB_HISTORY_EXPORT.messages=messages;
   const latest=new Map();messages.forEach(m=>{if(!latest.has(m.session_id))latest.set(m.session_id,m)});
   list.replaceChildren();
   rows.forEach(function(session){
@@ -347,19 +347,36 @@ async function loadHistory(){
     if(m.error){window.alert('Pesan tidak dapat dihapus.');del.disabled=false;return}
     const s=await client.from('chat_sessions').delete().eq('id',session.id).eq('user_id',userId);
     if(s.error){window.alert('Sesi tidak dapat dihapus.');del.disabled=false;return}
-    article.remove();refreshFilters();
+    article.remove();
+    window.CDB_HISTORY_EXPORT.sessions=window.CDB_HISTORY_EXPORT.sessions.filter(s=>s.id!==session.id);
+    window.CDB_HISTORY_EXPORT.messages=window.CDB_HISTORY_EXPORT.messages.filter(m=>m.session_id!==session.id);
+    const total=document.getElementById('history-total-count');if(total)total.textContent=String(window.CDB_HISTORY_EXPORT.sessions.length);
+    const feat=document.getElementById('history-tab-count-feat');if(feat)feat.textContent=String(window.CDB_HISTORY_EXPORT.sessions.filter(s=>s.mode!=='battle').length);
+    const battle=document.getElementById('history-tab-count-battle');if(battle)battle.textContent=String(window.CDB_HISTORY_EXPORT.sessions.filter(s=>s.mode==='battle').length);
+    const all=document.getElementById('history-tab-count-all');if(all)all.textContent=String(window.CDB_HISTORY_EXPORT.sessions.length);
+    refreshFilters();
    });
    actions.append(del);article.append(actions);list.append(article);
   });
   show('cdb-history-loading',false);show('cdb-history-error',false);
   show('cdb-history-empty',rows.length===0);list.classList.toggle('hidden',rows.length===0);
   const total=document.getElementById('history-total-count');if(total)total.textContent=String(rows.length);
+  const featCount=document.getElementById('history-tab-count-feat');if(featCount)featCount.textContent=String(rows.filter(s=>s.mode!=='battle').length);
+  const battleCount=document.getElementById('history-tab-count-battle');if(battleCount)battleCount.textContent=String(rows.filter(s=>s.mode==='battle').length);
+  const allCount=document.getElementById('history-tab-count-all');if(allCount)allCount.textContent=String(rows.length);
   refreshFilters();
  }catch(error){
   show('cdb-history-loading',false);show('cdb-history-error',true);
   const el=document.getElementById('cdb-history-error');if(el)el.textContent='Riwayat belum dapat dimuat: '+(error.message||'Kesalahan koneksi.');
  }
 }
+document.getElementById('history-export-json')?.addEventListener('click',function(){
+ const data=window.CDB_HISTORY_EXPORT||{sessions:[],messages:[]};
+ const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),sessions:data.sessions,messages:data.messages},null,2)],{type:'application/json;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='chat-death-battle-history.json';document.body.appendChild(a);a.click();a.remove();
+ window.setTimeout(function(){URL.revokeObjectURL(url)},1000);
+});
 loadHistory();
 })();
 </script>
