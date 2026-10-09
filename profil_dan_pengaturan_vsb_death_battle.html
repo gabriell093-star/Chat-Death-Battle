@@ -125,7 +125,7 @@ main .grid { grid-template-columns:minmax(0,1fr)!important; }
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-ocean-blue text-[24px]">task_alt</span>
 <div class="font-body-sm text-body-sm text-ocean-blue">
-<span class="font-bold">Email Anda sudah terverifikasi. Fitur AI tersedia sesuai batas penggunaan akun dan ketersediaan layanan.
+<span class="font-bold">Akun Anda aktif. Fitur AI tersedia sesuai batas penggunaan akun dan ketersediaan layanan.
           </div>
 </div>
 <div class="flex items-center gap-space-2xs self-end sm:self-center shrink-0">
@@ -448,7 +448,7 @@ main .grid { grid-template-columns:minmax(0,1fr)!important; }
     if (badge) {
       badge.className = 'font-label-sm text-label-sm px-space-2xs py-1 rounded-full font-semibold flex items-center gap-1 ' +
         (isVerified ? 'bg-mint-mist text-ocean-blue' : 'bg-tertiary-fixed text-on-tertiary-fixed');
-      badge.textContent = isVerified ? 'Email terverifikasi' : 'Verifikasi email diperlukan';
+      badge.textContent = isVerified ? 'Akun aktif' : 'Login diperlukan';
     }
     if (shield) {
       shield.textContent = isVerified ? 'verified_user' : 'shield_with_heart';
@@ -727,12 +727,12 @@ if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)')
     });
     window.CDB_AUTH_CLIENT = client;
     const { data, error } = await client.auth.getSession();
-    if (error || !data.session || !data.session.user || !data.session.user.email_confirmed_at) {
+    if (error || !data.session || !data.session.user) {
       redirectToLogin();
       return;
     }
     client.auth.onAuthStateChange(function (event, session) {
-      if (event === 'SIGNED_OUT' || (session && !session.user.email_confirmed_at)) redirectToLogin();
+      if (event === 'SIGNED_OUT') redirectToLogin();
     });
     window.dispatchEvent(new CustomEvent('cdb-auth-ready', { detail: { client: client, user: data.session.user } }));
   }
@@ -787,7 +787,7 @@ async function loadProfile(){
   }else{
    safeText(document.getElementById('displayName'),user.user_metadata?.display_name||'');
   }
-  if(typeof window.switchVerification==='function')window.switchVerification(!!user.email_confirmed_at);
+  if(typeof window.switchVerification==='function')window.switchVerification(true);
  }catch(error){showProfileMessage('error',error.message||'Gagal memuat profil dari akun.')}
 }
 window.handleProfileSubmit=async function(event){
