@@ -75,75 +75,15 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 </a>
 </div>
 </section>
-<!-- 2. INFORMASI KUOTA OPERASIONAL & KOMPUTASI AI -->
-<section class="w-full bg-surface-container-low rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col gap-space-md">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
-<div class="flex items-center gap-space-xs">
-<div class="w-8 h-8 rounded-lg bg-ocean-blue text-glacier-white flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">memory</span>
-</div>
-<div>
-<h2 class="font-headline-sm text-headline-sm text-ocean-blue leading-tight">Telemetri &amp; Kuota Operasional AI</h2>
-<p class="font-caption-meta text-caption-meta text-slate-blue">Audit pemrosesan inferensial real-time via VSB Epistemic Core</p>
-</div>
-</div>
-<button class="inline-flex items-center gap-space-3xs text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm underline underline-offset-4 transition-colors" onclick="document.getElementById('quota-modal').classList.toggle('hidden')" type="button">
-<span class="material-symbols-outlined text-[16px]">info</span>
-          Protokol Kuota &amp; Cache
-        </button>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
-<!-- Kuota Sesi -->
-<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col justify-between gap-space-sm">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm text-slate-blue uppercase">Sesi Analisis Mendalam</span>
-<span class="px-space-2xs py-0.5 rounded bg-ice-effect text-ocean-blue font-data-dense-numeric text-data-dense-numeric">
-              18 / 25
-            </span>
-</div>
-<div class="flex flex-col gap-space-2xs">
-<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
-<div class="bg-ocean-blue h-full rounded-full" style="width: 72%;"></div>
-</div>
-<div class="flex justify-between items-center text-slate-blue font-caption-meta text-caption-meta">
-<span>Tersedia: 7 sesi cadangan</span>
-<span>Reset: 00:00 UTC (4 jam lagi)</span>
-</div>
-</div>
-</div>
-<!-- Latensi & Rate Limit -->
-<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col justify-between gap-space-sm">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm text-slate-blue uppercase">VSB Canonical API Gateway</span>
-<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-ocean-blue bg-mint-mist px-space-2xs py-0.5 rounded-full">
-<span class="w-2 h-2 rounded-full bg-ocean-blue"></span>
-              Operasional Aktif
-            </span>
-</div>
-<div class="flex items-baseline justify-between">
-<div class="flex items-baseline gap-space-3xs">
-<span class="font-display-hero text-headline-lg text-ocean-blue font-bold">42</span>
-<span class="font-data-dense-numeric text-data-dense-numeric text-slate-blue">ms</span>
-</div>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Batas Beban: 0.8% utilisasi</span>
-</div>
-</div>
-<!-- Mode Cadangan Penjelasan -->
-<div class="md:col-span-2 lg:col-span-1 bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col justify-center gap-space-2xs">
-<span class="font-label-sm text-label-sm text-slate-blue uppercase">Regulasi Batas Eksekusi</span>
-<p class="font-caption-meta text-caption-meta text-slate-blue leading-relaxed">
-            Apabila kuota sesi harian terpenuhi, mode analisis beralih ke <strong class="text-ocean-blue">Mode Ringkas</strong> berbasis cache kanonikal tanpa kalkulasi dimensi dinamis hingga siklus reset berikutnya.
-          </p>
-</div>
-</div>
-<!-- Collapsible info modal inline preview -->
-<div class="hidden bg-surface-container rounded-lg p-space-sm font-body-sm text-body-sm text-slate-blue flex items-start gap-space-xs" id="quota-modal">
-<span class="material-symbols-outlined text-ocean-blue text-[20px] shrink-0 mt-0.5">verified_user</span>
-<div class="flex flex-col gap-space-3xs">
-<span class="font-label-md text-label-md text-ocean-blue font-semibold">Kebijakan Epistemik Anti-AI Slop</span>
-<span>Platform membatasi 25 penalaran mendalam per analis per hari untuk mencegah halusinasi rekursif LLM, menjaga verifikasi cross-reference manga/komik bab-per-bab tetap terlindungi oleh komputasi audit kanonik tervalidasi.</span>
-</div>
-</div>
+<!-- Current backend usage policy (no fabricated live metrics) -->
+<section class="w-full bg-surface-container-low rounded-xl p-space-md flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+  <div class="flex items-start gap-3">
+    <span class="material-symbols-outlined text-ocean-blue text-[22px]">verified_user</span>
+    <div>
+      <h2 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Batas penggunaan AI</h2>
+      <p class="font-body-sm text-body-sm text-slate-blue">Kuota dihitung di server dan berlaku per hari. Batas saat ini 15 permintaan AI per akun; jumlah penggunaan aktual tidak ditampilkan sampai endpoint statistik tersedia.</p>
+    </div>
+  </div>
 </section>
 <!-- 3. DUA AKSES FITUR UTAMA (LANCAR & JELAS) -->
 <section class="grid grid-cols-1 lg:grid-cols-2 gap-space-md lg:gap-space-lg w-full">
@@ -234,132 +174,20 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 </div>
 </div>
 </section>
-<!-- 4. RIWAYAT PERCAKAPAN & SIMULASI TERAKHIR -->
-<section class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col gap-space-md">
-<!-- Section Header & Filter Tabs -->
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
-<div class="flex items-center gap-space-xs">
-<div class="w-8 h-8 rounded-lg bg-surface-container text-ocean-blue flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">history</span>
-</div>
-<div>
-<h2 class="font-headline-sm text-headline-sm text-ocean-blue">Riwayat Aktivitas &amp; Simulasi Terakhir</h2>
-<p class="font-caption-meta text-caption-meta text-slate-blue">Dokumentasi log audit dan konfrontasi tersimpan dalam sandbox lokal</p>
-</div>
-</div>
-<!-- Filter Pill Group & Toggle Demo Empty State -->
-<div class="flex flex-wrap items-center gap-space-2xs">
-<div class="bg-surface-container-low p-space-3xs rounded-xl flex items-center gap-space-3xs">
-<button class="px-space-xs py-1 rounded-lg bg-ocean-blue text-glacier-white font-label-sm text-label-sm shadow-sm transition-all" id="tab-all" onclick="filterHistory('all')" type="button">Semua Riwayat (3)</button>
-<button class="px-space-xs py-1 rounded-lg text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm transition-all" id="tab-feat" onclick="filterHistory('feat')" type="button">Konsultasi Feat (2)</button>
-<button class="px-space-xs py-1 rounded-lg text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm transition-all" id="tab-db" onclick="filterHistory('db')" type="button">Death Battle (1)</button>
-</div>
-<button class="px-space-xs py-1 rounded-lg bg-surface-container text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm flex items-center gap-1" onclick="toggleEmptyState()" title="Sakelar demonstrasi pratinjau empty state" type="button">
-<span class="material-symbols-outlined text-[16px]">visibility</span>
-<span>Simulasi Kosong</span>
-</button>
-</div>
-</div>
-<!-- Riwayat List -->
-<div class="flex flex-col gap-space-xs" id="history-container">
-<!-- Item 1: Death Battle -->
-<div class="history-item p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col md:flex-row md:items-center justify-between gap-space-md shadow-sm" data-category="db">
-<div class="flex items-start gap-space-md min-w-0">
-<div class="w-12 h-12 rounded-xl bg-ocean-blue text-glacier-white flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[24px]">swords</span>
-</div>
-<div class="flex flex-col gap-space-3xs min-w-0">
-<div class="flex flex-wrap items-center gap-space-2xs">
-<span class="px-space-2xs py-0.5 rounded bg-surface-container-highest text-ocean-blue font-label-sm text-label-sm">Death Battle 1v1</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue">2 jam yang lalu</span>
-<span class="px-space-2xs py-0.5 rounded bg-mint-mist text-ocean-blue font-label-sm text-label-sm">Selesai (KO / SBA Standar)</span>
-</div>
-<h4 class="font-headline-sm text-headline-sm text-ocean-blue truncate">
-                Goku (Cell Games) vs Superman (Post-Crisis)
-              </h4>
-<p class="font-data-dense-body text-data-dense-body text-slate-blue line-clamp-1">
-                Kondisi: Standar SBA, Kecepatan Equalized OFF, Hasil deterministik via Superioritas Solar Radiation &amp; Feat Daya Tahan Supernova.
-              </p>
-</div>
-</div>
-<div class="flex items-center gap-space-xs shrink-0 self-end md:self-center">
-<a class="inline-flex items-center gap-space-2xs px-space-md py-space-xs rounded-xl bg-surface-container-lowest text-ocean-blue hover:bg-ocean-blue hover:text-glacier-white transition-all shadow-sm font-label-md text-label-md" href="konsultasi_ai_powerscaling_vsb_death_battle.html">
-<span>Buka Kembali Analisis</span>
-<span class="material-symbols-outlined text-[18px]">open_in_new</span>
-</a>
-</div>
-</div>
-<!-- Item 2: Konsultasi Feat -->
-<div class="history-item p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col md:flex-row md:items-center justify-between gap-space-md shadow-sm" data-category="feat">
-<div class="flex items-start gap-space-md min-w-0">
-<div class="w-12 h-12 rounded-xl bg-ice-effect text-ocean-blue flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[24px]">smart_toy</span>
-</div>
-<div class="flex flex-col gap-space-3xs min-w-0">
-<div class="flex flex-wrap items-center gap-space-2xs">
-<span class="px-space-2xs py-0.5 rounded bg-surface-container-highest text-ocean-blue font-label-sm text-label-sm">Konsultasi Feat</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Kemarin, 19:40</span>
-<span class="px-space-2xs py-0.5 rounded bg-mint-mist text-ocean-blue font-label-sm text-label-sm">Terverifikasi: 3 Rujukan Bab Manga</span>
-</div>
-<h4 class="font-headline-sm text-headline-sm text-ocean-blue truncate">
-                Audit Kecepatan FTL Kizaru &amp; Pika Pika no Mi
-              </h4>
-<p class="font-data-dense-body text-data-dense-body text-slate-blue line-clamp-1">
-                Konteks: Evaluasi Egghead Arc feat akselerasi di atas c natural, perbandingan dengan observasi Haki Luffy Gear 5.
-              </p>
-</div>
-</div>
-<div class="flex items-center gap-space-xs shrink-0 self-end md:self-center">
-<a class="inline-flex items-center gap-space-2xs px-space-md py-space-xs rounded-xl bg-surface-container-lowest text-ocean-blue hover:bg-ocean-blue hover:text-glacier-white transition-all shadow-sm font-label-md text-label-md" href="konsultasi_ai_powerscaling_vsb_death_battle.html">
-<span>Buka Kembali Analisis</span>
-<span class="material-symbols-outlined text-[18px]">open_in_new</span>
-</a>
-</div>
-</div>
-<!-- Item 3: Konsultasi Feat -->
-<div class="history-item p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col md:flex-row md:items-center justify-between gap-space-md shadow-sm" data-category="feat">
-<div class="flex items-start gap-space-md min-w-0">
-<div class="w-12 h-12 rounded-xl bg-ice-effect text-ocean-blue flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[24px]">view_in_ar</span>
-</div>
-<div class="flex flex-col gap-space-3xs min-w-0">
-<div class="flex flex-wrap items-center gap-space-2xs">
-<span class="px-space-2xs py-0.5 rounded bg-surface-container-highest text-ocean-blue font-label-sm text-label-sm">Konsultasi Feat</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue">3 hari yang lalu</span>
-<span class="px-space-2xs py-0.5 rounded bg-mint-mist text-ocean-blue font-label-sm text-label-sm">Terverifikasi: Diferensiasi Inkarnasi</span>
-</div>
-<h4 class="font-headline-sm text-headline-sm text-ocean-blue truncate">
-                Hierarki Dimensi Rimuru Tempest (Web Novel vs Light Novel)
-              </h4>
-<p class="font-data-dense-body text-data-dense-body text-slate-blue line-clamp-1">
-                Konteks: Pemisahan eksklusif kontinuitas Turn Over / Akasha Records WN dari struktur cosmology spasial LN Vol 16-21.
-              </p>
-</div>
-</div>
-<div class="flex items-center gap-space-xs shrink-0 self-end md:self-center">
-<a class="inline-flex items-center gap-space-2xs px-space-md py-space-xs rounded-xl bg-surface-container-lowest text-ocean-blue hover:bg-ocean-blue hover:text-glacier-white transition-all shadow-sm font-label-md text-label-md" href="konsultasi_ai_powerscaling_vsb_death_battle.html">
-<span>Buka Kembali Analisis</span>
-<span class="material-symbols-outlined text-[18px]">open_in_new</span>
-</a>
-</div>
-</div>
-</div>
-<!-- Mini Empty State Component (Toggled for zero records) -->
-<div class="hidden p-space-lg rounded-xl bg-surface-container-low flex flex-col items-center justify-center text-center gap-space-sm py-space-xl" id="empty-state-card">
-<div class="w-16 h-16 rounded-2xl bg-surface-container text-slate-blue flex items-center justify-center shadow-inner">
-<span class="material-symbols-outlined text-[32px]">folder_open</span>
-</div>
-<div class="flex flex-col gap-space-3xs max-w-md">
-<h4 class="font-headline-sm text-headline-sm text-ocean-blue">Belum Ada Sesi Tersimpan</h4>
-<p class="font-body-sm text-body-sm text-slate-blue">
-            Riwayat komputasi feat atau duel SBA akan tercatat secara runut begitu Anda menginisiasi sesi konsultasi pertama.
-          </p>
-</div>
-<button class="inline-flex items-center gap-space-2xs px-space-md py-space-xs rounded-xl bg-summer-orange text-ocean-blue font-label-md text-label-md font-bold shadow-md hover:bg-summer-orange/90 transition-all" onclick="toggleEmptyState()" type="button">
-<span class="material-symbols-outlined text-[18px]">add_comment</span>
-<span>Mulai Percakapan Pertama</span>
-</button>
-</div>
+<!-- Real recent sessions -->
+<section class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col gap-3">
+  <div class="flex flex-wrap items-center justify-between gap-2">
+    <div>
+      <h2 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Riwayat terbaru</h2>
+      <p class="font-body-sm text-body-sm text-slate-blue">Percakapan yang tersimpan pada akun Anda.</p>
+    </div>
+    <a class="text-sm font-semibold text-ocean-blue underline" href="riwayat_arsip_audit_epistemik_vsb_death_battle.html">Buka semua riwayat</a>
+  </div>
+  <div id="cdb-dashboard-history" class="flex flex-col gap-2">
+    <p id="cdb-dashboard-history-loading" class="text-sm text-slate-blue">Memuat riwayat…</p>
+  </div>
+  <p id="cdb-dashboard-history-empty" class="hidden text-sm text-slate-blue">Belum ada percakapan tersimpan. Mulai konsultasi atau simulasi battle untuk membuat riwayat pertama.</p>
+  <p id="cdb-dashboard-history-error" class="hidden text-sm text-on-error-container bg-error-container rounded-lg p-3" role="alert">Riwayat belum dapat dimuat. Muat ulang halaman.</p>
 </section>
 <!-- 5. FOOTER WORKSPACE & ETIKA EPISTEMIK -->
 <section class="w-full flex flex-col sm:flex-row items-center justify-between gap-space-xs px-space-xs pb-space-xs text-slate-blue">
@@ -485,6 +313,39 @@ if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)')
     window.dispatchEvent(new CustomEvent('cdb-auth-ready', { detail: { client: client, user: data.session.user } }));
   }
   guard().catch(function () { redirectToLogin(); });
+})();
+</script>
+<script id="cdb-dashboard-live-integration">
+(function(){
+'use strict';
+const list=document.getElementById('cdb-dashboard-history');
+if(!list)return;
+function toggle(id,visible){const el=document.getElementById(id);if(el)el.classList.toggle('hidden',!visible)}
+function element(tag,cls,text){const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el}
+async function loadDashboardHistory(){
+ const client=window.CDB_AUTH_CLIENT;
+ if(!client){toggle('cdb-dashboard-history-loading',false);toggle('cdb-dashboard-history-error',true);return}
+ try{
+  const {data:authData,error:authError}=await client.auth.getUser();
+  if(authError||!authData.user||!authData.user.email_confirmed_at)throw new Error('Sesi tidak valid.');
+  const {data:sessions,error}=await client.from('chat_sessions').select('id,title,mode,character_a,character_b,updated_at').order('updated_at',{ascending:false}).limit(5);
+  if(error)throw error;
+  const rows=sessions||[];
+  list.replaceChildren();
+  rows.forEach(function(s){
+   const card=element('article','rounded-xl bg-surface-container-low p-space-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3');
+   const info=element('div','min-w-0');
+   info.append(element('div','text-xs text-slate-blue mb-1',s.mode==='battle'?'Death Battle 1v1':'Konsultasi AI'));
+   info.append(element('h3','font-label-md text-label-md text-ocean-blue font-bold',s.title||((s.character_a||'Karakter A')+' vs '+(s.character_b||'Karakter B'))));
+   info.append(element('p','text-xs text-slate-blue mt-1',new Date(s.updated_at).toLocaleString(document.documentElement.lang==='en'?'en-US':'id-ID',{dateStyle:'medium',timeStyle:'short',timeZone:'Asia/Jakarta'})));
+   const link=element('a','inline-flex items-center justify-center px-3 py-2 rounded-lg bg-surface-container text-ocean-blue text-sm font-semibold shrink-0',s.mode==='battle'?'Lanjutkan battle':'Lanjutkan konsultasi');
+   link.href=(s.mode==='battle'?'simulasi_chat_death_battle_1v1_vsb_matrix.html':'konsultasi_ai_powerscaling_vsb_death_battle.html')+'?sessionId='+encodeURIComponent(s.id);
+   card.append(info,link);list.append(card);
+  });
+  toggle('cdb-dashboard-history-loading',false);toggle('cdb-dashboard-history-error',false);toggle('cdb-dashboard-history-empty',rows.length===0);
+ }catch(error){toggle('cdb-dashboard-history-loading',false);toggle('cdb-dashboard-history-error',true);const msg=document.getElementById('cdb-dashboard-history-error');if(msg)msg.textContent='Riwayat belum dapat dimuat: '+(error.message||'Kesalahan koneksi.')}
+}
+loadDashboardHistory();
 })();
 </script>
 </body></html>
