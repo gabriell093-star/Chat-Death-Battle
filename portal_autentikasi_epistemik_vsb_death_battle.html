@@ -534,14 +534,6 @@
     try {
       const { data, error } = await authClient.auth.signInWithPassword({ email, password });
       if (error) throw error;
-      if (!data.user?.email_confirmed_at) {
-        await authClient.auth.signOut();
-        setVerifyEmail(email);
-        switchAuthTab('verify');
-        showAuthStatus('info', 'Email harus diverifikasi sebelum Anda dapat menggunakan fitur AI. Periksa email atau kirim ulang verifikasi.');
-        setFormBusy(form, false);
-        return;
-      }
       scheduleWorkspaceRedirect('Login berhasil. Membuka workspace...');
     } catch (error) {
       showAuthFailure(error, 'login');
@@ -586,13 +578,14 @@
         }
       });
       if (error) throw error;
-      setVerifyEmail(email);
-      window.sessionStorage.setItem('cdb_auth_email', email);
-      switchAuthTab('verify');
-      if (data.session && data.user?.email_confirmed_at) {
-        scheduleWorkspaceRedirect('Akun berhasil dibuat dan email sudah terverifikasi. Membuka workspace...');
+      if (data.session) {
+        window.sessionStorage.setItem('cdb_auth_email', email);
+        scheduleWorkspaceRedirect('Akun berhasil dibuat. Membuka workspace...');
       } else {
-        showAuthStatus('success', 'Permintaan pendaftaran diterima. Buka email dari Supabase dan klik tautan verifikasi. Jika email berisi kode 6 digit, masukkan pada tab Verifikasi Email. Akun belum dapat memakai fitur AI sebelum terverifikasi.');
+        setVerifyEmail(email);
+        window.sessionStorage.setItem('cdb_auth_email', email);
+        switchAuthTab('verify');
+        showAuthStatus('error', 'Akun telah dibuat, tetapi Supabase masih meminta konfirmasi email. Pemilik situs perlu mematikan Confirm email di Authentication > Providers agar pendaftaran langsung aktif.');
       }
     } catch (error) {
       showAuthFailure(error, 'register');
@@ -640,7 +633,7 @@
     try {
       const { data, error } = await authClient.auth.verifyOtp({ email, token, type: 'signup' });
       if (error) throw error;
-      if (!data.user?.email_confirmed_at && !data.session?.user?.email_confirmed_at) {
+      if (!data.user && !data.session?.user) {
         showAuthStatus('info', 'Kode diterima, tetapi status konfirmasi belum terlihat. Coba masuk kembali setelah beberapa saat.');
         return;
       }
@@ -846,7 +839,7 @@
         renderPasswordResetForm();
         return;
       }
-      if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at && !passwordRecoveryMode) {
+      if (event === 'SIGNED_IN' && session?.user && !passwordRecoveryMode) {
         scheduleWorkspaceRedirect('Login atau verifikasi email berhasil. Membuka workspace...');
       }
     });
