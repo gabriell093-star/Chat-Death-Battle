@@ -226,6 +226,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
   const CDB_CHAT_ENDPOINT = CDB_SUPABASE_URL + '/functions/v1/chat-ai';
   const questionInput = document.getElementById('consult-question');
   const submitButton = document.getElementById('consult-submit');
+  let activeSessionId = new URLSearchParams(window.location.search).get('sessionId') || null;
   if (!questionInput || !submitButton) return;
 
   const status = document.createElement('div');
@@ -248,8 +249,52 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
        kind === 'success' ? 'bg-mint-mist text-secondary' : 'bg-ice-effect text-ocean-blue');
     status.textContent = message;
   }
+  function renderUserMessage(message) {
+    const bubble = document.createElement('div');
+    bubble.className = 'my-3 ml-auto max-w-3xl rounded-2xl bg-ice-effect/80 p-3 text-ocean-blue whitespace-pre-wrap';
+    const label = document.createElement('p');
+    label.className = 'text-xs font-bold mb-1';
+    label.textContent = window.CDB_SITE_LANGUAGE === 'en' ? 'You' : 'Anda';
+    const content = document.createElement('p');
+    content.textContent = message;
+    bubble.append(label, content);
+    output.appendChild(bubble);
+    output.classList.remove('hidden');
+  }
+
+  async function loadExistingConversation(client) {
+    if (!activeSessionId || !client) return;
+    try {
+      const { data, error } = await client.from('chat_messages')
+        .select('role,content,created_at')
+        .eq('session_id', activeSessionId)
+        .order('created_at', { ascending: true })
+        .limit(100);
+      if (error) throw error;
+      if (!Array.isArray(data) || !data.length) {
+        showStatus('info', window.CDB_SITE_LANGUAGE === 'en' ? 'No saved messages found for this session.' : 'Tidak ada pesan tersimpan untuk sesi ini.');
+        return;
+      }
+      output.replaceChildren();
+      data.forEach(function (item) {
+        const bubble = document.createElement('div');
+        const isUser = item.role === 'user';
+        bubble.className = 'my-3 rounded-2xl p-3 whitespace-pre-wrap ' + (isUser ? 'ml-auto max-w-3xl bg-ice-effect/80 text-ocean-blue' : 'bg-surface-container-low text-on-surface');
+        const label = document.createElement('p');
+        label.className = 'text-xs font-bold mb-1';
+        label.textContent = isUser ? (window.CDB_SITE_LANGUAGE === 'en' ? 'You' : 'Anda') : 'AI';
+        const content = document.createElement('p');
+        content.textContent = item.content || '';
+        bubble.append(label, content);
+        output.appendChild(bubble);
+      });
+      output.classList.remove('hidden');
+    } catch (error) {
+      showStatus('error', error && error.message ? error.message : 'Riwayat sesi gagal dimuat.');
+    }
+  }
+
   function renderAnswer(payload) {
-    output.replaceChildren();
     const header = document.createElement('div');
     header.className = 'flex items-center justify-between gap-3 mb-3';
     const heading = document.createElement('h2');
@@ -339,6 +384,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
   }
 
   let authClientPromise = initConsultAuth();
+  authClientPromise.then(function (client) { return loadExistingConversation(client); }).catch(function () {});
   async function sendConsult() {
     const message = questionInput.value.trim();
     if (!message) {
@@ -365,10 +411,17 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
           'apikey': CDB_SUPABASE_KEY,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ message: message, mode: 'consult', language: window.CDB_SITE_LANGUAGE === 'en' ? 'en' : 'id' })
+        body: JSON.stringify({ message: message, mode: 'consult', language: window.CDB_SITE_LANGUAGE === 'en' ? 'en' : 'id', sessionId: activeSessionId })
       });
       const payload = await response.json().catch(function () { return {}; });
       if (!response.ok) throw new Error(payload.error || ('Permintaan gagal (' + response.status + ').'));
+      if (payload.sessionId) {
+        activeSessionId = payload.sessionId;
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('sessionId', activeSessionId);
+        window.history.replaceState({}, '', currentUrl);
+      }
+      renderUserMessage(message);
       renderAnswer(payload);
       showStatus('success', window.CDB_SITE_LANGUAGE === 'en' ? 'Analysis complete. Review the answer and sources below.' : 'Analisis selesai. Periksa jawaban dan sumber di bawah.');
     } catch (error) {
