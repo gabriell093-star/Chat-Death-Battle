@@ -182,7 +182,10 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 <!-- Compact input context -->
 <div class="flex flex-wrap items-center justify-between gap-2 px-space-2xs">
   <span class="font-label-md text-label-md text-ocean-blue font-semibold">Konsultasi berbasis VS Battles Wiki</span>
-  <span class="font-caption-meta text-caption-meta text-slate-blue">Maksimal 4.000 karakter</span>
+  <div class="flex items-center gap-1" role="group" aria-label="Gaya jawaban AI">
+    <button id="consult-style-deep" type="button" class="rounded-lg px-3 py-2 text-xs font-semibold bg-ocean-blue text-glacier-white" aria-pressed="true">Mendalam</button>
+    <button id="consult-style-brief" type="button" class="rounded-lg px-3 py-2 text-xs font-semibold bg-surface-container text-ocean-blue" aria-pressed="false">Ringkas</button>
+  </div>
 </div>
 <!-- Recessed Inset Textarea Well -->
 <div class="relative rounded-xl bg-glacier-white p-space-xs shadow-[inset_0_2px_5px_rgba(0,43,76,0.06)]">
@@ -227,6 +230,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
   const questionInput = document.getElementById('consult-question');
   const submitButton = document.getElementById('consult-submit');
   let activeSessionId = new URLSearchParams(window.location.search).get('sessionId') || null;
+  let answerStyle = (function(){ try { return localStorage.getItem('cdb_answer_style') === 'brief' ? 'brief' : 'deep'; } catch (_) { return 'deep'; } })();
   if (!questionInput || !submitButton) return;
 
   const status = document.createElement('div');
@@ -385,6 +389,40 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 
   let authClientPromise = initConsultAuth();
   authClientPromise.then(function (client) { return loadExistingConversation(client); }).catch(function () {});
+  function updateAnswerStyleButtons() {
+    const deep = document.getElementById('consult-style-deep');
+    const brief = document.getElementById('consult-style-brief');
+    if (deep) { deep.className = 'rounded-lg px-3 py-2 text-xs font-semibold ' + (answerStyle === 'deep' ? 'bg-ocean-blue text-glacier-white' : 'bg-surface-container text-ocean-blue'); deep.setAttribute('aria-pressed', String(answerStyle === 'deep')); }
+    if (brief) { brief.className = 'rounded-lg px-3 py-2 text-xs font-semibold ' + (answerStyle === 'brief' ? 'bg-ocean-blue text-glacier-white' : 'bg-surface-container text-ocean-blue'); brief.setAttribute('aria-pressed', String(answerStyle === 'brief')); }
+  }
+  async function selectAnswerStyle(style) {
+    answerStyle = style === 'brief' ? 'brief' : 'deep';
+    try { localStorage.setItem('cdb_answer_style', answerStyle); } catch (_) {}
+    updateAnswerStyleButtons();
+    const client = await authClientPromise;
+    if (client) {
+      const { data } = await client.auth.getUser();
+      if (data && data.user) {
+        const { error } = await client.from('profiles').update({ answer_style: answerStyle }).eq('id', data.user.id);
+        if (error) showStatus('error', 'Preferensi gaya jawaban belum tersimpan ke akun; pilihan ini tetap berlaku pada sesi ini.');
+      }
+    }
+  }
+  document.getElementById('consult-style-deep')?.addEventListener('click', function(){ selectAnswerStyle('deep'); });
+  document.getElementById('consult-style-brief')?.addEventListener('click', function(){ selectAnswerStyle('brief'); });
+  updateAnswerStyleButtons();
+  authClientPromise.then(async function(client) {
+    if (!client) return;
+    const { data: authData } = await client.auth.getUser();
+    if (!authData?.user) return;
+    const { data: profile } = await client.from('profiles').select('answer_style').eq('id', authData.user.id).maybeSingle();
+    if (profile?.answer_style === 'brief' || profile?.answer_style === 'deep') {
+      answerStyle = profile.answer_style;
+      try { localStorage.setItem('cdb_answer_style', answerStyle); } catch (_) {}
+      updateAnswerStyleButtons();
+    }
+  }).catch(function(){});
+
   async function sendConsult() {
     const message = questionInput.value.trim();
     if (!message) {
@@ -411,7 +449,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
           'apikey': CDB_SUPABASE_KEY,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ message: message, mode: 'consult', language: window.CDB_SITE_LANGUAGE === 'en' ? 'en' : 'id', sessionId: activeSessionId })
+        body: JSON.stringify({ message: message, mode: 'consult', language: window.CDB_SITE_LANGUAGE === 'en' ? 'en' : 'id', answerStyle: answerStyle, sessionId: activeSessionId })
       });
       const payload = await response.json().catch(function () { return {}; });
       if (!response.ok) throw new Error(payload.error || ('Permintaan gagal (' + response.status + ').'));
