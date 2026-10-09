@@ -182,7 +182,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 <span class="font-caption-meta text-caption-meta text-slate-blue">Tampil di log debat</span>
 </label>
 <div class="relative">
-<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container-lowest text-ocean-blue font-body-md text-body-md shadow-[inset_0px_2px_4px_rgba(0,43,76,0.06)] focus:outline-none focus:ring-2 focus:ring-summer-orange transition-all placeholder-slate-blue" id="displayName" maxlength="32" minlength="3" placeholder="Masukkan nama tampilan..." required="" type="text" value="Ellias"/>
+<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container-lowest text-ocean-blue font-body-md text-body-md shadow-[inset_0px_2px_4px_rgba(0,43,76,0.06)] focus:outline-none focus:ring-2 focus:ring-summer-orange transition-all placeholder-slate-blue" id="displayName" maxlength="32" minlength="3" placeholder="Memuat nama akun..." required="" type="text" value=""/>
 <span class="material-symbols-outlined absolute right-3 top-3 text-slate-blue text-[20px]">person</span>
 </div>
 <span class="font-caption-meta text-caption-meta text-slate-blue">Minimal 3 karakter, digunakan sebagai nama tanda tangan audit.</span>
@@ -196,10 +196,10 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
                 </span>
 </label>
 <div class="relative">
-<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container-high text-slate-blue font-body-md text-body-md shadow-[inset_0px_1px_2px_rgba(0,43,76,0.05)] cursor-not-allowed select-none" id="userEmail" readonly="" type="email" value="ellias.auditor@vsb-arena.id"/>
+<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container-high text-slate-blue font-body-md text-body-md shadow-[inset_0px_1px_2px_rgba(0,43,76,0.05)] cursor-not-allowed select-none" id="userEmail" readonly="" type="email" value=""/>
 <span class="material-symbols-outlined absolute right-3 top-3 text-slate-blue text-[20px]">lock_clock</span>
 </div>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Untuk mengubah email pemulihan, hubungi administrator pusat VSB Epistemic Council.</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Alamat email berasal dari Supabase Auth. Perubahan email belum disediakan pada halaman ini.</span>
 </div>
 <!-- Spesialisasi Epistemik & Zona Waktu (2 Cols) -->
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
@@ -744,6 +744,8 @@ async function loadProfile(){
  try{
   const {client,user}=await getClientUser();
   safeText(document.getElementById('userEmail'),user.email);
+  const headerEmail=document.getElementById('cdb-profile-header-email');
+  if(headerEmail)headerEmail.textContent=user.email||'Email tidak tersedia';
   safeText(document.getElementById('cdb-profile-header-email'),user.email);
   const {data,error}=await client.from('profiles').select('display_name,preferred_language,theme,specialty,timezone,answer_style').eq('id',user.id).maybeSingle();
   if(error)throw error;
@@ -778,9 +780,9 @@ window.handleProfileSubmit=async function(event){
   const lang=(localStorage.getItem('cdb_language')||'id')==='en'?'en':'id';
   const theme=['light','dark','system'].includes(localStorage.getItem('cdb_theme'))?localStorage.getItem('cdb_theme'):'system';
   const specialty=document.getElementById('epistemicSpecialty')?.value||'tier-1a';
-  const {error}=await client.from('profiles').update({
-   display_name:name,preferred_language:lang,theme:theme,specialty:specialty,timezone:'Asia/Jakarta'
-  }).eq('id',user.id);
+  const {error}=await client.from('profiles').upsert({
+   id:user.id,display_name:name,preferred_language:lang,theme:theme,specialty:specialty,timezone:'Asia/Jakarta'
+  },{onConflict:'id'});
   if(error)throw error;
   showProfileMessage('success','Nama tampilan dan preferensi berhasil disimpan ke Supabase.');
  }catch(error){showProfileMessage('error',error.message||'Gagal menyimpan profil.')}
@@ -820,7 +822,7 @@ window.setLanguage=async function(lang){
  const idBtn=document.getElementById('langIdBtn'),enBtn=document.getElementById('langEnBtn');
  if(idBtn)idBtn.classList.toggle('ring-2',valid==='id');
  if(enBtn)enBtn.classList.toggle('ring-2',valid==='en');
- try{const {client,user}=await getClientUser();const {error}=await client.from('profiles').update({preferred_language:valid}).eq('id',user.id);if(error)throw error;}catch(error){showProfileMessage('error',error.message||'Preferensi bahasa belum dapat disimpan.')}
+ try{const {client,user}=await getClientUser();const {error}=await client.from('profiles').upsert({id:user.id,preferred_language:valid},{onConflict:'id'});if(error)throw error;}catch(error){showProfileMessage('error',error.message||'Preferensi bahasa belum dapat disimpan.')}
 };
 window.selectTheme=async function(mode){
  const valid=['light','dark','system'].includes(mode)?mode:'system';
@@ -832,7 +834,7 @@ window.selectTheme=async function(mode){
   const b=document.getElementById({light:'themeLightBtn',dark:'themeDarkBtn',system:'themeSystemBtn'}[theme]);
   if(b){b.classList.toggle('ring-2',theme===valid);b.classList.toggle('opacity-70',theme!==valid)}
  });
- try{const {client,user}=await getClientUser();const {error}=await client.from('profiles').update({theme:valid}).eq('id',user.id);if(error)throw error;}catch(error){showProfileMessage('error',error.message||'Preferensi tema belum dapat disimpan.')}
+ try{const {client,user}=await getClientUser();const {error}=await client.from('profiles').upsert({id:user.id,theme:valid},{onConflict:'id'});if(error)throw error;}catch(error){showProfileMessage('error',error.message||'Preferensi tema belum dapat disimpan.')}
 };
 loadProfile();
 })();
