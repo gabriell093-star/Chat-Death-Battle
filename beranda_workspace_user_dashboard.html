@@ -306,12 +306,12 @@ if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)')
     });
     window.CDB_AUTH_CLIENT = client;
     const { data, error } = await client.auth.getSession();
-    if (error || !data.session || !data.session.user || !data.session.user.email_confirmed_at) {
+    if (error || !data.session || !data.session.user) {
       redirectToLogin();
       return;
     }
     client.auth.onAuthStateChange(function (event, session) {
-      if (event === 'SIGNED_OUT' || (session && !session.user.email_confirmed_at)) redirectToLogin();
+      if (event === 'SIGNED_OUT') redirectToLogin();
     });
     window.dispatchEvent(new CustomEvent('cdb-auth-ready', { detail: { client: client, user: data.session.user } }));
   }
@@ -330,7 +330,7 @@ async function loadDashboardHistory(){
  if(!client){toggle('cdb-dashboard-history-loading',false);toggle('cdb-dashboard-history-error',true);return}
  try{
   const {data:authData,error:authError}=await client.auth.getUser();
-  if(authError||!authData.user||!authData.user.email_confirmed_at)throw new Error('Sesi tidak valid.');
+  if(authError||!authData.user)throw new Error('Sesi tidak valid.');
   const {data:sessions,error}=await client.from('chat_sessions').select('id,title,mode,character_a,character_b,updated_at').order('updated_at',{ascending:false}).limit(5);
   if(error)throw error;
   const rows=sessions||[];
