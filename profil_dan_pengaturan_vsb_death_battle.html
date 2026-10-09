@@ -428,38 +428,21 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 <script>
   // 1. Simulator Switch Verification State
   function switchVerification(isVerified) {
-    const btnV = document.getElementById('btnStateVerified');
-    const btnR = document.getElementById('btnStateRestricted');
     const badge = document.getElementById('verificationBadge');
     const verifiedCard = document.getElementById('verifiedStateCard');
     const restrictedCard = document.getElementById('restrictedStateCard');
     const shield = document.getElementById('shieldIcon');
-
-    if (isVerified) {
-      btnV.className = 'px-space-xs py-1 rounded-lg bg-surface-container-lowest text-ocean-blue font-label-sm text-label-sm font-bold shadow-[inset_1px_1px_2px_rgba(255,255,255,0.85)] transition-all';
-      btnR.className = 'px-space-xs py-1 rounded-lg text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm font-medium transition-all';
-
-      badge.className = 'font-label-sm text-label-sm px-space-2xs py-1 rounded-full bg-mint-mist text-ocean-blue font-semibold shadow-[inset_1px_1px_1px_rgba(255,255,255,0.9)] flex items-center gap-1';
-      badge.innerHTML = '<span class="material-symbols-outlined text-[14px]">check_circle</span> Akun Terverifikasi (Email Aktif)';
-
-      shield.textContent = 'verified_user';
-      shield.className = 'material-symbols-outlined text-[32px] text-ocean-blue';
-
-      verifiedCard.classList.remove('hidden');
-      restrictedCard.classList.add('hidden');
-    } else {
-      btnR.className = 'px-space-xs py-1 rounded-lg bg-status-warning text-surface-container-lowest font-label-sm text-label-sm font-bold shadow-[0_2px_6px_rgba(229,133,44,0.3)] transition-all';
-      btnV.className = 'px-space-xs py-1 rounded-lg text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm font-medium transition-all';
-
-      badge.className = 'font-label-sm text-label-sm px-space-2xs py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-semibold shadow-[inset_1px_1px_1px_rgba(255,255,255,0.9)] flex items-center gap-1';
-      badge.innerHTML = '<span class="material-symbols-outlined text-[14px]">cancel</span> Belum Terverifikasi';
-
-      shield.textContent = 'shield_with_heart';
-      shield.className = 'material-symbols-outlined text-[32px] text-status-warning';
-
-      verifiedCard.classList.add('hidden');
-      restrictedCard.classList.remove('hidden');
+    if (badge) {
+      badge.className = 'font-label-sm text-label-sm px-space-2xs py-1 rounded-full font-semibold flex items-center gap-1 ' +
+        (isVerified ? 'bg-mint-mist text-ocean-blue' : 'bg-tertiary-fixed text-on-tertiary-fixed');
+      badge.textContent = isVerified ? 'Email terverifikasi' : 'Verifikasi email diperlukan';
     }
+    if (shield) {
+      shield.textContent = isVerified ? 'verified_user' : 'shield_with_heart';
+      shield.className = 'material-symbols-outlined text-[32px] ' + (isVerified ? 'text-ocean-blue' : 'text-status-warning');
+    }
+    if (verifiedCard) verifiedCard.classList.toggle('hidden', !isVerified);
+    if (restrictedCard) restrictedCard.classList.toggle('hidden', isVerified);
   }
 
   function resendEmailVerification() {
