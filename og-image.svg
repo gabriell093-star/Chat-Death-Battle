@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+<title id="title">Chat Death Battle</title>
+<desc id="desc">Evidence-led powerscaling consultation and 1v1 battle analysis based on VS Battles Wiki.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#092033"/><stop offset="1" stop-color="#152d42"/></linearGradient>
+  <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b6eee4"/><stop offset="1" stop-color="#69cfc5"/></linearGradient>
+  <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffc49f"/><stop offset="1" stop-color="#f59e71"/></linearGradient>
+</defs>
+<rect width="1200" height="630" rx="0" fill="url(#bg)"/>
+<circle cx="1060" cy="54" r="190" fill="#99e1d9" opacity=".09"/>
+<circle cx="1100" cy="620" r="250" fill="#f59e71" opacity=".07"/>
+<path d="M0 530 C240 470 310 610 540 555 S930 480 1200 540 V630 H0Z" fill="#99e1d9" opacity=".045"/>
+<rect x="58" y="46" width="56" height="56" rx="15" fill="url(#mint)"/>
+<path d="M74 59 L97 59 L97 88 L86 81 L74 88Z" fill="#102b3f"/>
+<path d="M80 65 H91 M80 72 H91" stroke="#99e1d9" stroke-width="2.5" stroke-linecap="round"/>
+<text x="132" y="69" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#ffffff" letter-spacing="1.5">CHAT DEATH BATTLE</text>
+<text x="132" y="94" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#a9c1d0" letter-spacing="2.2">EVIDENCE-LED POWER SCALING</text>
+<rect x="58" y="154" width="365" height="34" rx="17" fill="#99e1d9" opacity=".15" stroke="#99e1d9" stroke-opacity=".45"/>
+<circle cx="78" cy="171" r="5" fill="#99e1d9"/>
+<text x="94" y="176" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#b9f1e8" letter-spacing="1.1">DIDUKUNG SUMBER VS BATTLES WIKI</text>
+<text x="58" y="251" font-family="Arial, Helvetica, sans-serif" font-size="53" font-weight="800" fill="#ffffff">Analisis karakter.</text>
+<text x="58" y="311" font-family="Arial, Helvetica, sans-serif" font-size="53" font-weight="800" fill="#99e1d9">Bukan sekadar klaim.</text>
+<text x="61" y="355" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#d2e0e8">Konsultasi powerscaling dan simulasi battle 1v1</text>
+<text x="61" y="384" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#d2e0e8">dengan sumber, asumsi, dan batasan yang jelas.</text>
+<rect x="58" y="432" width="193" height="49" rx="13" fill="url(#mint)"/>
+<text x="82" y="462" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#102b3f">Konsultasi AI</text>
+<rect x="263" y="432" width="186" height="49" rx="13" fill="#203d51" stroke="#567184"/>
+<path d="M284 449 L294 462 L304 449 M294 462 V446" fill="none" stroke="#ffc49f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="316" y="462" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#ffffff">Death Battle 1v1</text>
+<text x="61" y="578" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#9eb5c4">Data utama: VS Battles Wiki</text>
+<text x="1126" y="578" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#9eb5c4">Creator: Ellias</text>
+<!-- Compact website preview mockup -->
+<rect x="560" y="132" width="584" height="426" rx="24" fill="#f5f8fa"/>
+<rect x="560" y="132" width="584" height="57" rx="24" fill="#e8eef2"/>
+<rect x="560" y="165" width="584" height="24" fill="#e8eef2"/>
+<circle cx="590" cy="160" r="5" fill="#b7c5ce"/><circle cx="609" cy="160" r="5" fill="#b7c5ce"/><circle cx="628" cy="160" r="5" fill="#b7c5ce"/>
+<rect x="684" y="150" width="346" height="20" rx="10" fill="#d7e2e8"/>
+<text x="857" y="164" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#526d7b">chatdeathbattle.vercel.app</text>
+<text x="592" y="223" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#092b45">Konsultasi AI Powerscaling</text>
+<text x="592" y="246" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#597488">Tanyakan feat, tier, AP, speed, dan kemampuan karakter.</text>
+<rect x="592" y="270" width="520" height="94" rx="14" fill="#e3f5f1"/>
+<text x="612" y="296" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#225b59">PERTANYAAN</text>
+<text x="612" y="322" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#143b50">Bagaimana bukti Attack Potency karakter</text>
+<text x="612" y="343" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#143b50">menurut halaman dan kalkulasi VSB?</text>
+<rect x="592" y="380" width="520" height="125" rx="14" fill="#ffffff" stroke="#d9e3e9"/>
+<rect x="612" y="400" width="9" height="9" rx="3" fill="#f59e71"/>
+<text x="632" y="409" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#153c55">JAWABAN BERBASIS BUKTI</text>
+<rect x="612" y="427" width="445" height="7" rx="3.5" fill="#d7e2e8"/>
+<rect x="612" y="445" width="405" height="7" rx="3.5" fill="#d7e2e8"/>
+<rect x="612" y="463" width="350" height="7" rx="3.5" fill="#d7e2e8"/>
+<rect x="612" y="482" width="106" height="18" rx="9" fill="#c7eee6"/>
+<text x="665" y="495" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700" fill="#22625d">RUJUKAN VSB</text>
+</svg>
