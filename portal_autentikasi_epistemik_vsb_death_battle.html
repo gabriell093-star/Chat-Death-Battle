@@ -454,10 +454,19 @@
         'profil_dan_pengaturan_vsb_death_battle.html'
       ];
       const requested = new URLSearchParams(window.location.search).get('next') || '';
-      const requestedPage = requested.split('?')[0];
-      const safeTarget = allowedPages.includes(requestedPage) && !requested.startsWith('/') && !requested.includes('://')
-        ? requested
+      const requestedParts = requested.split('?');
+      const requestedPage = requestedParts[0];
+      let safeTarget = allowedPages.includes(requestedPage) && !requestedPage.startsWith('/') && !requestedPage.includes('://')
+        ? requestedPage
         : 'beranda_workspace_user_dashboard.html';
+      // Preserve only the UUID session id; never redirect to a user-provided URL.
+      if (safeTarget === requestedPage && requestedParts[1]) {
+        const query = new URLSearchParams(requestedParts.slice(1).join('?'));
+        const sessionId = query.get('sessionId') || '';
+        if (/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(sessionId)) {
+          safeTarget += '?sessionId=' + encodeURIComponent(sessionId);
+        }
+      }
       window.location.href = safeTarget;
     }, 900);
   }
