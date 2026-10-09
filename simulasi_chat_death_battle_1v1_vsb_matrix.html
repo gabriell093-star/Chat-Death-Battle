@@ -82,505 +82,46 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 </section>
 <!-- Main Content Space -->
 <div class="w-full px-space-md lg:px-space-lg py-space-md max-w-7xl mx-auto flex flex-col gap-space-lg">
-<!-- State Simulation Switcher (Dev & Audit Sandbox Bar) -->
-<div class="w-full bg-surface-container p-space-xs rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-xs">
-<div class="flex items-center gap-space-xs">
-<span class="material-symbols-outlined text-slate-blue text-[20px]">tune</span>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-ocean-blue font-bold">Simulator Integritas Audit</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Simulasi penanganan respon data powerscaling &amp; edge case</span>
-</div>
-</div>
-<div class="flex flex-wrap items-center gap-space-2xs w-full md:w-auto">
-<label class="font-label-sm text-label-sm text-slate-blue" for="state-selector">Status Komputasi:</label>
-<select class="bg-surface-container-lowest text-ocean-blue font-label-sm text-label-sm rounded-xl px-space-xs py-1.5 shadow-sm focus:outline-none" id="state-selector">
-<option selected="" value="state-normal">Normal / Diverifikasi Lengkap (Goku vs Superman)</option>
-<option value="state-not-found">Karakter C/D: Profil Tidak Ditemukan</option>
-<option value="state-insufficient">Data Tidak Cukup (Tier Spekulatif / Inconclusive)</option>
-<option value="state-api-down">Gangguan Sinkronisasi VSB Core Engine</option>
-</select>
-</div>
-</div>
-<!-- Error/Fallback Warning Banner (Dynamically shown by selector) -->
-<div class="hidden w-full p-space-md rounded-2xl bg-error-container text-on-error-container shadow-sm flex-col gap-space-3xs" id="status-alert-box">
-<div class="flex items-center gap-space-2xs">
-<span class="material-symbols-outlined text-status-error text-[22px]">warning</span>
-<span class="font-headline-sm text-headline-sm text-on-error-container" id="status-alert-title">Pemberitahuan Sistem</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-error-container" id="status-alert-desc">Deskripsi status fallback.</p>
-</div>
-<!-- STAGE 1 & 2: DUAL COMBATANT SELECTION & VALIDATION SLABS -->
-<section class="grid grid-cols-1 lg:grid-cols-11 gap-space-md items-stretch" id="combatant-selection-zone">
-<!-- Combatant A: Son Goku -->
-<div class="lg:col-span-5 bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col justify-between relative overflow-hidden">
-<div class="absolute -right-12 -top-12 w-40 h-40 bg-ice-effect/30 rounded-full blur-2xl pointer-events-none"></div>
-<div class="flex flex-col gap-space-sm relative z-10">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm tracking-wider uppercase text-slate-blue font-bold">Kombatan Alfa (Primer)</span>
-<span class="flex items-center gap-1 bg-mint-mist text-ocean-blue px-2.5 py-0.5 rounded-full font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-              Kanonik VSB #142
-            </span>
-</div>
-<!-- Combatant Header & Identity -->
-<div class="flex items-start gap-space-sm">
-<img alt="Son Goku" class="w-20 h-20 rounded-2xl object-cover shadow-sm bg-surface-container-high" data-alt="Tactile sculpted portrait of Son Goku in Super Saiyan Full Power stance with golden spiky hair, wearing dark blue and orange martial arts gi, neutral studio illumination, soft depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1-MuEpIJ3mxh_ZEy10aWGGfEUe35rmVKp5G5kHhFWbNCdcwVg4YlS_km7pqROtoyacc5Q_l8lxCXwpPqeuyxRrGc_XHeWlJNRU-BGXJ3ccRh_QTOhf8yHwRZ4DCuINzCpvIZj_NpS8N_iTg3Qj00xzk_B8Zs2PHv25LZIEHcfgdP253e-6NeaJfy4YZ24H_7rA4SoFlilwsTt2nKqiasok2Z9HrQb5HNZqxkWruA4D01HzZbzZsbicw"/>
-<div class="flex flex-col flex-1 min-w-0">
-<div class="flex items-center gap-space-2xs">
-<span class="font-headline-md text-headline-md text-ocean-blue font-bold truncate">Son Goku</span>
-<span class="font-label-sm text-label-sm text-slate-blue">(孫悟空)</span>
-</div>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Verse: Dragon Ball (Canon Toriyama Universe)</span>
-<!-- Incarnation Badge & Dropdown -->
-<div class="mt-space-2xs bg-surface-container-low p-space-3xs rounded-xl flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-caption-meta text-caption-meta text-slate-blue">Inkarnasi Terkunci:</span>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">Cell Games Saga (SSJ Full Power)</span>
-</div>
-<button class="text-ocean-blue hover:text-slate-blue p-1 rounded" title="Ganti Inkarnasi">
-<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Quick Chips Selection Alternative -->
-<div class="flex items-center gap-space-3xs flex-wrap">
-<span class="font-caption-meta text-caption-meta text-slate-blue mr-1">Versi lain:</span>
-<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">Saiyan Saga</span>
-<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">Frieza Saga (Namek)</span>
-<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">Buu Saga</span>
-</div>
-<!-- Mini Powerscaling Card -->
-<div class="bg-surface-container-low rounded-2xl p-space-sm flex flex-col gap-space-2xs">
-<div class="flex items-center justify-between pb-space-2xs bg-surface-container-low">
-<span class="font-label-sm text-label-sm text-slate-blue font-semibold">Tingkatan Dimensi (Tier)</span>
-<span class="font-headline-sm text-headline-sm text-ocean-blue font-bold">High 4-C (Large Star Level)</span>
-</div>
-<div class="grid grid-cols-2 gap-space-2xs font-data-dense-body text-data-dense-body text-slate-blue pt-1">
-<div><strong class="text-ocean-blue">AP:</strong> ~2.3×10⁴⁵ Joule (Solar Flare)</div>
-<div><strong class="text-ocean-blue">Speed:</strong> FTL+ (15c - 30c)</div>
-<div><strong class="text-ocean-blue">Daya Tahan:</strong> Large Star level</div>
-<div><strong class="text-ocean-blue">Stamina:</strong> Superhuman (Ki Depletable)</div>
-</div>
-<div class="pt-space-3xs text-slate-blue font-caption-meta text-caption-meta flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">auto_stories</span>
-<span>Rujukan: Manga Bab 390-415 &amp; Daizenshuu 7 hal. 82</span>
-</div>
-</div>
-</div>
-<div class="mt-space-sm pt-space-xs flex items-center justify-between">
-<button class="text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm flex items-center gap-1 py-1">
-<span class="material-symbols-outlined text-[16px]">edit</span>
-<span>Ubah Profil Karakter A</span>
-</button>
-<span class="font-label-sm text-label-sm text-ocean-blue font-semibold bg-ice-effect/60 px-2 py-1 rounded-lg">Verifikasi Valid</span>
-</div>
-</div>
-<!-- Center Pillar: Tactical VS Emblem & Verse Equalization Rules -->
-<div class="lg:col-span-1 flex flex-col items-center justify-center py-space-sm lg:py-0">
-<div class="relative flex items-center justify-center">
-<div class="w-16 h-16 rounded-full bg-ocean-blue text-on-primary flex flex-col items-center justify-center shadow-lg transform hover:scale-105 transition-all">
-<span class="material-symbols-outlined text-[20px] text-summer-orange">swords</span>
-<span class="font-headline-sm text-headline-sm font-extrabold tracking-tighter leading-none mt-0.5">VS</span>
-</div>
-</div>
-<div class="mt-space-sm bg-surface-container rounded-xl p-space-2xs flex flex-col items-center text-center max-w-[140px]">
-<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">Standardisasi</span>
-<span class="font-label-sm text-label-sm text-ocean-blue font-bold">Verse Eq. ON</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue text-center leading-tight mt-1">Ki ↔ Bio-Energi Radiasi Surya</span>
-</div>
-</div>
-<!-- Combatant B: Superman -->
-<div class="lg:col-span-5 bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col justify-between relative overflow-hidden">
-<div class="absolute -right-12 -top-12 w-40 h-40 bg-summer-orange/15 rounded-full blur-2xl pointer-events-none"></div>
-<div class="flex flex-col gap-space-sm relative z-10">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm tracking-wider uppercase text-slate-blue font-bold">Kombatan Beta (Sekunder)</span>
-<span class="flex items-center gap-1 bg-mint-mist text-ocean-blue px-2.5 py-0.5 rounded-full font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-              Kanonik VSB #088
-            </span>
-</div>
-<!-- Combatant Header & Identity -->
-<div class="flex items-start gap-space-sm">
-<img alt="Superman" class="w-20 h-20 rounded-2xl object-cover shadow-sm bg-surface-container-high" data-alt="Tactile clay style portrait of Post-Crisis Superman with prominent S-shield emblem on dark blue suit, calm analytical expression, crimson cape draped over shoulders, subtle atmospheric lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf2MkjLYSgmpeVXiFHsry26XGXEf-HZEWbC3AtCydyzusZtR8XnCvLQtkx8WDq4ZkuygRuVRSLojCEX9cERDkSOKpVFUZe3I72gl6cO_nCrxtL9PX17oiJAt5b0yz-TyxvZfuBpU80QAHtNabUq1U9pbbc85RaH6N5z9wBo9oRgAeQIp-8Sgi4XkQN7wN1ByE4S2fGLZ_MfhxT9HprMs1_Qo-fhTSzuxVrzUiNnIW8dpfTlPaKEYNTfQ"/>
-<div class="flex flex-col flex-1 min-w-0">
-<div class="flex items-center gap-space-2xs">
-<span class="font-headline-md text-headline-md text-ocean-blue font-bold truncate">Superman</span>
-<span class="font-label-sm text-label-sm text-slate-blue">(Kal-El / Clark Kent)</span>
-</div>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Verse: DC Comics (Post-Crisis Prime Canon)</span>
-<!-- Incarnation Badge & Dropdown -->
-<div class="mt-space-2xs bg-surface-container-low p-space-3xs rounded-xl flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-caption-meta text-caption-meta text-slate-blue">Inkarnasi Terkunci:</span>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">Post-Crisis (Mid-Late Era, Base)</span>
-</div>
-<button class="text-ocean-blue hover:text-slate-blue p-1 rounded" title="Ganti Inkarnasi">
-<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Quick Chips Selection Alternative -->
-<div class="flex items-center gap-space-3xs flex-wrap">
-<span class="font-caption-meta text-caption-meta text-slate-blue mr-1">Versi lain:</span>
-<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">Pre-Crisis (Silver Age)</span>
-<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">New 52</span>
-<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">DC Rebirth</span>
-</div>
-<!-- Mini Powerscaling Card -->
-<div class="bg-surface-container-low rounded-2xl p-space-sm flex flex-col gap-space-2xs">
-<div class="flex items-center justify-between pb-space-2xs bg-surface-container-low">
-<span class="font-label-sm text-label-sm text-slate-blue font-semibold">Tingkatan Dimensi (Tier)</span>
-<span class="font-headline-sm text-headline-sm text-ocean-blue font-bold">4-B hingga 4-A (Solar System Level)</span>
-</div>
-<div class="grid grid-cols-2 gap-space-2xs font-data-dense-body text-data-dense-body text-slate-blue pt-1">
-<div><strong class="text-ocean-blue">AP:</strong> ~1.8×10⁴⁶ Joule (Supernova Hold)</div>
-<div><strong class="text-ocean-blue">Speed:</strong> MFTL+ (&gt;1000c Vacuum)</div>
-<div><strong class="text-ocean-blue">Daya Tahan:</strong> Solar System level</div>
-<div><strong class="text-ocean-blue">Stamina:</strong> Hampir Tak Terbatas (Yellow Sun)</div>
-</div>
-<div class="pt-space-3xs text-slate-blue font-caption-meta text-caption-meta flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">auto_stories</span>
-<span>Rujukan: Action Comics #847, JLA Vol. 3 #72-77</span>
-</div>
-</div>
-</div>
-<div class="mt-space-sm pt-space-xs flex items-center justify-between">
-<button class="text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm flex items-center gap-1 py-1">
-<span class="material-symbols-outlined text-[16px]">edit</span>
-<span>Ubah Profil Karakter B</span>
-</button>
-<span class="font-label-sm text-label-sm text-ocean-blue font-semibold bg-ice-effect/60 px-2 py-1 rounded-lg">Verifikasi Valid</span>
-</div>
-</div>
+<div id="cdb-battle-status" class="hidden mx-space-md mt-space-md rounded-xl p-space-sm text-body-sm" role="status" aria-live="polite"></div>
+<!-- Battle configuration: real inputs, no fabricated character statistics -->
+<section id="combatant-selection-zone" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+ <div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-3">
+  <label class="font-label-md text-label-md text-ocean-blue font-bold" for="battle-character-a">Karakter A</label>
+  <input id="battle-character-a" maxlength="160" required value="Son Goku" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Nama karakter pertama"/>
+  <label class="font-label-sm text-label-sm text-slate-blue" for="battle-version-a">Versi / inkarnasi A</label>
+  <input id="battle-version-a" maxlength="160" value="Cell Games Saga (SSJ Full Power)" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Versi spesifik karakter"/>
+ </div>
+ <div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-3">
+  <label class="font-label-md text-label-md text-ocean-blue font-bold" for="battle-character-b">Karakter B</label>
+  <input id="battle-character-b" maxlength="160" required value="Superman" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Nama karakter kedua"/>
+  <label class="font-label-sm text-label-sm text-slate-blue" for="battle-version-b">Versi / inkarnasi B</label>
+  <input id="battle-version-b" maxlength="160" value="Post-Crisis (Base)" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Versi spesifik karakter"/>
+ </div>
 </section>
-<!-- STAGE 3: STANDARD BATTLE ASSUMPTIONS (SBA) CONDITIONS CARD -->
-<section class="bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-md">
-<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-2xs">
-<div class="flex items-center gap-space-2xs">
-<div class="w-8 h-8 rounded-xl bg-ice-effect text-ocean-blue flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px]">tune</span>
-</div>
-<div>
-<h3 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Kondisi Pertarungan Resmi (Parameter SBA Terkunci)</h3>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Parameter baku untuk membatasi spekulasi liar dan bias skenario</span>
-</div>
-</div>
-<div class="flex items-center gap-space-3xs bg-surface-container px-3 py-1.5 rounded-xl text-ocean-blue font-label-sm text-label-sm">
-<span class="material-symbols-outlined text-[16px] text-summer-orange">shield</span>
-<span>Protokol Netral Bebas Eksternalitas</span>
-</div>
-</div>
-<!-- Parameters Bento Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-sm">
-<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-1">
-<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">State Mental</span>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">In-Character (Willing to Kill)</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue leading-snug">Tetap mempertahankan gaya bertarung asli, namun rela membunuh jika situasi mendesak.</span>
-</div>
-<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-1">
-<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">Arena Pertempuran</span>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">Dimensi Tak Berpenghuni</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue leading-snug">Gurun planet netral, atmosfer 1 atm, matahari kuning 1 AU aktif tanpa hambatan.</span>
-</div>
-<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-1">
-<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">Jarak &amp; Info Awal</span>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">4.000 Meter • Zero Info</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue leading-snug">Pertemuan pertama tanpa pengetahuan tentang kelemahan biologi atau energi lawan.</span>
-</div>
-<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-1">
-<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">Perlengkapan Standar</span>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">Kanon Standar Saja</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue leading-snug">Goku: Gi tanpa Senzu Bean. Superman: Kostum standar Kryptonian tanpa sundip gear.</span>
-</div>
-<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-1">
-<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">Kondisi Kemenangan</span>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">KO, Mati, atau BFR &gt; 1 Jam</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue leading-snug">Ketidakmampuan bertarung total tanpa bantuan pihak ketiga.</span>
-</div>
-</div>
+<!-- Standard Battle Assumptions: editable and passed to the server -->
+<section class="rounded-2xl bg-surface-container-lowest p-space-md flex flex-col gap-3">
+ <div>
+  <h2 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Aturan pertarungan</h2>
+  <p class="text-sm text-slate-blue mt-1">Ubah kondisi untuk simulasi ini. AI harus menyebutkan asumsi dan ketidakpastian; hasil bukan putusan kanon resmi.</p>
+ </div>
+ <textarea id="battle-rules" maxlength="1800" rows="4" class="w-full rounded-xl bg-surface-container-low p-3 text-ocean-blue resize-y" placeholder="Aturan SBA, jarak awal, pengetahuan lawan, equalized speed, kondisi menang...">Standard Battle Assumptions: arena netral tanpa bantuan pihak ketiga; kedua karakter menggunakan perlengkapan standar untuk versi yang dipilih; kondisi menang KO, mati, atau tidak mampu bertarung. Jangan menyamakan statistik tanpa dasar sumber.</textarea>
+ <textarea id="battle-custom-instructions" maxlength="1800" rows="3" class="w-full rounded-xl bg-surface-container-low p-3 text-ocean-blue resize-y" placeholder="Instruksi tambahan (opsional), misalnya equalized speed atau batas arena..."></textarea>
+ <div class="flex flex-wrap items-center gap-3">
+  <button id="btn-run-battle" type="button" class="inline-flex items-center gap-2 rounded-xl bg-summer-orange px-5 py-3 font-semibold text-ocean-blue shadow-sm hover:opacity-90"><span class="material-symbols-outlined">swords</span>Jalankan analisis battle</button>
+  <span class="text-xs text-slate-blue">Batas input: 4.000 karakter per permintaan</span>
+ </div>
 </section>
-<!-- REAL-TIME AUDIT INTEGRITY INDICATOR -->
-<div class="w-full bg-surface-container-low rounded-2xl p-space-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-space-xs shadow-sm">
-<div class="flex items-center gap-space-xs">
-<div class="w-2.5 h-2.5 rounded-full bg-summer-orange animate-pulse"></div>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md text-ocean-blue font-bold">Status Analisis VSB Core Engine: Diverifikasi Penuh</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Komputasi deterministik selesai dalam 312ms • Berlandaskan 14 thread kalkulasi peer-reviewed &amp; 6 guidebook kanon.</span>
-</div>
-</div>
-<div class="flex items-center gap-space-3xs text-slate-blue font-label-sm text-label-sm">
-<span class="material-symbols-outlined text-[16px] text-ocean-blue">verified_user</span>
-<span>Anti-Slop Epistemic: Tanpa Generator Persentase Arbitrer</span>
-</div>
-</div>
-<!-- STAGE 4: DETAILED STATISTICAL COMPARISON MATRIX (VSB COMPILATION) -->
-<section class="bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-md">
-<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-2xs">
-<div>
-<h3 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Matriks Komparasi Statistik Kanonik</h3>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Penyelarasan metrik fisik, dimensionalitas, kelemahan, dan toleransi hax</span>
-</div>
-<div class="flex items-center gap-space-3xs">
-<button class="bg-surface-container text-ocean-blue font-label-sm text-label-sm px-3 py-1.5 rounded-xl hover:bg-surface-container-high transition-all flex items-center gap-1" id="toggle-dense-view">
-<span class="material-symbols-outlined text-[16px]">view_agenda</span>
-<span>Tampilan Rinci</span>
-</button>
-</div>
-</div>
-<!-- Comparison Matrix Table / Clay Rows -->
-<div class="overflow-x-auto">
-<table class="w-full text-left font-data-dense-body text-data-dense-body border-collapse">
-<thead>
-<tr class="bg-surface-container text-ocean-blue font-label-sm text-label-sm">
-<th class="p-space-sm rounded-l-xl w-1/4">Atribut / Metrik Laga</th>
-<th class="p-space-sm w-3/8 text-ocean-blue">Son Goku (Cell Games SSJ)</th>
-<th class="p-space-sm rounded-r-xl w-3/8 text-ocean-blue">Superman (Post-Crisis Base)</th>
-</tr>
-</thead>
-<tbody class="divide-y-0 text-slate-blue">
-<!-- Row 1: Attack Potency -->
-<tr class="bg-glacier-white">
-<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Attack Potency (AP)</td>
-<td class="p-space-sm">
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">High 4-C (Large Star level)</span>
-<span class="text-caption-meta block">Skala output Kamehameha ~2.3×10⁴⁵ J. Melebihi batas ledakan bintang kelas Frieza Namek.</span>
-<span class="inline-block mt-1 bg-mint-mist text-ocean-blue font-caption-meta text-caption-meta px-2 py-0.5 rounded">Sitasi: Calc #104 (Daizenshuu)</span>
-</td>
-<td class="p-space-sm">
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">4-B ke 4-A (Solar System level)</span>
-<span class="text-caption-meta block">Konsisten menahan &amp; menghasilkan energi ~1.8×10⁴⁶ J (mencegah runtuhnya tata surya dari Mageddon/Imperiex probes).</span>
-<span class="inline-block mt-1 bg-mint-mist text-ocean-blue font-caption-meta text-caption-meta px-2 py-0.5 rounded">Sitasi: Action Comics #847 Calc</span>
-</td>
-</tr>
-<!-- Row 2: Speed -->
-<tr class="bg-surface-container-low">
-<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Kecepatan Tempur &amp; Reaksi</td>
-<td class="p-space-sm">
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">FTL+ (Faster Than Light)</span>
-<span class="text-caption-meta block">Reaksi refleks ~15c hingga 30c. Diperkuat kemampuan Instant Transmission untuk perpindahan koordinat 0-frame.</span>
-</td>
-<td class="p-space-sm">
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">Massively FTL+ (MFTL+)</span>
-<span class="text-caption-meta block">Kecepatan tempur nanosekon dalam atmosfer, mencapai ribuan kali kecepatan cahaya (&gt;1000c) dalam vacuum ruang angkasa.</span>
-</td>
-</tr>
-<!-- Row 3: Durability -->
-<tr class="bg-glacier-white">
-<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Durability (Ketahanan)</td>
-<td class="p-space-sm">
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">Large Star level</span>
-<span class="text-caption-meta block">Dapat menahan ledakan setara energi penghancur bintang masif saat perisai Ki aktif pada kapasitas 100%.</span>
-</td>
-<td class="p-space-sm">
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">Solar System level</span>
-<span class="text-caption-meta block">Kepadatan seluler Kryptonian tahan terhadap radiasi singularitas dan tumbukan benturan benda kosmik padat.</span>
-</td>
-</tr>
-<!-- Row 4: Striking Strength -->
-<tr class="bg-surface-container-low">
-<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Daya Pukul Fisik (Striking)</td>
-<td class="p-space-sm">
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">Class XT (Exaton punch scaling)</span>
-<span class="text-caption-meta block">Fokus pukulan Ki yang terkonsentrasi untuk menembus cangkang Perfect Cell.</span>
-</td>
-<td class="p-space-sm">
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">Class Multi-Stellar</span>
-<span class="text-caption-meta block">Mampu menggeser massa planet seukuran bumi dan membelah asteroid padat tanpa bantuan proyektil.</span>
-</td>
-</tr>
-<!-- Row 5: Hax & Abilities -->
-<tr class="bg-glacier-white">
-<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Hax &amp; Kemampuan Taktis</td>
-<td class="p-space-sm">
-<ul class="list-disc pl-4 space-y-1 text-caption-meta">
-<li><strong>Instant Transmission:</strong> Teleportasi instan via penguncian Ki.</li>
-<li><strong>Ki Manipulation:</strong> Kamehameha, Explosive Wave, Kiai (Shockwave).</li>
-<li><strong>Analisis Tempur Instingtif:</strong> Pembaca pola bertarung lawan dalam hitungan detik.</li>
-</ul>
-</td>
-<td class="p-space-sm">
-<ul class="list-disc pl-4 space-y-1 text-caption-meta">
-<li><strong>Heat Vision:</strong> Sinar energi termal mikroskopis hingga tingkat bintang.</li>
-<li><strong>Super-Hearing &amp; Telescopic Vision:</strong> Penginderaan frekuensi tinggi lintas planet.</li>
-<li><strong>Torquasm-Vo:</strong> Seni meditasi Kryptonian untuk resistansi psikis &amp; mental.</li>
-<li><strong>Bio-Electric Aura:</strong> Melindungi pakaian dan benda yang disentuhnya.</li>
-</ul>
-</td>
-</tr>
-<!-- Row 6: Weaknesses & Limitations -->
-<tr class="bg-surface-container-low">
-<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Kelemahan Eksplisit (Kanon)</td>
-<td class="p-space-sm">
-<span class="text-caption-meta block text-status-error font-medium">Penurunan Stamina Signifikan:</span>
-<span class="text-caption-meta block">Penggunaan energi Ki konstan menguras cadangan tubuh biologis manusia/Saiyan. Membutuhkan oksigen untuk bernapas (tidak bisa bertarung di vacuum mutlak).</span>
-</td>
-<td class="p-space-sm">
-<span class="text-caption-meta block text-status-error font-medium">Sensitivitas Sihir &amp; Pengurangan Surya:</span>
-<span class="text-caption-meta block">Rentan jika pasokan matahari kuning diblokir total (meski membutuhkan waktu lama untuk habis). Tidak memiliki perisai alami terhadap sihir sejati.</span>
-</td>
-</tr>
-<!-- Row 7: Reality Warping / Dimensional Tiering -->
-<tr class="bg-glacier-white">
-<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Manipulasi Dimensi Lanjutan</td>
-<td class="p-space-sm">
-<span class="bg-surface-container text-slate-blue px-2 py-0.5 rounded font-caption-meta text-caption-meta inline-block">Data Unavailable (Tidak Ada Bukti di Cell Saga)</span>
-</td>
-<td class="p-space-sm">
-<span class="bg-surface-container text-slate-blue px-2 py-0.5 rounded font-caption-meta text-caption-meta inline-block">Data Unavailable (Pada Base Post-Crisis Form)</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
+<!-- Live AI result panel -->
+<section id="cdb-battle-result" class="hidden rounded-2xl bg-surface-container-lowest p-space-md flex flex-col gap-4" aria-live="polite">
+ <div class="flex flex-wrap items-center justify-between gap-3">
+  <h2 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Hasil analisis AI</h2>
+  <button id="btn-copy-battle-answer" type="button" class="rounded-lg bg-surface-container px-3 py-2 text-sm font-semibold text-ocean-blue">Salin hasil</button>
+ </div>
+ <p id="cdb-battle-answer" class="whitespace-pre-wrap break-words text-body-md text-on-surface leading-relaxed"></p>
+ <div id="cdb-battle-sources" class="flex flex-col gap-2"></div>
+ <p id="cdb-battle-quota" class="text-xs text-slate-blue"></p>
 </section>
-<!-- STAGE 5: FINAL EPISTEMIC VERDICT & EXECUTIVE REPORT -->
-<section class="bg-surface-container-lowest rounded-[28px] p-space-md lg:p-space-lg shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-md">
-<!-- Verdict Header Card -->
-<div class="bg-ice-effect/50 p-space-md rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm">
-<div class="flex items-center gap-space-sm">
-<div class="w-14 h-14 rounded-2xl bg-ocean-blue text-on-primary flex items-center justify-center shadow-md">
-<span class="material-symbols-outlined text-[28px] text-summer-orange">trophy</span>
-</div>
-<div class="flex flex-col">
-<span class="font-caption-meta text-caption-meta text-slate-blue font-bold uppercase tracking-wider">Hasil Evaluasi Deterministik Laga</span>
-<span class="font-headline-lg text-headline-lg text-ocean-blue font-extrabold leading-tight">Pemenang: Superman (Post-Crisis, Base)</span>
-<span class="font-label-sm text-label-sm text-slate-blue">Probabilitas Kemenangan SBA Netral: Keunggulan Statis Deterministik</span>
-</div>
-</div>
-<div class="flex flex-col sm:items-end">
-<span class="font-caption-meta text-caption-meta text-slate-blue">Klasifikasi Keputusan:</span>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">Mid-High Difficulty (Bukan Neg-Diff)</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Toleransi adaptasi Goku memperpanjang durasi laga</span>
-</div>
-</div>
-<!-- Decisive Factors Breakdown -->
-<div class="flex flex-col gap-space-xs">
-<h4 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Faktor Penentu Utama (Decisive Audit Factors):</h4>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
-<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-space-3xs">
-<div class="flex items-center gap-2 text-ocean-blue font-label-md text-label-md font-bold">
-<span class="material-symbols-outlined text-summer-orange text-[20px]">bolt</span>
-<span>1. Disparitas Kecepatan (Speed Gap)</span>
-</div>
-<p class="font-body-sm text-body-sm text-slate-blue leading-relaxed">
-              Meskipun Goku menguasai <em>Instant Transmission</em> (perpindahan 0-frame), kecepatan reaksi biologis Goku pada Cell Games adalah FTL+ (~15-30c). Reaksi dan manuver pertempuran Superman berada di tingkatan MFTL+ (&gt;1000c). Superman memiliki waktu respons beberapa orde magnitudo lebih cepat untuk mengantisipasi lintasan serangan setelah teleportasi terjadi.
-            </p>
-</div>
-<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-space-3xs">
-<div class="flex items-center gap-2 text-ocean-blue font-label-md text-label-md font-bold">
-<span class="material-symbols-outlined text-summer-orange text-[20px]">shield_with_heart</span>
-<span>2. Kesenjangan AP &amp; Durability (High 4-C vs 4-B)</span>
-</div>
-<p class="font-body-sm text-body-sm text-slate-blue leading-relaxed">
-              Kamehameha skala maksimum Goku pada Cell Games (~2.3×10⁴⁵ Joule) berada pada batas Large Star level. Ketahanan Superman Post-Crisis secara konsisten menahan kompresi energi setara Supernova (~1.8×10⁴⁶ Joule). Goku membutuhkan output beruntun di atas batas maksimalnya untuk menembus pertahanan dasar Kryptonian.
-            </p>
-</div>
-<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-space-3xs">
-<div class="flex items-center gap-2 text-ocean-blue font-label-md text-label-md font-bold">
-<span class="material-symbols-outlined text-summer-orange text-[20px]">battery_charging_full</span>
-<span>3. Daya Tahan &amp; Asimetri Stamina</span>
-</div>
-<p class="font-body-sm text-body-sm text-slate-blue leading-relaxed">
-              SBA menetapkan keberadaan matahari kuning aktif 1 AU. Selama matahari tersebut bersinar, Superman terus meregenerasi sel dan energi kinetiknya. Sebaliknya, bentuk Super Saiyan Full Power Goku—meski meminimalkan kebocoran Ki—tetap menguras tenaga fisik secara linier seiring waktu.
-            </p>
-</div>
-</div>
-</div>
-<!-- Epistemic Disclaimer Box -->
-<div class="bg-mint-mist/40 p-space-sm rounded-2xl flex items-start gap-space-xs">
-<span class="material-symbols-outlined text-ocean-blue text-[22px] mt-0.5">info</span>
-<div class="flex flex-col gap-1">
-<span class="font-label-md text-label-md text-ocean-blue font-bold">Batasan Epistemik &amp; Spesifisitas Versi:</span>
-<p class="font-body-sm text-body-sm text-slate-blue leading-normal">
-            Hasil audit ini <strong>hanya berlaku secara ketat</strong> untuk parameter inkarnasi yang dipilih: <em>Son Goku (Cell Games Saga SSJ)</em> melawan <em>Superman (Post-Crisis Mid Era Base)</em>. Apabila Goku diganti ke inkarnasi <em>Dragon Ball Super (Ultra Instinct - Tier Low 2-C / 2-C)</em> atau Superman dialihkan ke inkarnasi <em>New 52</em> atau <em>Cosmic Armor</em>, seluruh matriks deterministik berubah secara radikal.
-          </p>
-</div>
-</div>
-<!-- Citations & Reference Deck -->
-<div class="flex flex-col gap-space-2xs pt-space-xs">
-<span class="font-caption-meta text-caption-meta text-slate-blue font-bold uppercase tracking-wider">Dek Rujukan &amp; Audit Trail:</span>
-<div class="flex flex-wrap items-center gap-space-2xs">
-<a class="bg-surface-container px-3 py-1.5 rounded-xl font-label-sm text-label-sm text-ocean-blue hover:bg-surface-container-high transition-all flex items-center gap-1" href="https://vsbattles.fandom.com/wiki/Special:Search?query=Son+Goku">
-<span class="material-symbols-outlined text-[16px]">link</span>
-<span>Profil VSB Goku #142 (Cell Arc Revision)</span>
-</a>
-<a class="bg-surface-container px-3 py-1.5 rounded-xl font-label-sm text-label-sm text-ocean-blue hover:bg-surface-container-high transition-all flex items-center gap-1" href="https://vsbattles.fandom.com/wiki/Special:Search?query=Superman">
-<span class="material-symbols-outlined text-[16px]">link</span>
-<span>Profil VSB Superman #088 (Post-Crisis Prime)</span>
-</a>
-<a class="bg-surface-container px-3 py-1.5 rounded-xl font-label-sm text-label-sm text-ocean-blue hover:bg-surface-container-high transition-all flex items-center gap-1" href="https://vsbattles.fandom.com/wiki/Special:Search?query=Solar+Cell+Destruction+Scale">
-<span class="material-symbols-outlined text-[16px]">calculate</span>
-<span>Thread Kalkulasi AP #209: Solar Cell Destruction Scale</span>
-</a>
-<a class="bg-surface-container px-3 py-1.5 rounded-xl font-label-sm text-label-sm text-ocean-blue hover:bg-surface-container-high transition-all flex items-center gap-1" href="https://vsbattles.fandom.com/wiki/Special:Search?query=DC+Comics+Canon+Guide">
-<span class="material-symbols-outlined text-[16px]">menu_book</span>
-<span>DC Comics Canon Guide: Post-Crisis Feat Hierarchy</span>
-</a>
-</div>
-</div>
-<!-- Action Trigger Buttons -->
-<div class="pt-space-sm flex flex-wrap items-center gap-space-xs justify-between">
-<div class="flex flex-wrap items-center gap-space-xs">
-<button class="bg-summer-orange text-ocean-blue font-headline-sm text-headline-sm px-space-md py-space-xs rounded-xl shadow-md hover:opacity-95 transition-all flex items-center gap-2" id="btn-re-evaluate">
-<span class="material-symbols-outlined text-[20px]">refresh</span>
-<span>Uji Ulang dengan Modifikasi Kondisi</span>
-</button>
-<button class="bg-ocean-blue text-on-primary font-label-md text-label-md px-space-sm py-space-xs rounded-xl hover:opacity-95 transition-all flex items-center gap-2" id="btn-switch-versions">
-<span class="material-symbols-outlined text-[18px]">transform</span>
-<span>Ganti Versi Inkarnasi (DBS vs Rebirth)</span>
-</button>
-</div>
-<div class="flex items-center gap-space-2xs">
-<button class="bg-surface-container text-ocean-blue font-label-md text-label-md px-space-sm py-space-xs rounded-xl hover:bg-surface-container-high transition-all flex items-center gap-1.5" id="btn-open-consult">
-<span class="material-symbols-outlined text-[18px]">smart_toy</span>
-<span>Buka di Konsultasi AI</span>
-</button>
-<button class="bg-surface-container text-ocean-blue font-label-md text-label-md p-space-xs rounded-xl hover:bg-surface-container-high transition-all" id="btn-save-history" title="Simpan ke Riwayat">
-<span class="material-symbols-outlined text-[20px]">bookmark</span>
-</button>
-</div>
-</div>
-</section>
-<!-- RECENT QUICK COMPARISONS SHORTCUTS (HISTORICAL AUDIT FEED) -->
-<section class="bg-surface-container-low rounded-2xl p-space-md flex flex-col gap-space-sm">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-2xs">
-<span class="material-symbols-outlined text-slate-blue text-[20px]">history</span>
-<span class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Riwayat Komparasi Terkait Cepat</span>
-</div>
-<a class="font-label-sm text-label-sm text-ocean-blue font-semibold hover:underline" href="riwayat_arsip_audit_epistemik_vsb_death_battle.html">Lihat Semua Riwayat (142)</a>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
-<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col gap-1">
-<div class="flex items-center justify-between">
-<span class="font-caption-meta text-caption-meta text-slate-blue">Audit Kemarin • SBA Match</span>
-<span class="bg-mint-mist text-ocean-blue px-2 py-0.5 rounded text-caption-meta font-bold">Selesai</span>
-</div>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">Kizaru (Borsalino) vs Minato Namikaze</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue">High 6-A vs 7-A • Putusan: Kizaru (Disparitas AP &amp; Logia Intangibility)</span>
-</div>
-<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col gap-1">
-<div class="flex items-center justify-between">
-<span class="font-caption-meta text-caption-meta text-slate-blue">3 Hari Lalu • Hax Audit</span>
-<span class="bg-mint-mist text-ocean-blue px-2 py-0.5 rounded text-caption-meta font-bold">Selesai</span>
-</div>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">Rimuru Tempest (LN) vs Anos Voldigoad</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Tier 2-A vs 2-A • Putusan: Inconclusive (Acasualty Paradox Equalized)</span>
-</div>
-<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col gap-1">
-<div class="flex items-center justify-between">
-<span class="font-caption-meta text-caption-meta text-slate-blue">1 Minggu Lalu • Cosmic Tier</span>
-<span class="bg-mint-mist text-ocean-blue px-2 py-0.5 rounded text-caption-meta font-bold">Selesai</span>
-</div>
-<span class="font-label-md text-label-md text-ocean-blue font-bold">Thor (Herald of None) vs Vegeta (Ultra Ego)</span>
-<span class="font-caption-meta text-caption-meta text-slate-blue">Tier Low 2-C vs Low 2-C • Putusan: Thor (God Blast Penetration)</span>
-</div>
-</div>
-</section>
-</div>
+
 <!-- Toast Notification Template for Micro-interactions -->
 <div class="fixed bottom-6 right-6 z-50 bg-ocean-blue text-on-primary px-space-md py-space-sm rounded-2xl shadow-xl flex items-center gap-space-xs transition-opacity duration-300 opacity-0 pointer-events-none" id="toast-notification">
 <span class="material-symbols-outlined text-summer-orange text-[22px]">check_circle</span>
@@ -746,6 +287,63 @@ if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)')
     window.dispatchEvent(new CustomEvent('cdb-auth-ready', { detail: { client: client, user: data.session.user } }));
   }
   guard().catch(function () { redirectToLogin(); });
+})();
+</script>
+<script id="cdb-battle-live-integration">
+(function(){
+'use strict';
+const URL='https://wfczzmajuhrlpdmhnkpm.supabase.co';
+const KEY='sb_publishable_gIX5KsthWfuY689W9H8IxA_IMN6_MbR';
+const ENDPOINT=URL+'/functions/v1/chat-ai';
+const status=document.getElementById('cdb-battle-status');
+const run=document.getElementById('btn-run-battle');
+const result=document.getElementById('cdb-battle-result');
+const answer=document.getElementById('cdb-battle-answer');
+const sources=document.getElementById('cdb-battle-sources');
+const quota=document.getElementById('cdb-battle-quota');
+let sessionId=new URLSearchParams(window.location.search).get('sessionId')||null;
+let latestAnswer='';
+function showStatus(kind,message){if(!status)return;status.textContent=message;status.className='mx-space-md mt-space-md rounded-xl p-space-sm text-body-sm '+(kind==='error'?'bg-error-container text-on-error-container':kind==='success'?'bg-mint-mist text-secondary':'bg-surface-container text-ocean-blue');}
+function authRedirect(){const next=window.location.pathname.replace(/^\/+/, '')+window.location.search;window.location.replace('portal_autentikasi_epistemik_vsb_death_battle.html?next='+encodeURIComponent(next));}
+function safeLink(source){if(!source||typeof source.url!=='string'||!source.url.startsWith('https://vsbattles.fandom.com/'))return null;const a=document.createElement('a');a.href=source.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=source.title||'VS Battles Wiki';a.className='underline text-ocean-blue';return a;}
+function renderResult(payload){
+ latestAnswer=String(payload.answer||'');answer.textContent=latestAnswer;sources.replaceChildren();
+ const list=document.createElement('div');list.className='flex flex-col gap-2';
+ (Array.isArray(payload.sources)?payload.sources:[]).forEach(function(s){const link=safeLink(s);if(link){const row=document.createElement('div');row.className='text-sm';row.append(link);list.append(row)}});
+ if(list.children.length){const label=document.createElement('h3');label.className='font-label-md text-label-md text-ocean-blue font-bold';label.textContent=window.CDB_SITE_LANGUAGE==='en'?'VS Battles Wiki sources':'Sumber VS Battles Wiki';sources.append(label,list)}
+ quota.textContent=payload.quota?'Kuota harian: '+payload.quota.used+'/'+payload.quota.limit:'';
+ result.classList.remove('hidden');
+ const url=new URL(window.location.href);if(payload.sessionId){sessionId=payload.sessionId;url.searchParams.set('sessionId',sessionId);history.replaceState({},'',url)}
+}
+async function clientReady(){if(window.CDB_AUTH_CLIENT)return window.CDB_AUTH_CLIENT;if(!window.supabase)return null;const client=window.supabase.createClient(URL,KEY,{auth:{autoRefreshToken:true,persistSession:true,detectSessionInUrl:true}});window.CDB_AUTH_CLIENT=client;return client}
+async function runBattle(){
+ const a=document.getElementById('battle-character-a').value.trim(),av=document.getElementById('battle-version-a').value.trim();
+ const b=document.getElementById('battle-character-b').value.trim(),bv=document.getElementById('battle-version-b').value.trim();
+ const rulesText=document.getElementById('battle-rules').value.trim();
+ const custom=document.getElementById('battle-custom-instructions').value.trim();
+ if(!a||!b){showStatus('error','Isi kedua nama karakter sebelum menjalankan battle.');return}
+ if(a.length>160||b.length>160){showStatus('error','Nama karakter terlalu panjang.');return}
+ const client=await clientReady();
+ if(!client){showStatus('error','Library autentikasi belum dimuat. Muat ulang halaman.');return}
+ run.disabled=true;run.classList.add('opacity-60');
+ try{
+  const {data,error}=await client.auth.getSession();
+  if(error||!data.session||!data.session.user?.email_confirmed_at){authRedirect();return}
+  showStatus('info','Mengambil sumber VSB Wiki dan menyusun analisis battle…');
+  const message='Analisis battle untuk '+a+' ('+(av||'versi tidak ditentukan')+') melawan '+b+' ('+(bv||'versi tidak ditentukan')+'). '+(custom||'Bandingkan bukti AP, speed, durability, abilities, resistances, dan win condition. Jangan mengarang statistik atau kemenangan.')+' Jawab dengan pemisahan sumber, inferensi, asumsi, dan keterbatasan.';
+  const res=await fetch(ENDPOINT,{method:'POST',headers:{'Authorization':'Bearer '+data.session.access_token,'apikey':KEY,'Content-Type':'application/json'},body:JSON.stringify({message,mode:'battle',language:window.CDB_SITE_LANGUAGE==='en'?'en':'id',characterA:a,characterAVersion:av,characterB:b,characterBVersion:bv,rules:{standard_battle_assumptions:rulesText,custom_instructions:custom},sessionId})});
+  const payload=await res.json().catch(()=>({}));
+  if(!res.ok)throw new Error(payload.error||('Permintaan gagal ('+res.status+').'));
+  renderResult(payload);showStatus('success','Analisis selesai. Periksa sumber dan keterbatasan di bawah hasil.');
+ }catch(error){showStatus('error',error.message||'Analisis battle gagal. Coba lagi.')}
+ finally{run.disabled=false;run.classList.remove('opacity-60')}
+}
+run.addEventListener('click',runBattle);
+document.getElementById('btn-copy-battle-answer')?.addEventListener('click',async function(){
+ if(!latestAnswer){showStatus('error','Belum ada hasil untuk disalin.');return}
+ try{await navigator.clipboard.writeText(latestAnswer);showStatus('success','Hasil analisis berhasil disalin.')}catch(_){showStatus('error','Clipboard tidak tersedia. Salin teks hasil secara manual.')}
+});
+if(sessionId){clientReady().then(async function(client){if(!client)return;const {data:authData}=await client.auth.getUser();if(!authData?.user?.email_confirmed_at){authRedirect();return}const r=await client.from('chat_messages').select('role,content,created_at').eq('session_id',sessionId).order('created_at',{ascending:true}).limit(100);if(r.error){showStatus('error','Riwayat sesi tidak dapat dimuat.');return}const rows=r.data||[];if(rows.length){answer.textContent=rows.map(m=>(m.role==='user'?'Anda':'AI')+':\n'+m.content).join('\n\n');latestAnswer=rows.filter(m=>m.role==='assistant').map(m=>m.content).join('\n\n');result.classList.remove('hidden');showStatus('success','Riwayat battle berhasil dimuat. Kirim ulang permintaan untuk melanjutkan analisis.')}})}
 })();
 </script>
 </body></html>
