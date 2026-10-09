@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","on-tertiary":"#ffffff","tertiary-container":"#4a1b00","secondary-fixed-dim":"#a2cde0","on-error":"#ffffff","secondary":"#3a6475","inverse-primary":"#a8c9f2","surface-dim":"#d7dadc","glacier-white":"#F5F8FA","on-secondary-fixed":"#001f29","tertiary":"#290c00","on-surface":"#181c1e","surface-variant":"#e0e3e5","status-error":"#D9383A","surface-container-lowest":"#ffffff","on-secondary-container":"#406a7b","primary-fixed-dim":"#a8c9f2","on-tertiary-fixed-variant":"#733511","outline":"#73777f","surface-bright":"#f7fafc","ice-effect":"#C0EBFF","error-container":"#ffdad6","on-error-container":"#93000a","secondary-container":"#bee9fd","summer-orange":"#F59E71","tertiary-fixed":"#ffdbcb","on-primary-fixed-variant":"#27496b","primary-fixed":"#d1e4ff","surface-tint":"#406184","surface":"#f7fafc","status-warning":"#E5852C","primary-container":"#002b4c","on-secondary":"#ffffff","background":"#f7fafc","slate-blue":"#567184","on-primary-fixed":"#001d35","on-tertiary-container":"#cc7c52","tertiary-fixed-dim":"#ffb691","surface-container-highest":"#e0e3e5","inverse-on-surface":"#eef1f3","on-secondary-fixed-variant":"#204c5c","mint-mist":"#DCECE6","on-tertiary-fixed":"#341100","surface-container":"#ebeef0","outline-variant":"#c3c7cf","primary":"#00162b","error":"#ba1a1a","ocean-blue":"#002B4C","surface-container-high":"#e5e9eb","on-background":"#181c1e","on-primary":"#ffffff","secondary-fixed":"#bee9fd","on-surface-variant":"#43474e","on-primary-container":"#7393ba"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-lg":"2rem","space-md":"1.5rem","space-2xs":"0.5rem","margin-mobile":"1rem","space-xl":"3rem","space-xs":"0.75rem","gutter":"1.5rem","gutter-mobile":"0.75rem","space-3xs":"0.25rem","space-sm":"1rem","margin":"2rem"},"fontFamily":{"display-hero-mobile":["Manrope"],"headline-md":["Manrope"],"body-lg":["Manrope"],"body-md":["Manrope"],"data-dense-body":["Inter"],"label-sm":["Inter"],"headline-lg-mobile":["Manrope"],"display-hero":["Manrope"],"label-md":["Inter"],"data-dense-numeric":["Inter"],"body-sm":["Manrope"],"headline-sm":["Manrope"],"caption-meta":["Inter"],"headline-lg":["Manrope"]},"fontSize":{"display-hero-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"data-dense-body":["13px",{"lineHeight":"18px","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"display-hero":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"800"}],"label-md":["13px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"500"}],"data-dense-numeric":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"caption-meta":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface min-h-screen"><div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-40 hidden lg:hidden" id="mobile-drawer-backdrop" onclick="document.getElementById('sidebar-drawer').classList.add('-translate-x-full');this.classList.add('hidden');"></div><aside class="fixed left-0 top-0 h-full w-72 bg-ocean-blue text-glacier-white z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 shadow-[0_8px_24px_-4px_rgba(0,43,76,0.25)]" id="sidebar-drawer"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center justify-between border-b border-slate-blue/20"><div class="flex items-center gap-space-xs"><img alt="VSB Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Uh-Nh77hWqK1LFPpk7SS-5j_r-L06ukqv0XMeO1emfgCPq-8nJCoP084_8DBfUirP5NGtTLRZ4-FbMpd3IQ-6itEnzpwR7gwP202VIETZAMg5daF5eruY_5DQUcjaaX3vGvym_hZK8U7DLF6WHnLa-jrcFLdNAPFii7nQF1iUpW-nPyBzaQUDAwtsdE8yQeYR-_HjYzGSwagFHxB1AUaEGEUuGtF6N-Fo4a8dKAAY230sadGgAXmRfTYyl"/><span class="font-headline-sm text-headline-sm text-glacier-white tracking-tight">VSB Arena</span></div><button class="lg:hidden p-space-3xs text-secondary-fixed-dim hover:text-glacier-white" onclick="document.getElementById('sidebar-drawer').classList.add('-translate-x-full');document.getElementById('mobile-drawer-backdrop').classList.add('hidden');" type="button"><span class="material-symbols-outlined">close</span></button></div><div class="px-space-md pt-space-md pb-space-xs"><span class="font-label-sm text-label-sm text-secondary-fixed-dim uppercase tracking-wider">Navigasi Analisis</span></div><nav class="flex flex-col gap-space-3xs px-space-sm" data-active-classes="bg-ice-effect text-ocean-blue font-headline-sm"><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="beranda" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Beranda</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="konsultasi-ai" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>Konsultasi AI</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="chat-death-battle" href="#"><span class="material-symbols-outlined text-[20px]">swords</span><span>Chat Death Battle</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="riwayat" href="#"><span class="material-symbols-outlined text-[20px]">history</span><span>Riwayat</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="profil-dan-pengaturan" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span><span>Profil &amp; Pengaturan</span></a></nav></div><div class="p-space-md border-t border-slate-blue/20"><div class="bg-primary/50 rounded-xl p-space-sm flex items-center justify-between"><div class="flex flex-col"><span class="font-label-sm text-label-sm text-secondary-fixed-dim">Platform Arsitek</span><span class="font-label-md text-label-md text-glacier-white font-semibold">Creator: Ellias</span></div><span class="material-symbols-outlined text-summer-orange text-[20px]">verified</span></div></div></aside><div class="lg:pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-surface/90 backdrop-blur-xl z-30 shadow-[0_1px_8px_rgba(0,43,76,0.05)]"><div class="h-16 w-full px-space-md lg:px-space-lg flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button class="lg:hidden p-space-2xs text-ocean-blue hover:bg-surface-container rounded-lg" onclick="document.getElementById('sidebar-drawer').classList.remove('-translate-x-full');document.getElementById('mobile-drawer-backdrop').classList.remove('hidden');" type="button"><span class="material-symbols-outlined">menu</span></button><div class="flex items-center gap-space-2xs text-slate-blue font-label-md text-label-md"><span class="hover:text-ocean-blue cursor-pointer">VSB Studio</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-ocean-blue font-semibold">Audit Analisis Feat</span></div></div><div class="flex items-center gap-space-sm"><div class="flex items-center bg-surface-container-high rounded-lg p-space-3xs font-label-sm text-label-sm"><button class="px-space-2xs py-1 rounded bg-ocean-blue text-on-primary font-bold" type="button">ID</button><button class="px-space-2xs py-1 rounded text-on-surface-variant hover:text-on-surface" type="button">EN</button></div><div class="flex items-center bg-surface-container-high rounded-lg p-space-3xs text-on-surface-variant"><button class="p-1 rounded bg-surface text-ocean-blue shadow-sm" type="button"><span class="material-symbols-outlined text-[18px]">light_mode</span></button><button class="p-1 rounded hover:text-ocean-blue" type="button"><span class="material-symbols-outlined text-[18px]">dark_mode</span></button></div><div class="flex items-center gap-space-xs pl-space-2xs border-l border-outline-variant/30"><div class="flex flex-col items-end hidden sm:flex"><span class="font-label-md text-label-md text-on-surface font-semibold">Analis Utama</span><span class="font-label-sm text-label-sm text-summer-orange font-bold uppercase">Tier 1-A Auditor</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_6px_rgba(0,43,76,0.15)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1umNN9tF9qoOgtzbffaUZK6KTMkkcyazEwkBgwiDr8vN8oF4Fje9aQpTQi-Yj4t7OUB9EdJOalsiqUM9ckTJNxxxjOePb_eHqyD4bVVy0DyDc3KpSZYyQ16pNOMbRKKsGMZMC0Fu3Dvxdaxz5c5lIC-PnUU94xQE6Hua7nz9cw0vHAoQoRPLIvyhzmuCVQA_XDQugp7X2Ew2tLVPekzj63G0ZR77xrLbMxIoV3gicc2sahMR6PiY7og"/></div></div></div></header><main class="relative pt-16 w-full flex-1 bg-glacier-white"><div class="flex flex-col w-full">
+<!-- Active Navigation Syncer & Dynamic UI Logic -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Synchronize Shell Sidebar Active Item
+      const navLinks = document.querySelectorAll("aside#sidebar-drawer nav a");
+      navLinks.forEach((a) => {
+        if (a.getAttribute("data-path") === "konsultasi-ai") {
+          a.className =
+            "flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl bg-ice-effect text-ocean-blue font-headline-sm transition-all text-body-md";
+        } else {
+          a.className =
+            "flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md";
+        }
+      });
+    });
+
+    function setAnalyticalMode(mode) {
+      const deepBtn = document.getElementById("btn-mode-deep");
+      const briefBtn = document.getElementById("btn-mode-brief");
+      const inputModeBadge = document.getElementById("input-mode-badge");
+      const modeTooltip = document.getElementById("mode-active-tooltip");
+
+      if (mode === "deep") {
+        deepBtn.className =
+          "px-space-sm py-space-2xs rounded-lg bg-ocean-blue text-glacier-white font-label-md text-label-md shadow-sm transition-all flex items-center gap-space-3xs";
+        briefBtn.className =
+          "px-space-sm py-space-2xs rounded-lg text-slate-blue hover:text-ocean-blue font-label-md text-label-md transition-all flex items-center gap-space-3xs";
+        inputModeBadge.textContent = "Mode Mendalam";
+        inputModeBadge.className =
+          "px-space-2xs py-1 rounded bg-ocean-blue text-glacier-white font-label-sm text-label-sm font-semibold flex items-center gap-1";
+        modeTooltip.textContent =
+          "Audit Mendalam Aktif: Pemisahan bukti 4-lapis (Fakta Kanon, Inferensi AI, SBA, & Keterbatasan).";
+      } else {
+        briefBtn.className =
+          "px-space-sm py-space-2xs rounded-lg bg-ocean-blue text-glacier-white font-label-md text-label-md shadow-sm transition-all flex items-center gap-space-3xs";
+        deepBtn.className =
+          "px-space-sm py-space-2xs rounded-lg text-slate-blue hover:text-ocean-blue font-label-md text-label-md transition-all flex items-center gap-space-3xs";
+        inputModeBadge.textContent = "Mode Singkat";
+        inputModeBadge.className =
+          "px-space-2xs py-1 rounded bg-secondary-fixed-dim text-ocean-blue font-label-sm text-label-sm font-semibold flex items-center gap-1";
+        modeTooltip.textContent =
+          "Mode Singkat: Ringkasan tiering cepat tanpa breakdown 4-lapis rujukan.";
+      }
+    }
+
+    function switchSystemStatePreview(state) {
+      const normalBox = document.getElementById("state-preview-normal");
+      const timeoutBox = document.getElementById("state-preview-timeout");
+      const rateLimitBox = document.getElementById("state-preview-ratelimit");
+
+      const tabNorm = document.getElementById("tab-state-norm");
+      const tabTime = document.getElementById("tab-state-time");
+      const tabRate = document.getElementById("tab-state-rate");
+
+      // Reset tabs
+      [tabNorm, tabTime, tabRate].forEach((btn) => {
+        btn.className =
+          "px-space-2xs py-1 rounded text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm transition-all";
+      });
+
+      normalBox.classList.add("hidden");
+      timeoutBox.classList.add("hidden");
+      rateLimitBox.classList.add("hidden");
+
+      if (state === "normal") {
+        normalBox.classList.remove("hidden");
+        tabNorm.className =
+          "px-space-2xs py-1 rounded bg-mint-mist text-secondary font-label-sm text-label-sm font-semibold";
+      } else if (state === "timeout") {
+        timeoutBox.classList.remove("hidden");
+        tabTime.className =
+          "px-space-2xs py-1 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold";
+      } else if (state === "ratelimit") {
+        rateLimitBox.classList.remove("hidden");
+        tabRate.className =
+          "px-space-2xs py-1 rounded bg-tertiary-fixed text-tertiary-container font-label-sm text-label-sm font-semibold";
+      }
+    }
+
+    function copyCitationPrompt() {
+      const toast = document.getElementById("clipboard-toast");
+      toast.classList.remove("opacity-0", "translate-y-2");
+      toast.classList.add("opacity-100", "translate-y-0");
+      setTimeout(() => {
+        toast.classList.remove("opacity-100", "translate-y-0");
+        toast.classList.add("opacity-0", "translate-y-2");
+      }, 2500);
+    }
+  </script>
+<!-- Sticky Sub-Header & Controls Bar -->
+<section class="w-full bg-glacier-white px-space-md lg:px-space-lg py-space-sm shadow-[0_2px_12px_rgba(0,43,76,0.04)]">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm">
+<!-- Title & Breadcrumb Detail -->
+<div class="flex flex-col gap-space-3xs">
+<div class="flex items-center gap-space-2xs">
+<span class="px-space-2xs py-0.5 rounded bg-ice-effect text-ocean-blue font-label-sm text-label-sm font-bold uppercase tracking-wide">Stage 3 AI Engine</span>
+<span class="text-slate-blue font-label-sm text-label-sm">•</span>
+<span class="text-slate-blue font-label-sm text-label-sm">Epistemic Tiering Auditor</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-ocean-blue tracking-tight">
+          Konsultasi AI Powerscaling
+        </h1>
+<p class="font-body-sm text-body-sm text-slate-blue max-w-3xl">
+          Audit komputasi feat, hierarki tiering (11-C hingga 1-S), validasi Attack Potency, Speed, hax, dan resistansi berdasar epistemologi VS Battles Wiki.
+        </p>
+</div>
+<!-- Control Toolbar & Analytical Mode Pill -->
+<div class="flex flex-wrap items-center gap-space-xs self-start lg:self-center">
+<!-- Analytical Mode Pill -->
+<div class="flex items-center bg-surface-container rounded-xl p-1 shadow-[inset_0_1px_3px_rgba(0,43,76,0.06)]">
+<button class="px-space-sm py-space-2xs rounded-lg bg-ocean-blue text-glacier-white font-label-md text-label-md shadow-sm transition-all flex items-center gap-space-3xs" id="btn-mode-deep" onclick="setAnalyticalMode('deep')" type="button">
+<span class="material-symbols-outlined text-[16px]">biotech</span>
+<span>Mode Mendalam</span>
+</button>
+<button class="px-space-sm py-space-2xs rounded-lg text-slate-blue hover:text-ocean-blue font-label-md text-label-md transition-all flex items-center gap-space-3xs" id="btn-mode-brief" onclick="setAnalyticalMode('brief')" type="button">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span>Mode Singkat</span>
+</button>
+</div>
+<!-- Sesi Baru Action Button -->
+<button class="h-10 px-space-sm rounded-xl bg-summer-orange text-ocean-blue font-label-md text-label-md font-bold shadow-[0_4px_12px_rgba(245,158,113,0.3)] hover:opacity-95 transition-all flex items-center gap-space-3xs" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Sesi Baru</span>
+</button>
+<!-- Pilih Karakter Cepat -->
+<button class="h-10 px-space-sm rounded-xl bg-surface-container hover:bg-surface-container-high text-ocean-blue font-label-md text-label-md font-semibold transition-all flex items-center gap-space-3xs shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">person_search</span>
+<span class="hidden sm:inline">Pilih Karakter</span>
+</button>
+</div>
+</div>
+<!-- Active Tooltip Banner / Subtitle Notice -->
+<div class="mt-space-xs flex items-center gap-space-2xs px-space-sm py-space-2xs bg-surface-container-low rounded-lg text-slate-blue font-caption-meta text-caption-meta">
+<span class="material-symbols-outlined text-ocean-blue text-[15px]">info</span>
+<span class="font-medium text-ocean-blue" id="mode-active-tooltip">Mode Mendalam Aktif: Pemisahan bukti, inferensi AI, asumsi, &amp; rujukan bab. Atribut tanpa rujukan ditandai "Data Unavailable".</span>
+<span class="ml-auto text-slate-blue hidden md:inline">Arsitek: Ellias • VSB System v2.4</span>
+</div>
+</section>
+<!-- Main Grid Workspace: Hybrid Chat Feed + Inspector Sidebar -->
+<div class="w-full px-space-md lg:px-space-lg py-space-md grid grid-cols-1 xl:grid-cols-12 gap-space-md">
+<!-- LEFT COLUMN: Main Chat & Epistemic Audit Stream (xl:col-span-8) -->
+<section class="xl:col-span-8 flex flex-col gap-space-md">
+<!-- Context Banner / Active Combatant Anchor Card -->
+<div class="rounded-xl bg-surface-container-low p-space-sm shadow-[0_4px_20px_-4px_rgba(0,43,76,0.06)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-12 h-12 rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,43,76,0.12)] bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Official anime concept bust portrait of Admiral Kizaru Borsalino in light yellow pinstripe suit and sunglasses, Egghead arc, bathed in golden photons, clean studio light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDG3qc8aEoOZKYDndV_vnyReSwFW9N-CD4WIyYYM3yNZzBEYwcHvr1LU4-W-KtbS8vbEx-JgqTI3qeSYmrwasWXbQVCQKMkiC5PfxnflqtUCufSY9exM7jxByDdfHLfe-jblEZWLmq1JuxgRkvErM0AF93WQKMSddjE3Vrt2vLG_DC7qgizGuKM4J1rsmJd2x4z5r38pitwvhUY5PC8a8okl2gaEb9x5l88PEuP2DY-NVFSAJDznoLG9w"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-mint-mist rounded-full shadow-sm"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-2xs">
+<span class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Kizaru (Borsalino)</span>
+<span class="px-space-2xs py-0.5 rounded bg-mint-mist text-secondary font-label-sm text-label-sm font-semibold">Post-Timeskip (Egghead)</span>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue">
+              Canon VSB Profile #810 • Tier 6-B to High 6-A • Logia Pika Pika no Mi
+            </span>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs self-end sm:self-center">
+<button class="px-space-2xs py-1 rounded bg-ice-effect text-ocean-blue font-label-sm text-label-sm font-semibold flex items-center gap-1 hover:bg-secondary-fixed transition-all" type="button">
+<span class="material-symbols-outlined text-[15px]">sync_alt</span>
+<span>Ganti Versi</span>
+</button>
+<a class="px-space-2xs py-1 rounded bg-surface-container text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm font-medium flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">open_in_new</span>
+<span>Wiki</span>
+</a>
+</div>
+</div>
+<!-- CHAT STREAM CONTAINER -->
+<div class="flex flex-col gap-space-md">
+<!-- MESSAGE 1: User Request Message (Tactile offset right) -->
+<div class="flex flex-col items-end gap-space-2xs ml-auto w-full max-w-2xl">
+<div class="flex items-center gap-space-2xs pr-space-2xs">
+<span class="font-label-sm text-label-sm text-slate-blue">10:42 WIB</span>
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Ellias</span>
+<span class="px-space-2xs py-0.5 rounded bg-tertiary-fixed text-tertiary-container font-label-sm text-label-sm font-bold uppercase">Tier 1-A Auditor</span>
+</div>
+<div class="rounded-2xl rounded-tr-sm bg-ice-effect/80 p-space-md text-ocean-blue shadow-[0_4px_16px_rgba(0,43,76,0.06)] leading-relaxed">
+<p class="font-body-md text-body-md">
+              Audit feat kecepatan Kizaru saat bergerak dalam wujud Pika Pika no Mi di Egghead Arc. Apakah murni Speed of Light (c), atau ada bukti akselerasi FTL/FTL+ yang telah diverifikasi kanon VSB? Bedakan antara inferensi spekulatif fans dan kalkulasi resmi VSB.
+            </p>
+</div>
+</div>
+<!-- MESSAGE 2: Full Rich AI Epistemic Response (Full width / tactile sculpted card) -->
+<div class="flex flex-col gap-space-xs w-full">
+<!-- AI Meta Bar -->
+<div class="flex items-center justify-between px-space-2xs">
+<div class="flex items-center gap-space-2xs">
+<div class="w-7 h-7 rounded-lg bg-ocean-blue flex items-center justify-center text-glacier-white shadow-sm">
+<span class="material-symbols-outlined text-[16px]">psychology</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-ocean-blue font-bold">VSB Epistemic Core v2.4</span>
+<span class="px-space-2xs py-0.5 rounded bg-mint-mist text-secondary font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Terverifikasi
+              </span>
+<span class="hidden sm:inline-flex px-space-2xs py-0.5 rounded bg-surface-container text-slate-blue font-label-sm text-label-sm font-medium">
+                Latency: 284ms
+              </span>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue">10:43 WIB</span>
+</div>
+<!-- Sculpted Main Clay Slab -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-md lg:p-space-lg shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-md">
+<!-- Summary Box: Tactile Bevel Panel -->
+<div class="rounded-xl bg-surface-container-low p-space-md shadow-[inset_0_1px_3px_rgba(0,43,76,0.04)]">
+<div class="flex items-center gap-space-2xs mb-space-2xs">
+<span class="material-symbols-outlined text-summer-orange text-[20px]">lightbulb</span>
+<h2 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Kesimpulan Utama (Executive Audit)</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                Kecepatan standar gerak Kizaru adalah <strong class="text-ocean-blue font-semibold">Speed of Light (c)</strong> berbasis translasi foton alami Buah Iblis Pika Pika no Mi. Namun pada Egghead Arc, terdapat feat <em class="text-slate-blue">"Acceleration is Power"</em> di mana Kizaru menendang Luffy Gear 4 Snakeman dari luar kubah Labophase menuju Fabriophase, menghasilkan tiering komputasi <strong class="text-ocean-blue font-semibold">FTL (Faster Than Light) terverifikasi</strong> dengan faktor akselerasi kinetik puncak <span class="px-space-2xs py-0.5 rounded bg-ice-effect text-ocean-blue font-data-dense-numeric text-data-dense-numeric font-bold">~2.4x c</span> untuk combat &amp; travel burst speed.
+              </p>
+</div>
+<!-- Epistemic 4-Layer Separation (Panduan UI/UX Specification) -->
+<div class="flex flex-col gap-space-sm">
+<span class="font-label-sm text-label-sm text-slate-blue uppercase tracking-wider font-bold">
+                Hierarki Pembuktian Epistemik (4-Layer Framework)
+              </span>
+<!-- LAYER 1: Fakta Terverifikasi Canon & VSB -->
+<div class="rounded-xl bg-glacier-white p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-2xs">
+<span class="w-6 h-6 rounded-md bg-mint-mist text-secondary flex items-center justify-center font-bold text-label-sm">1</span>
+<h3 class="font-label-md text-label-md text-ocean-blue font-bold">Fakta Terverifikasi Canon &amp; VSB</h3>
+</div>
+<span class="px-space-2xs py-0.5 rounded bg-mint-mist text-secondary font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">check_circle</span> Kanon Resmi
+                  </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-xs pt-space-2xs">
+<div class="bg-surface-container-lowest rounded-lg p-space-xs shadow-xs">
+<span class="font-caption-meta text-caption-meta text-slate-blue block">Bab Rujukan Manga</span>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">One Piece Ch. 1092 &amp; 1093</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue block mt-1">Eiichiro Oda (Shueisha)</span>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-xs shadow-xs">
+<span class="font-caption-meta text-caption-meta text-slate-blue block">Tier Speed VSB Resmi</span>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">FTL Combat / Relativistic+ Travel</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue block mt-1">Approved Calc Blog #442</span>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-xs shadow-xs">
+<span class="font-caption-meta text-caption-meta text-slate-blue block">Status Entri Profile</span>
+<a class="font-label-md text-label-md text-secondary hover:text-ocean-blue font-bold flex items-center gap-1 mt-0.5" href="#">
+<span>VSB Profile #810</span>
+<span class="material-symbols-outlined text-[14px]">launch</span>
+</a>
+<span class="font-caption-meta text-caption-meta text-secondary font-medium block">Acceptance Ratio: 100%</span>
+</div>
+</div>
+</div>
+<!-- LAYER 2: Inferensi Komputasional AI -->
+<div class="rounded-xl bg-glacier-white p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-2xs">
+<span class="w-6 h-6 rounded-md bg-ice-effect text-ocean-blue flex items-center justify-center font-bold text-label-sm">2</span>
+<h3 class="font-label-md text-label-md text-ocean-blue font-bold">Inferensi Komputasional AI</h3>
+</div>
+<span class="px-space-2xs py-0.5 rounded bg-ice-effect text-ocean-blue font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">calculate</span> Model Logika AI
+                  </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface leading-relaxed">
+                  Perhitungan jeda transisi bingkai visual dan translasi perpindahan koordinat dari ketinggian Labophase menuju Fabriophase (jarak minimum pulau ~1.2 km). Mengingat Kizaru melontarkan dirinya dan menendang Luffy sebelum reaksi kinetik Gear 4 Snakeman menyentuh batas observasi, percepatan kinetik berada di skala <strong class="text-ocean-blue font-semibold">2.14x c hingga 2.45x c</strong>.
+                </p>
+<div class="flex items-center gap-space-2xs bg-surface-container-low p-space-xs rounded-lg text-slate-blue font-caption-meta text-caption-meta">
+<span class="material-symbols-outlined text-[16px] text-ocean-blue">functions</span>
+<span>Formula: <code>Δv = (d_island / Δt_reaction) &gt; c</code> dengan margin toleransi pikselasi panel 5%.</span>
+</div>
+</div>
+<!-- LAYER 3: Asumsi Pertarungan Standar (SBA) -->
+<div class="rounded-xl bg-glacier-white p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-2xs">
+<span class="w-6 h-6 rounded-md bg-surface-container-high text-slate-blue flex items-center justify-center font-bold text-label-sm">3</span>
+<h3 class="font-label-md text-label-md text-ocean-blue font-bold">Asumsi Pertarungan (SBA - Standard Battle Assumptions)</h3>
+</div>
+<span class="px-space-2xs py-0.5 rounded bg-surface-container text-slate-blue font-label-sm text-label-sm font-semibold">
+                    Konteks Netral
+                  </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface leading-relaxed">
+                  Evaluasi bertumpu pada premis Standard Battle Assumptions VSB: medan atmosfer bumi standar 1 atm, tanpa adanya anomali medan gravitasi tak biasa yang mendistorsi foton, serta netralitas energi kinetik (Haki versus sistem energi fiksi lain tanpa biased debuff).
+                </p>
+</div>
+<!-- LAYER 4: Honest Limitation / Keterbatasan Data -->
+<div class="rounded-xl bg-surface-container-low p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-2xs">
+<span class="w-6 h-6 rounded-md bg-error-container text-on-error-container flex items-center justify-center font-bold text-label-sm">4</span>
+<h3 class="font-label-md text-label-md text-ocean-blue font-bold">Informasi Belum Terverifikasi &amp; Keterbatasan Epistemik</h3>
+</div>
+<span class="px-space-2xs py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">block</span> Disqualified
+                  </span>
+</div>
+<p class="font-body-sm text-body-sm text-slate-blue leading-relaxed">
+                  Klaim spekulatif komunitas online mengenai <span class="line-through text-on-surface-variant">kecepatan tak hingga (Infinite Speed)</span> atau pengali 100x FTL dinyatakan <strong class="text-error font-semibold">DISQUALIFIED</strong> karena tidak memiliki kalkulasi rujukan yang diterima oleh Thread Moderator VSB Wiki, dan melanggar aturan fisik kanon buah iblis foton Eiichiro Oda.
+                </p>
+</div>
+</div>
+<!-- Interactive Action Chips Below Response -->
+<div class="pt-space-2xs flex flex-wrap items-center gap-space-xs">
+<button class="px-space-sm py-space-2xs rounded-lg bg-surface-container-high hover:bg-ice-effect text-ocean-blue font-label-sm text-label-sm font-semibold transition-all flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span>Kalkulasi AP Terkait (Joule)</span>
+</button>
+<button class="px-space-sm py-space-2xs rounded-lg bg-surface-container-high hover:bg-ice-effect text-ocean-blue font-label-sm text-label-sm font-semibold transition-all flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+<span>Katalog Hax &amp; Resistansi Kizaru</span>
+</button>
+<a class="px-space-sm py-space-2xs rounded-lg bg-summer-orange text-ocean-blue font-label-sm text-label-sm font-bold shadow-sm hover:opacity-90 transition-all flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">swords</span>
+<span>Kirim ke Death Battle 1v1</span>
+</a>
+<button class="px-space-sm py-space-2xs rounded-lg bg-surface-container hover:bg-surface-container-high text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm font-medium transition-all flex items-center gap-1 ml-auto" onclick="copyCitationPrompt()" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>Salin Kutipan Sumber</span>
+</button>
+</div>
+</div>
+</div>
+<!-- MESSAGE 3: Processing & Auditing Simulation State -->
+<div class="flex items-center gap-space-sm rounded-xl bg-glacier-white p-space-md shadow-sm animate-pulse">
+<div class="w-8 h-8 rounded-lg bg-ice-effect flex items-center justify-center text-ocean-blue">
+<span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">
+              AI sedang memvalidasi data kanon VSB &amp; menyusun matriks pembuktian...
+            </span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">
+              Memverifikasi thread kalkulasi #442 dan konsistensi tiering Speed of Light vs FTL.
+            </span>
+</div>
+<span class="ml-auto px-space-2xs py-1 rounded bg-surface-container text-slate-blue font-label-sm text-label-sm hidden sm:inline">
+            Locking Prompt...
+          </span>
+</div>
+</div>
+<!-- INSET CHAT INPUT BOX (Recessed Clay Well) -->
+<div class="mt-space-sm rounded-2xl bg-surface-container-lowest p-space-sm shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-2xs">
+<!-- Input Context Header -->
+<div class="flex items-center justify-between px-space-2xs">
+<div class="flex items-center gap-space-2xs">
+<span class="px-space-2xs py-1 rounded bg-ocean-blue text-glacier-white font-label-sm text-label-sm font-semibold flex items-center gap-1" id="input-mode-badge">
+<span class="material-symbols-outlined text-[14px]">biotech</span>
+<span>Mode Mendalam</span>
+</span>
+<span class="text-slate-blue font-caption-meta text-caption-meta">• Target: Kizaru (Borsalino) Post-Timeskip</span>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue hidden sm:inline">Anti-Hallucination Safe Protocol</span>
+</div>
+<!-- Recessed Inset Textarea Well -->
+<div class="relative rounded-xl bg-glacier-white p-space-xs shadow-[inset_0_2px_5px_rgba(0,43,76,0.06)]">
+<textarea class="w-full bg-transparent resize-none outline-none font-body-md text-body-md text-ocean-blue placeholder:text-slate-blue/60" placeholder="Tanyakan tier, kalkulasi AP/Speed, feat kanon, atau resistansi hax karakter (misal: 'Bagaimana perbandingan kecepatan Kizaru vs Minato Namikaze KCM?')..." rows="3"></textarea>
+</div>
+<!-- Bottom Input Action Bar -->
+<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-3xs px-space-2xs">
+<div class="flex items-center gap-space-2xs">
+<button class="px-space-2xs py-1 rounded-lg bg-surface-container-low hover:bg-surface-container text-ocean-blue font-label-sm text-label-sm font-medium flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Ganti Inkarnasi</span>
+</button>
+<button class="px-space-2xs py-1 rounded-lg bg-surface-container-low hover:bg-surface-container text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm font-medium flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">attach_file</span>
+<span>Lampirkan Manga Panel</span>
+</button>
+</div>
+<div class="flex items-center gap-space-sm ml-auto">
+<span class="font-caption-meta text-caption-meta text-slate-blue hidden md:inline">
+              Enter ↵ untuk kirim • Shift+Enter baris baru
+            </span>
+<button class="h-10 px-space-md rounded-xl bg-summer-orange text-ocean-blue font-label-md text-label-md font-bold shadow-[0_4px_12px_rgba(245,158,113,0.3)] hover:opacity-95 transition-all flex items-center gap-space-2xs" type="button">
+<span>Audit Feat</span>
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+<!-- Safety & Attribution Micro-bar -->
+<div class="flex items-center justify-between px-space-2xs pt-1 text-slate-blue font-caption-meta text-caption-meta">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-mint-mist text-[14px]">shield</span>
+            Dilindungi Anti-Slop Filter &amp; Standard Battle Assumptions
+          </span>
+<span class="font-medium text-ocean-blue">Creator: Ellias</span>
+</div>
+</div>
+</section>
+<!-- RIGHT COLUMN: System & Epistemic Inspector Sidebar (xl:col-span-4) -->
+<aside class="xl:col-span-4 flex flex-col gap-space-md">
+<!-- CARD 1: Epistemic Integrity & Source Verification -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-2xs">
+<div class="w-8 h-8 rounded-lg bg-mint-mist text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Integritas Epistemik</h3>
+</div>
+<span class="px-space-2xs py-0.5 rounded bg-mint-mist text-secondary font-label-sm text-label-sm font-bold">100% Audit</span>
+</div>
+<p class="font-body-sm text-body-sm text-slate-blue">
+          Status konektivitas sumber kanon dan transparansi epistemic pipeline saat mengevaluasi feat pertarungan.
+        </p>
+<!-- Source Indicators -->
+<div class="flex flex-col gap-space-2xs pt-space-2xs">
+<!-- Source Item 1 -->
+<div class="rounded-xl bg-glacier-white p-space-xs flex items-center justify-between">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">api</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">VS Battles Wiki API</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Official Canon DB Gateway</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-secondary font-data-dense-numeric text-data-dense-numeric">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Aktif (38ms)</span>
+</div>
+</div>
+<!-- Source Item 2 -->
+<div class="rounded-xl bg-glacier-white p-space-xs flex items-center justify-between">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-summer-orange text-[20px]">auto_stories</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Shueisha Databook</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Vivre Card &amp; SBS Oda</span>
+</div>
+</div>
+<span class="px-space-2xs py-0.5 rounded bg-ice-effect text-ocean-blue font-label-sm text-label-sm font-semibold">
+              Kanon Primer
+            </span>
+</div>
+</div>
+<!-- Zero Hallucination Guarantee Callout -->
+<div class="rounded-xl bg-surface-container-low p-space-xs flex items-start gap-space-2xs">
+<span class="material-symbols-outlined text-ocean-blue text-[18px] shrink-0 mt-0.5">policy</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-ocean-blue font-bold">Zero Hallucination Policy</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue leading-normal">
+              Atribut yang tidak memiliki landasan kanon eksplisit ditandai <strong class="text-ocean-blue">"Data Unavailable"</strong>. Tidak ada angka kemenangan imajiner.
+            </span>
+</div>
+</div>
+</div>
+<!-- CARD 2: Interactive System State & Error Preview -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-2xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container text-ocean-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">dns</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Audit Status Sistem</h3>
+</div>
+<span class="text-slate-blue font-caption-meta text-caption-meta">Error States</span>
+</div>
+<p class="font-body-sm text-body-sm text-slate-blue">
+          Simulasi respons UI saat menghadapi anomali jaringan atau batas kuota powerscaler.
+        </p>
+<!-- Preview Switcher Tabs -->
+<div class="flex items-center bg-surface-container rounded-lg p-1">
+<button class="flex-1 py-1 rounded bg-mint-mist text-secondary font-label-sm text-label-sm font-semibold transition-all text-center" id="tab-state-norm" onclick="switchSystemStatePreview('normal')" type="button">
+            Normal
+          </button>
+<button class="flex-1 py-1 rounded text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm transition-all text-center" id="tab-state-time" onclick="switchSystemStatePreview('timeout')" type="button">
+            Timeout
+          </button>
+<button class="flex-1 py-1 rounded text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm transition-all text-center" id="tab-state-rate" onclick="switchSystemStatePreview('ratelimit')" type="button">
+            Rate Limit
+          </button>
+</div>
+<!-- PREVIEW BOX 1: State Normal -->
+<div class="rounded-xl bg-glacier-white p-space-sm flex flex-col gap-space-2xs" id="state-preview-normal">
+<div class="flex items-center gap-space-2xs text-secondary font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-[18px]">cloud_done</span>
+<span>Semua Gateway Beroperasi Normal</span>
+</div>
+<p class="font-caption-meta text-caption-meta text-slate-blue leading-normal">
+            Kueri konsensus VSB Wiki aktif. Seluruh perhitungan tiering 1-A hingga 1-S dapat dikalkulasikan secara real-time.
+          </p>
+<div class="mt-1 flex items-center justify-between text-slate-blue font-data-dense-numeric text-data-dense-numeric">
+<span>Server Uptime</span>
+<span class="font-bold text-ocean-blue">99.98%</span>
+</div>
+</div>
+<!-- PREVIEW BOX 2: State Gateway Timeout / Data Unavailable (Hidden by default) -->
+<div class="hidden rounded-xl bg-error-container/60 p-space-sm flex flex-col gap-space-2xs" id="state-preview-timeout">
+<div class="flex items-center gap-space-2xs text-on-error-container font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-[18px]">wifi_off</span>
+<span>VSB Gateway Timeout (504)</span>
+</div>
+<p class="font-caption-meta text-caption-meta text-on-error-container leading-normal">
+            Gagal mengambil data dari VS Battles Wiki. Server rujukan tidak merespons. Gunakan data cache kanon lokal atau ulangi audit.
+          </p>
+<div class="pt-space-3xs flex items-center gap-space-2xs">
+<button class="px-space-2xs py-1 rounded bg-ocean-blue text-glacier-white font-label-sm text-label-sm font-semibold" type="button">
+              Gunakan Cache Lokal
+            </button>
+<button class="px-space-2xs py-1 rounded bg-glacier-white text-ocean-blue font-label-sm text-label-sm font-semibold" type="button">
+              Coba Lagi
+            </button>
+</div>
+</div>
+<!-- PREVIEW BOX 3: State Rate Limit / Kuota Habis (Hidden by default) -->
+<div class="hidden rounded-xl bg-tertiary-fixed/60 p-space-sm flex flex-col gap-space-2xs" id="state-preview-ratelimit">
+<div class="flex items-center gap-space-2xs text-tertiary font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-[18px]">hourglass_top</span>
+<span>Kuota Harian Terpenuhi (25/25)</span>
+</div>
+<p class="font-caption-meta text-caption-meta text-tertiary-container leading-normal">
+            Analisis dialihkan ke Mode Ringkas untuk meminimalkan beban token komputasi. Kuota audit mendalam reset otomatis dalam 3 jam 18 menit.
+          </p>
+<div class="w-full bg-surface-container rounded-full h-2 mt-1 overflow-hidden">
+<div class="bg-summer-orange h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+<!-- CARD 3: Populer Powerscaling Topics & Quick Queries -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-2xs">
+<div class="w-8 h-8 rounded-lg bg-ice-effect text-ocean-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">trending_up</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Topik Konsultasi Populer</h3>
+</div>
+<div class="flex flex-col gap-space-2xs">
+<button class="w-full text-left p-space-xs rounded-xl bg-glacier-white hover:bg-ice-effect/50 transition-all flex items-center justify-between" type="button">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Attack Potency vs Striking Strength</span>
+<span class="material-symbols-outlined text-slate-blue text-[16px]">arrow_forward</span>
+</button>
+<button class="w-full text-left p-space-xs rounded-xl bg-glacier-white hover:bg-ice-effect/50 transition-all flex items-center justify-between" type="button">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Dimensional Tiering 1-A to 1-S</span>
+<span class="material-symbols-outlined text-slate-blue text-[16px]">arrow_forward</span>
+</button>
+<button class="w-full text-left p-space-xs rounded-xl bg-glacier-white hover:bg-ice-effect/50 transition-all flex items-center justify-between" type="button">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Immeasurable vs Infinite Speed</span>
+<span class="material-symbols-outlined text-slate-blue text-[16px]">arrow_forward</span>
+</button>
+<button class="w-full text-left p-space-xs rounded-xl bg-glacier-white hover:bg-ice-effect/50 transition-all flex items-center justify-between" type="button">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Nullifikasi &amp; Resistansi Kausalitas</span>
+<span class="material-symbols-outlined text-slate-blue text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- CARD 4: Auditor Signature & System Footnote -->
+<div class="rounded-xl bg-surface-container-low p-space-sm flex items-center justify-between text-slate-blue font-caption-meta text-caption-meta">
+<div class="flex flex-col">
+<span class="font-semibold text-ocean-blue">Platform Epistemik VSB</span>
+<span>Sistem Audit Komparatif Independen</span>
+</div>
+<div class="flex items-center gap-1 font-bold text-ocean-blue">
+<span>Creator: Ellias</span>
+</div>
+</div>
+</aside>
+</div>
+<!-- Micro-Interaction Toast Notification for Clipboard Copy -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-2 opacity-0 transition-all duration-300 pointer-events-none" id="clipboard-toast">
+<div class="px-space-md py-space-xs rounded-xl bg-ocean-blue text-glacier-white font-label-md text-label-md font-semibold shadow-[0_12px_32px_rgba(0,43,76,0.35)] flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-summer-orange text-[18px]">verified</span>
+<span>Kutipan epistemik &amp; sumber rujukan berhasil disalin!</span>
+</div>
+</div>
+</div></main><footer class="w-full bg-surface-container-low py-space-sm px-space-md lg:px-space-lg shadow-[0_-1px_6px_rgba(0,43,76,0.03)]"><div class="w-full flex flex-col sm:flex-row items-center justify-between gap-space-2xs"><span class="font-label-sm text-label-sm text-slate-blue">© 2025 VSB &amp; Chat Death Battle. Epistemic Powerscaling System.</span><span class="font-label-md text-label-md text-slate-blue font-medium">Creator: Ellias</span></div></footer></div></body></html>

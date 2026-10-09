@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"error":"#ba1a1a","on-background":"#181c1e","surface-container-highest":"#e0e3e5","on-secondary-fixed":"#001f29","status-error":"#D9383A","primary-fixed-dim":"#a8c9f2","surface-container-low":"#f1f4f6","on-primary-fixed":"#001d35","surface-container-high":"#e5e9eb","on-error":"#ffffff","surface-variant":"#e0e3e5","on-primary-fixed-variant":"#27496b","primary-fixed":"#d1e4ff","mint-mist":"#DCECE6","on-secondary-fixed-variant":"#204c5c","on-secondary-container":"#406a7b","outline-variant":"#c3c7cf","error-container":"#ffdad6","surface-container":"#ebeef0","secondary-fixed-dim":"#a2cde0","on-primary-container":"#7393ba","secondary-container":"#bee9fd","tertiary-container":"#4a1b00","secondary":"#3a6475","glacier-white":"#F5F8FA","tertiary-fixed":"#ffdbcb","tertiary-fixed-dim":"#ffb691","on-tertiary-fixed-variant":"#733511","on-tertiary-container":"#cc7c52","primary-container":"#002b4c","background":"#f7fafc","on-tertiary":"#ffffff","inverse-primary":"#a8c9f2","surface-tint":"#406184","on-tertiary-fixed":"#341100","tertiary":"#290c00","outline":"#73777f","ice-effect":"#C0EBFF","surface-dim":"#d7dadc","surface-container-lowest":"#ffffff","slate-blue":"#567184","inverse-on-surface":"#eef1f3","on-error-container":"#93000a","inverse-surface":"#2d3133","on-surface":"#181c1e","surface-bright":"#f7fafc","surface":"#f7fafc","status-warning":"#E5852C","on-primary":"#ffffff","summer-orange":"#F59E71","ocean-blue":"#002B4C","primary":"#00162b","secondary-fixed":"#bee9fd","on-secondary":"#ffffff","on-surface-variant":"#43474e"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"2rem","space-2xs":"0.5rem","space-md":"1.5rem","gutter":"1.5rem","space-sm":"1rem","margin-mobile":"1rem","gutter-mobile":"0.75rem","space-xs":"0.75rem","space-3xs":"0.25rem","space-xl":"3rem","margin":"2rem"},fontFamily:{"headline-lg-mobile":["Manrope"],"caption-meta":["Inter"],"display-hero-mobile":["Manrope"],"label-sm":["Inter"],"body-lg":["Manrope"],"data-dense-numeric":["Inter"],"headline-md":["Manrope"],"body-sm":["Manrope"],"headline-lg":["Manrope"],"body-md":["Manrope"],"display-hero":["Manrope"],"label-md":["Inter"],"data-dense-body":["Inter"],"headline-sm":["Manrope"]},fontSize:{"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"caption-meta":["12px",{"lineHeight":"16px","fontWeight":"400"}],"display-hero-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"800"}],"label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"data-dense-numeric":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"display-hero":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"800"}],"label-md":["13px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"500"}],"data-dense-body":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}};</script></head><body class="bg-glacier-white text-on-surface font-body-md"><aside class="fixed left-0 top-0 h-full w-72 bg-ocean-blue text-glacier-white z-50 flex flex-col justify-between shadow-[0_8px_24px_-4px_rgba(0,43,76,0.12)]"><div class="flex flex-col pt-space-md"><div class="px-space-md mb-space-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><div class="w-9 h-9 rounded-xl bg-ice-effect flex items-center justify-center text-ocean-blue shadow-[inset_1px_1px_2px_rgba(255,255,255,0.85)]"><span class="material-symbols-outlined text-[22px]">shield_with_heart</span></div><div><div class="font-headline-sm text-headline-sm text-glacier-white tracking-tight">VSB Studio</div><div class="font-caption-meta text-caption-meta text-ice-effect">Epistemic Powerscaling</div></div></div></div><div class="px-space-md mb-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-blue">Menu Utama</span></div><nav class="flex flex-col gap-space-3xs px-space-xs" data-active-classes="bg-ice-effect text-ocean-blue font-bold shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)]"><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-ocean-blue/40 hover:text-glacier-white transition-all" data-path="beranda" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span class="font-body-sm text-body-sm">Beranda</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-ocean-blue/40 hover:text-glacier-white transition-all" data-path="konsultasi-ai" href="#"><span class="material-symbols-outlined text-[20px]">neurology</span><span class="font-body-sm text-body-sm">Konsultasi AI</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-ocean-blue/40 hover:text-glacier-white transition-all" data-path="chat-death-battle" href="#"><span class="material-symbols-outlined text-[20px]">swords</span><span class="font-body-sm text-body-sm">Chat Death Battle</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-ocean-blue/40 hover:text-glacier-white transition-all" data-path="riwayat" href="#"><span class="material-symbols-outlined text-[20px]">history</span><span class="font-body-sm text-body-sm">Riwayat</span></a><a aria-current="page" class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl transition-all bg-ice-effect text-ocean-blue font-bold shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)]" data-path="profil-dan-pengaturan" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span><span class="font-body-sm text-body-sm">Profil &amp; Pengaturan</span></a></nav></div><div class="p-space-md m-space-xs rounded-xl bg-primary/40 backdrop-blur-sm flex flex-col gap-space-xs shadow-[inset_0px_2px_5px_rgba(0,43,76,0.2)]"><div class="flex items-center justify-between"><span class="font-caption-meta text-caption-meta text-slate-blue uppercase tracking-wider">Audit Status</span><span class="font-label-sm text-label-sm px-space-2xs py-0.5 rounded-full bg-mint-mist text-ocean-blue">Verified</span></div><div class="flex items-center gap-space-xs"><div class="w-8 h-8 rounded-full bg-summer-orange text-ocean-blue flex items-center justify-center font-bold font-caption-meta text-caption-meta shadow-[0_2px_6px_rgba(245,158,113,0.3)]">1-A</div><div><div class="font-label-md text-label-md text-glacier-white font-semibold">Auditor Tier 1-A</div><div class="font-caption-meta text-caption-meta text-ice-effect">Ontological Feats</div></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-glacier-white/90 backdrop-blur-xl z-40 flex items-center justify-between px-space-md shadow-[0_1px_8px_rgba(0,43,76,0.04)]"><div class="flex items-center gap-space-2xs text-slate-blue font-label-md text-label-md"><span class="text-ocean-blue font-semibold">VSB Studio</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-on-surface font-semibold">Profil &amp; Pengaturan Akun</span></div><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container rounded-xl p-1 gap-1"><button class="px-space-2xs py-1 rounded-lg bg-surface-container-lowest text-ocean-blue font-label-sm text-label-sm font-semibold shadow-[inset_1px_1px_2px_rgba(255,255,255,0.85)]" type="button">ID</button><button class="px-space-2xs py-1 rounded-lg text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm font-medium transition-colors" type="button">EN</button></div><div class="flex items-center bg-surface-container rounded-xl p-1 gap-1"><button class="w-7 h-7 rounded-lg bg-surface-container-lowest text-summer-orange flex items-center justify-center shadow-[inset_1px_1px_2px_rgba(255,255,255,0.85)]" title="Tema Terang" type="button"><span class="material-symbols-outlined text-[18px]">light_mode</span></button><button class="w-7 h-7 rounded-lg text-slate-blue hover:text-ocean-blue flex items-center justify-center transition-colors" title="Tema Gelap" type="button"><span class="material-symbols-outlined text-[18px]">dark_mode</span></button><button class="w-7 h-7 rounded-lg text-slate-blue hover:text-ocean-blue flex items-center justify-center transition-colors" title="Tema Sistem" type="button"><span class="material-symbols-outlined text-[18px]">desktop_windows</span></button></div><div class="flex items-center gap-space-2xs px-space-xs py-1 rounded-full bg-mint-mist text-ocean-blue font-label-sm text-label-sm shadow-[inset_1px_1px_2px_rgba(255,255,255,0.85)]"><span class="material-symbols-outlined text-[16px] text-ocean-blue">verified</span><span>Terverifikasi</span></div><div class="flex items-center gap-space-xs pl-space-2xs"><div class="text-right hidden sm:block"><div class="font-label-md text-label-md font-bold text-ocean-blue leading-tight">Ellias</div><div class="font-caption-meta text-caption-meta text-slate-blue">Tier 1-A Auditor</div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-glacier-white flex-1"><div class="flex flex-col w-full">
+<div class="w-full px-space-md py-space-md max-w-7xl mx-auto flex flex-col gap-space-lg">
+<!-- PAGE HEADER BLOCK -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm">
+<div class="flex flex-col gap-space-3xs">
+<div class="flex items-center gap-space-2xs text-slate-blue font-label-sm text-label-sm uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-summer-orange inline-block"></span>
+<span>Workspace Console • Security Node</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-ocean-blue tracking-tight">Profil &amp; Pengaturan Akun</h1>
+<p class="font-body-md text-body-md text-slate-blue max-w-3xl">
+          Kelola identitas analis epistemik, status verifikasi akun, kuota komputasi, dan preferensi antarmuka workspace secara presisi.
+        </p>
+</div>
+<!-- Quick Session Indicator -->
+<div class="flex items-center gap-space-xs px-space-sm py-space-2xs rounded-2xl bg-surface-container shadow-[inset_1px_1px_2px_rgba(255,255,255,0.85)] self-start md:self-auto">
+<span class="material-symbols-outlined text-ocean-blue text-[20px]">encrypted</span>
+<div class="flex flex-col">
+<span class="font-caption-meta text-caption-meta text-slate-blue">Protokol Keamanan</span>
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue">TLS 1.3 • SHA-256 Auth</span>
+</div>
+</div>
+</div>
+<!-- NOTIFICATION ALERT POPUP (Dynamically triggerable) -->
+<div class="hidden transition-all duration-300 rounded-2xl bg-mint-mist p-space-sm shadow-[0_8px_24px_-4px_rgba(0,43,76,0.08)] flex items-start justify-between gap-space-sm" id="saveToast">
+<div class="flex items-center gap-space-xs">
+<div class="w-9 h-9 rounded-xl bg-surface-container-lowest text-ocean-blue flex items-center justify-center shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)]">
+<span class="material-symbols-outlined text-[22px]">check_circle</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-ocean-blue">Perubahan Berhasil Disimpan</h4>
+<p class="font-caption-meta text-caption-meta text-slate-blue">
+            Metadata profil dan konfigurasi antarmuka disinkronisasi ke server aman VSB. Timestamp: <span class="font-semibold text-ocean-blue" id="toastTimestamp">2025-05-18 14:32:04 UTC+7</span>.
+          </p>
+</div>
+</div>
+<button class="text-slate-blue hover:text-ocean-blue p-1" onclick="document.getElementById('saveToast').classList.add('hidden')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- 1. ACCOUNT VERIFICATION DUAL-STATE BANNER -->
+<section class="rounded-3xl bg-surface-container p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),inset_1px_1px_2px_rgba(255,255,255,0.85)] flex flex-col gap-space-md relative overflow-hidden">
+<!-- Decorative Backdrop Element -->
+<div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-ice-effect/40 blur-2xl pointer-events-none"></div>
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md relative z-10">
+<div class="flex items-center gap-space-sm">
+<div class="w-14 h-14 rounded-2xl bg-surface-container-lowest flex items-center justify-center text-ocean-blue shadow-[0_4px_16px_rgba(0,43,76,0.08),inset_1px_1px_2px_rgba(255,255,255,0.9)]">
+<span class="material-symbols-outlined text-[32px] text-ocean-blue" id="shieldIcon">verified_user</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="font-label-sm text-label-sm px-space-2xs py-1 rounded-full bg-mint-mist text-ocean-blue font-semibold shadow-[inset_1px_1px_1px_rgba(255,255,255,0.9)] flex items-center gap-1" id="verificationBadge">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                Akun Terverifikasi (Email Aktif)
+              </span>
+<span class="font-caption-meta text-caption-meta text-slate-blue px-space-2xs py-1 rounded-lg bg-surface-container-highest">
+                UID: #AUD-88219
+              </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-ocean-blue mt-1">ellias.auditor@vsb-arena.id</div>
+</div>
+</div>
+<!-- Simulator Switch Panel -->
+<div class="flex flex-col items-start lg:items-end gap-space-3xs bg-surface-container-lowest p-space-xs rounded-2xl shadow-[inset_0px_2px_5px_rgba(0,43,76,0.06)]">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-slate-blue">Simulator Status Akses:</span>
+<div class="inline-flex p-1 bg-surface-container rounded-xl">
+<button class="px-space-xs py-1 rounded-lg bg-surface-container-lowest text-ocean-blue font-label-sm text-label-sm font-bold shadow-[inset_1px_1px_2px_rgba(255,255,255,0.85)] transition-all" id="btnStateVerified" onclick="switchVerification(true)">
+                Terverifikasi (Penuh)
+              </button>
+<button class="px-space-xs py-1 rounded-lg text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm font-medium transition-all" id="btnStateRestricted" onclick="switchVerification(false)">
+                Belum Terverifikasi
+              </button>
+</div>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Uji perilaku sistem saat akun belum memvalidasi token email.</span>
+</div>
+</div>
+<!-- Verified State Content -->
+<div class="p-space-sm rounded-2xl bg-surface-container-lowest shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)] flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm" id="verifiedStateCard">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-ocean-blue text-[24px]">task_alt</span>
+<div class="font-body-sm text-body-sm text-ocean-blue">
+<span class="font-bold">Otorisasi Tier 1-A Penuh Aktif:</span> Anda memiliki akses tidak terbatas ke mesin komputasi VSB Non-spekulatif AI Feat Audit, pembuatan matriks pertarungan, dan Chat Death Battle 1v1 multi-dimensi.
+          </div>
+</div>
+<div class="flex items-center gap-space-2xs self-end sm:self-center shrink-0">
+<span class="font-caption-meta text-caption-meta text-slate-blue">SLA Response:</span>
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue">&lt; 140ms</span>
+</div>
+</div>
+<!-- Restricted State Content (Hidden by default) -->
+<div class="hidden p-space-sm rounded-2xl bg-tertiary-fixed shadow-[0_4px_12px_rgba(245,158,113,0.15)] flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md" id="restrictedStateCard">
+<div class="flex items-start gap-space-xs">
+<div class="w-8 h-8 rounded-xl bg-status-warning text-surface-container-lowest flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-tertiary-fixed font-bold">Peringatan: Akses Fitur AI Dibatasi Sementara</span>
+<p class="font-body-sm text-body-sm text-on-tertiary-fixed-variant max-w-2xl mt-1">
+              Token verifikasi email belum divalidasi. Fitur Konsultasi AI dan Chat Death Battle 1v1 dinonaktifkan guna mematuhi integritas data tiering. Buka tautan di kotak masuk email Anda untuk membuka kunci analitik.
+            </p>
+</div>
+</div>
+<button class="px-space-sm py-space-xs rounded-xl bg-ocean-blue text-surface-container-lowest font-label-md text-label-md font-semibold hover:bg-ocean-blue/90 transition-all flex items-center gap-space-2xs shrink-0 shadow-[0_4px_12px_rgba(0,43,76,0.2)]" onclick="resendEmailVerification()">
+<span class="material-symbols-outlined text-[18px]">forward_to_inbox</span>
+<span>Kirim Ulang Email Verifikasi</span>
+</button>
+</div>
+</section>
+<!-- MAIN TWO-COLUMN SPLIT -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: EDIT PROFILE (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- 2. EDIT PROFILE SECTION -->
+<section class="rounded-3xl bg-surface-container p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),inset_1px_1px_2px_rgba(255,255,255,0.85)] flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-ocean-blue text-[24px]">badge</span>
+<h2 class="font-headline-md text-headline-md text-ocean-blue">Identitas Analis &amp; Profil</h2>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue bg-surface-container-highest px-space-2xs py-1 rounded-lg">ID-SEC-01</span>
+</div>
+<!-- Avatar Clay 3D Module -->
+<div class="flex flex-col sm:flex-row items-center gap-space-md p-space-sm rounded-2xl bg-surface-container-lowest shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)]">
+<div class="relative group">
+<!-- Clay Avatar Circle -->
+<div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-ice-effect via-secondary-fixed to-mint-mist flex items-center justify-center text-ocean-blue shadow-[0_8px_20px_rgba(0,43,76,0.12),inset_2px_2px_4px_rgba(255,255,255,0.9)] transform group-hover:scale-105 transition-transform duration-300">
+<span class="font-display-hero text-display-hero font-extrabold text-ocean-blue select-none">E</span>
+</div>
+<div class="absolute -bottom-2 -right-2 w-8 h-8 rounded-xl bg-summer-orange text-ocean-blue flex items-center justify-center font-bold text-caption-meta shadow-[0_2px_8px_rgba(245,158,113,0.4)]" title="Rank: Tier 1-A Auditor">
+                1-A
+              </div>
+</div>
+<div class="flex flex-col items-center sm:items-start text-center sm:text-left gap-1 flex-1">
+<div class="flex items-center gap-space-2xs">
+<h3 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Ellias</h3>
+<span class="material-symbols-outlined text-ocean-blue text-[18px]">verified</span>
+</div>
+<span class="font-label-md text-label-md text-slate-blue">Auditor Epistemik Tier 1-A • Lead Verificator</span>
+<p class="font-caption-meta text-caption-meta text-slate-blue mt-1">
+                Avatar dihitung secara prosedural berdasarkan identitas kunci kriptografis VSB Studio.
+              </p>
+</div>
+</div>
+<!-- Form Fields -->
+<form class="flex flex-col gap-space-sm" id="profileForm" onsubmit="handleProfileSubmit(event)">
+<!-- Nama Tampilan -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-ocean-blue font-semibold flex items-center justify-between" for="displayName">
+<span>Nama Tampilan Analis</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Tampil di log debat</span>
+</label>
+<div class="relative">
+<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container-lowest text-ocean-blue font-body-md text-body-md shadow-[inset_0px_2px_4px_rgba(0,43,76,0.06)] focus:outline-none focus:ring-2 focus:ring-summer-orange transition-all placeholder-slate-blue" id="displayName" maxlength="32" minlength="3" placeholder="Masukkan nama tampilan..." required="" type="text" value="Ellias"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-slate-blue text-[20px]">person</span>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Minimal 3 karakter, digunakan sebagai nama tanda tangan audit.</span>
+</div>
+<!-- Email (Read-Only) -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-ocean-blue font-semibold flex items-center justify-between" for="userEmail">
+<span>Alamat Email Utama</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span> Terkunci • Keamanan
+                </span>
+</label>
+<div class="relative">
+<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container-high text-slate-blue font-body-md text-body-md shadow-[inset_0px_1px_2px_rgba(0,43,76,0.05)] cursor-not-allowed select-none" id="userEmail" readonly="" type="email" value="ellias.auditor@vsb-arena.id"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-slate-blue text-[20px]">lock_clock</span>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Untuk mengubah email pemulihan, hubungi administrator pusat VSB Epistemic Council.</span>
+</div>
+<!-- Spesialisasi Epistemik & Zona Waktu (2 Cols) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-ocean-blue font-semibold" for="epistemicSpecialty">Gelar • Spesialisasi</label>
+<div class="relative">
+<select class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container-lowest text-ocean-blue font-body-md text-body-md shadow-[inset_0px_2px_4px_rgba(0,43,76,0.06)] focus:outline-none focus:ring-2 focus:ring-summer-orange appearance-none pr-9 cursor-pointer" id="epistemicSpecialty">
+<option selected="" value="tier-1a">Tier 1-A Auditor</option>
+<option value="dimensional">Dimensional Tiering Specialist</option>
+<option value="canonical">Kanonikal Calc Reviewer</option>
+<option value="cosmology">Transfinite Cosmology Analyst</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-slate-blue text-[20px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-ocean-blue font-semibold" for="timezone">Zona Waktu Komputasi</label>
+<div class="relative">
+<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container-high text-slate-blue font-body-md text-body-md shadow-[inset_0px_1px_2px_rgba(0,43,76,0.05)] cursor-not-allowed" id="timezone" readonly="" type="text" value="UTC+07:00 (Asia/Jakarta)"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-slate-blue text-[20px]">schedule</span>
+</div>
+</div>
+</div>
+<!-- Security Assurance Note -->
+<div class="p-space-xs rounded-xl bg-mint-mist/50 flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-ocean-blue text-[18px]">shield</span>
+<span class="font-caption-meta text-caption-meta text-ocean-blue">
+<strong>Prinsip Privasi:</strong> Kata sandi dan hash kredensial tidak pernah ditampilkan maupun disimpan di antarmuka klien ini.
+              </span>
+</div>
+<!-- Action Button -->
+<div class="flex items-center justify-end gap-space-xs pt-space-xs">
+<button class="px-space-md py-space-xs rounded-xl bg-summer-orange text-ocean-blue font-label-md text-label-md font-bold hover:bg-summer-orange/90 active:scale-[0.99] transition-all shadow-[0_4px_12px_rgba(245,158,113,0.35),inset_0_1px_1px_rgba(255,255,255,0.4)] flex items-center gap-space-2xs min-h-[44px]" type="submit">
+<span class="material-symbols-outlined text-[20px]">save</span>
+<span>Simpan Perubahan Profil</span>
+</button>
+</div>
+</form>
+</section>
+<!-- 4. SECURITY & SESSION MANAGEMENT SECTION -->
+<section class="rounded-3xl bg-surface-container p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),inset_1px_1px_2px_rgba(255,255,255,0.85)] flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-ocean-blue text-[24px]">key</span>
+<h2 class="font-headline-md text-headline-md text-ocean-blue">Keamanan &amp; Sesi Aktif</h2>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue bg-surface-container-highest px-space-2xs py-1 rounded-lg">Auth • 2FA Ready</span>
+</div>
+<!-- Password Accordion Trigger -->
+<div class="rounded-2xl bg-surface-container-lowest p-space-sm shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)] flex flex-col gap-space-sm">
+<button class="flex items-center justify-between w-full text-left" onclick="togglePasswordForm()" type="button">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-ocean-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">password</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-ocean-blue">Pembaruan Kata Sandi</h4>
+<p class="font-caption-meta text-caption-meta text-slate-blue">Disarankan memperbarui kata sandi secara berkala setiap 90 hari.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-ocean-blue text-[24px] transition-transform duration-300" id="passwordChevron">expand_more</span>
+</button>
+<!-- Collapsible Form -->
+<form class="hidden pt-space-xs flex flex-col gap-space-sm" id="passwordFormCollapse" onsubmit="handlePasswordChange(event)">
+<!-- Current Password -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-ocean-blue font-semibold" for="currentPassword">Kata Sandi Saat Ini</label>
+<div class="relative">
+<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container text-ocean-blue font-body-md text-body-md shadow-[inset_0px_2px_4px_rgba(0,43,76,0.06)] focus:outline-none focus:ring-2 focus:ring-summer-orange pr-10" id="currentPassword" required="" type="password"/>
+<button class="absolute right-3 top-3 text-slate-blue hover:text-ocean-blue" onclick="togglePasswordVisibility('currentPassword')" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- New Password -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-ocean-blue font-semibold" for="newPassword">Kata Sandi Baru</label>
+<div class="relative">
+<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container text-ocean-blue font-body-md text-body-md shadow-[inset_0px_2px_4px_rgba(0,43,76,0.06)] focus:outline-none focus:ring-2 focus:ring-summer-orange pr-10" id="newPassword" minlength="8" oninput="checkStrength(this.value)" required="" type="password"/>
+<button class="absolute right-3 top-3 text-slate-blue hover:text-ocean-blue" onclick="togglePasswordVisibility('newPassword')" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+<!-- Strength Indicator -->
+<div class="flex items-center gap-space-xs mt-1">
+<div class="flex-1 h-1.5 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full w-0 bg-summer-orange transition-all duration-300" id="strengthBar"></div>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue" id="strengthLabel">Minimal 8 karakter</span>
+</div>
+</div>
+<!-- Confirm New Password -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-ocean-blue font-semibold" for="confirmPassword">Konfirmasi Kata Sandi Baru</label>
+<div class="relative">
+<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container text-ocean-blue font-body-md text-body-md shadow-[inset_0px_2px_4px_rgba(0,43,76,0.06)] focus:outline-none focus:ring-2 focus:ring-summer-orange pr-10" id="confirmPassword" required="" type="password"/>
+<button class="absolute right-3 top-3 text-slate-blue hover:text-ocean-blue" onclick="togglePasswordVisibility('confirmPassword')" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-xs pt-1">
+<button class="px-space-sm py-space-xs rounded-xl text-slate-blue font-label-md text-label-md hover:text-ocean-blue" onclick="togglePasswordForm()" type="button">Batal</button>
+<button class="px-space-md py-space-xs rounded-xl bg-ocean-blue text-surface-container-lowest font-label-md text-label-md font-semibold hover:bg-ocean-blue/90 shadow-[0_4px_12px_rgba(0,43,76,0.2)]" type="submit">Perbarui Sandi</button>
+</div>
+</form>
+</div>
+<!-- Active Sessions Monitor -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-slate-blue uppercase tracking-wider">Perangkat &amp; Sesi Aktif</span>
+<!-- Current Session -->
+<div class="flex items-center justify-between p-space-sm rounded-2xl bg-surface-container-lowest shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)]">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-xl bg-ice-effect text-ocean-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">laptop_mac</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-ocean-blue">Chrome di MacOS</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-mint-mist text-ocean-blue font-semibold">Sesi Ini</span>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Jakarta, Indonesia • IP: 182.253.***.*** (Aktif Sekarang)</span>
+</div>
+</div>
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue font-bold hidden sm:inline">Active</span>
+</div>
+<!-- Past Session Item -->
+<div class="flex items-center justify-between p-space-sm rounded-2xl bg-surface-container-lowest/60">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-slate-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">smartphone</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-ocean-blue">Safari di iOS (iPhone 15)</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Bandung, Indonesia • Login terakhir: Kemarin, 21:14 WIB</span>
+</div>
+</div>
+<button class="font-caption-meta text-caption-meta text-status-error hover:underline font-semibold" onclick="terminateOtherSession(this)">Cabut Akses</button>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN: PREFERENCES & LOGOUT (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- 3. PREFERENCES & SYSTEM SETTINGS -->
+<section class="rounded-3xl bg-surface-container p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),inset_1px_1px_2px_rgba(255,255,255,0.85)] flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-ocean-blue text-[24px]">tune</span>
+<h2 class="font-headline-md text-headline-md text-ocean-blue">Preferensi Antarmuka</h2>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue bg-surface-container-highest px-space-2xs py-1 rounded-lg">UI/UX</span>
+</div>
+<!-- Language Selection -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Bahasa Sistem</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Sinkronisasi Terminologi</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<!-- ID Selected -->
+<button class="p-space-xs rounded-2xl bg-surface-container-lowest text-ocean-blue shadow-[0_4px_12px_rgba(0,43,76,0.06),inset_1px_1px_2px_rgba(255,255,255,0.9)] flex items-center justify-between text-left transition-all ring-2 ring-ocean-blue" id="langIdBtn" onclick="setLanguage('id')" type="button">
+<div class="flex items-center gap-space-2xs">
+<span class="font-label-md text-label-md font-bold">Bahasa Indonesia</span>
+</div>
+<span class="material-symbols-outlined text-ocean-blue text-[20px]" id="langIdIcon">check_circle</span>
+</button>
+<!-- EN Option -->
+<button class="p-space-xs rounded-2xl bg-surface-container-lowest text-slate-blue hover:text-ocean-blue flex items-center justify-between text-left transition-all" id="langEnBtn" onclick="setLanguage('en')" type="button">
+<div class="flex items-center gap-space-2xs">
+<span class="font-label-md text-label-md font-medium">English (US)</span>
+</div>
+<span class="material-symbols-outlined text-slate-blue text-[20px] hidden" id="langEnIcon">check_circle</span>
+</button>
+</div>
+<p class="font-caption-meta text-caption-meta text-slate-blue">
+              Diterapkan secara otomatis ke seluruh navigasi, laporan logika feat, dan metrik dimensional tiering.
+            </p>
+</div>
+<!-- Theme Selection -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Mode Tampilan Ruang Kerja</span>
+<div class="grid grid-cols-3 gap-space-2xs">
+<!-- Light Clay (Active) -->
+<button class="p-space-xs rounded-2xl bg-surface-container-lowest flex flex-col items-center gap-2 text-center ring-2 ring-ocean-blue shadow-[0_4px_12px_rgba(0,43,76,0.06)] transition-all" id="themeLightBtn" onclick="selectTheme('light')" type="button">
+<div class="w-full h-8 rounded-lg bg-glacier-white flex items-center justify-center gap-1 shadow-[inset_0px_1px_2px_rgba(0,43,76,0.08)]">
+<div class="w-3 h-3 rounded-full bg-ice-effect"></div>
+<div class="w-3 h-3 rounded-full bg-summer-orange"></div>
+</div>
+<span class="font-label-sm text-label-sm text-ocean-blue font-bold">Terang (Clay)</span>
+</button>
+<!-- Deep Ocean -->
+<button class="p-space-xs rounded-2xl bg-surface-container-lowest flex flex-col items-center gap-2 text-center opacity-70 hover:opacity-100 transition-all" id="themeDarkBtn" onclick="selectTheme('dark')" type="button">
+<div class="w-full h-8 rounded-lg bg-ocean-blue flex items-center justify-center gap-1">
+<div class="w-3 h-3 rounded-full bg-glacier-white"></div>
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+</div>
+<span class="font-label-sm text-label-sm text-ocean-blue font-medium">Deep Ocean</span>
+</button>
+<!-- System Sync -->
+<button class="p-space-xs rounded-2xl bg-surface-container-lowest flex flex-col items-center gap-2 text-center opacity-70 hover:opacity-100 transition-all" id="themeSystemBtn" onclick="selectTheme('system')" type="button">
+<div class="w-full h-8 rounded-lg bg-gradient-to-r from-glacier-white to-ocean-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-summer-orange">desktop_windows</span>
+</div>
+<span class="font-label-sm text-label-sm text-ocean-blue font-medium">Sistem</span>
+</button>
+</div>
+</div>
+<!-- Notification & Quota Alert Switches -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Notifikasi &amp; Pemantauan Kuota</span>
+<!-- Switch 1 -->
+<div class="p-space-xs rounded-2xl bg-surface-container-lowest flex items-center justify-between gap-space-xs shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)]">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-ocean-blue text-[20px]">notifications_active</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Reset Kuota Harian</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Pengingat saat kuota diisi ulang (00:00 UTC).</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" onchange="toggleSetting(this)" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-ocean-blue shadow-[inset_0px_1px_2px_rgba(0,43,76,0.15)]"></div>
+</label>
+</div>
+<!-- Switch 2 -->
+<div class="p-space-xs rounded-2xl bg-surface-container-lowest flex items-center justify-between gap-space-xs shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)]">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-summer-orange text-[20px]">hourglass_bottom</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-ocean-blue font-semibold">Peringatan Sisa Kuota Kritis</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Peringatkan saat analisis AI tersisa &lt; 3 sesi.</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" onchange="toggleSetting(this)" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-ocean-blue shadow-[inset_0px_1px_2px_rgba(0,43,76,0.15)]"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- 5. LOGOUT & ACCESS TERMINATION ZONE -->
+<section class="rounded-3xl bg-surface-container p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),inset_1px_1px_2px_rgba(255,255,255,0.85)] flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-xs text-status-error">
+<span class="material-symbols-outlined text-[24px]">power_settings_new</span>
+<h2 class="font-headline-md text-headline-md text-ocean-blue">Terminasi Sesi Ruang Kerja</h2>
+</div>
+<p class="font-body-sm text-body-sm text-slate-blue">
+            Keluar dari sesi ini akan mengunci enkripsi lokal antarmuka, menghapus kunci token bearer dari peramban, dan mengarahkan kembali ke gerbang login VSB Studio.
+          </p>
+<div class="p-space-xs rounded-xl bg-surface-container-lowest text-slate-blue font-caption-meta text-caption-meta flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px] text-ocean-blue">history_toggle_off</span>
+<span>Perlindungan kedaluwarsa sesi otomatis aktif setelah 30 menit tidak aktif.</span>
+</div>
+<button class="w-full mt-space-2xs py-space-xs rounded-xl bg-error-container text-error hover:bg-error hover:text-on-error font-label-md text-label-md font-bold transition-all shadow-[0_4px_12px_rgba(217,56,58,0.15)] flex items-center justify-center gap-space-2xs min-h-[44px]" onclick="openLogoutModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span>Keluar dari Akun (Logout)</span>
+</button>
+</section>
+<!-- BRANDING / FOOTER WATERMARK -->
+<div class="p-space-xs text-center flex flex-col items-center gap-1 opacity-75">
+<span class="font-caption-meta text-caption-meta text-slate-blue">© 2025 VSB &amp; Chat Death Battle • Epistemic Powerscaling System</span>
+<span class="font-label-sm text-label-sm text-ocean-blue font-semibold">Creator: Ellias</span>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL: LOGOUT CONFIRMATION -->
+<div class="fixed inset-0 z-50 bg-ocean-blue/60 backdrop-blur-sm hidden items-center justify-center p-space-sm" id="logoutModal">
+<div class="bg-surface-container-lowest rounded-3xl p-space-lg max-w-md w-full shadow-[0_20px_48px_rgba(0,43,76,0.3)] flex flex-col gap-space-sm transform transition-transform">
+<div class="w-12 h-12 rounded-2xl bg-error-container text-status-error flex items-center justify-center shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)]">
+<span class="material-symbols-outlined text-[28px]">logout</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Konfirmasi Pengakhiran Sesi</h3>
+<p class="font-body-sm text-body-sm text-slate-blue">
+          Apakah Anda yakin ingin keluar? Seluruh draf komputasi non-spekulatif yang belum disimpan akan dikunci dalam cache lokal.
+        </p>
+</div>
+<div class="flex items-center justify-end gap-space-xs pt-space-xs">
+<button class="px-space-sm py-space-xs rounded-xl bg-surface-container text-ocean-blue font-label-md text-label-md font-semibold hover:bg-surface-container-high transition-colors" onclick="closeLogoutModal()" type="button">
+          Batal
+        </button>
+<button class="px-space-md py-space-xs rounded-xl bg-status-error text-surface-container-lowest font-label-md text-label-md font-bold hover:bg-status-error/90 shadow-[0_4px_12px_rgba(217,56,58,0.3)] transition-all" onclick="executeLogout()" type="button">
+          Ya, Keluar Sekarang
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // 1. Simulator Switch Verification State
+  function switchVerification(isVerified) {
+    const btnV = document.getElementById('btnStateVerified');
+    const btnR = document.getElementById('btnStateRestricted');
+    const badge = document.getElementById('verificationBadge');
+    const verifiedCard = document.getElementById('verifiedStateCard');
+    const restrictedCard = document.getElementById('restrictedStateCard');
+    const shield = document.getElementById('shieldIcon');
+
+    if (isVerified) {
+      btnV.className = 'px-space-xs py-1 rounded-lg bg-surface-container-lowest text-ocean-blue font-label-sm text-label-sm font-bold shadow-[inset_1px_1px_2px_rgba(255,255,255,0.85)] transition-all';
+      btnR.className = 'px-space-xs py-1 rounded-lg text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm font-medium transition-all';
+
+      badge.className = 'font-label-sm text-label-sm px-space-2xs py-1 rounded-full bg-mint-mist text-ocean-blue font-semibold shadow-[inset_1px_1px_1px_rgba(255,255,255,0.9)] flex items-center gap-1';
+      badge.innerHTML = '<span class="material-symbols-outlined text-[14px]">check_circle</span> Akun Terverifikasi (Email Aktif)';
+
+      shield.textContent = 'verified_user';
+      shield.className = 'material-symbols-outlined text-[32px] text-ocean-blue';
+
+      verifiedCard.classList.remove('hidden');
+      restrictedCard.classList.add('hidden');
+    } else {
+      btnR.className = 'px-space-xs py-1 rounded-lg bg-status-warning text-surface-container-lowest font-label-sm text-label-sm font-bold shadow-[0_2px_6px_rgba(229,133,44,0.3)] transition-all';
+      btnV.className = 'px-space-xs py-1 rounded-lg text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm font-medium transition-all';
+
+      badge.className = 'font-label-sm text-label-sm px-space-2xs py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-semibold shadow-[inset_1px_1px_1px_rgba(255,255,255,0.9)] flex items-center gap-1';
+      badge.innerHTML = '<span class="material-symbols-outlined text-[14px]">cancel</span> Belum Terverifikasi';
+
+      shield.textContent = 'shield_with_heart';
+      shield.className = 'material-symbols-outlined text-[32px] text-status-warning';
+
+      verifiedCard.classList.add('hidden');
+      restrictedCard.classList.remove('hidden');
+    }
+  }
+
+  function resendEmailVerification() {
+    alert("Token konfirmasi baru berhasil dikirimkan ke ellias.auditor@vsb-arena.id. Silakan periksa folder Inbox atau Spam Anda.");
+  }
+
+  // 2. Profile Submission & Confirmed Timestamp
+  function handleProfileSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('displayName').value;
+    const now = new Date();
+    const ts = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC+7';
+
+    document.getElementById('toastTimestamp').textContent = ts;
+    const toast = document.getElementById('saveToast');
+    toast.classList.remove('hidden');
+
+    setTimeout(() => {
+      toast.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
+  }
+
+  // 3. Password Accordion & Strength
+  function togglePasswordForm() {
+    const form = document.getElementById('passwordFormCollapse');
+    const chevron = document.getElementById('passwordChevron');
+    const isHidden = form.classList.contains('hidden');
+    if (isHidden) {
+      form.classList.remove('hidden');
+      chevron.style.transform = 'rotate(180deg)';
+    } else {
+      form.classList.add('hidden');
+      chevron.style.transform = 'rotate(0deg)';
+    }
+  }
+
+  function togglePasswordVisibility(fieldId) {
+    const input = document.getElementById(fieldId);
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  function checkStrength(val) {
+    const bar = document.getElementById('strengthBar');
+    const label = document.getElementById('strengthLabel');
+    if (val.length < 5) {
+      bar.style.width = '20%';
+      bar.className = 'h-full bg-status-error transition-all duration-300';
+      label.textContent = 'Sangat Lemah';
+    } else if (val.length < 8) {
+      bar.style.width = '50%';
+      bar.className = 'h-full bg-status-warning transition-all duration-300';
+      label.textContent = 'Cukup';
+    } else {
+      bar.style.width = '100%';
+      bar.className = 'h-full bg-mint-mist text-ocean-blue transition-all duration-300';
+      label.textContent = 'Kuat (Tervalidasi)';
+    }
+  }
+
+  function handlePasswordChange(e) {
+    e.preventDefault();
+    const p1 = document.getElementById('newPassword').value;
+    const p2 = document.getElementById('confirmPassword').value;
+    if (p1 !== p2) {
+      alert("Kata sandi baru dan konfirmasi kata sandi tidak cocok!");
+      return;
+    }
+    alert("Kata sandi akun berhasil diperbarui secara aman.");
+    togglePasswordForm();
+  }
+
+  function terminateOtherSession(btn) {
+    const parent = btn.closest('.flex.items-center.justify-between');
+    if (parent) {
+      parent.style.opacity = '0.4';
+      parent.style.pointerEvents = 'none';
+      btn.textContent = 'Dicabut';
+    }
+  }
+
+  // 4. Preferences (Language, Theme, Switches)
+  function setLanguage(lang) {
+    const idBtn = document.getElementById('langIdBtn');
+    const enBtn = document.getElementById('langEnBtn');
+    const idIcon = document.getElementById('langIdIcon');
+    const enIcon = document.getElementById('langEnIcon');
+
+    if (lang === 'id') {
+      idBtn.classList.add('ring-2', 'ring-ocean-blue');
+      idIcon.classList.remove('hidden');
+      enBtn.classList.remove('ring-2', 'ring-ocean-blue');
+      enIcon.classList.add('hidden');
+    } else {
+      enBtn.classList.add('ring-2', 'ring-ocean-blue');
+      enIcon.classList.remove('hidden');
+      idBtn.classList.remove('ring-2', 'ring-ocean-blue');
+      idIcon.classList.add('hidden');
+    }
+  }
+
+  function selectTheme(mode) {
+    const light = document.getElementById('themeLightBtn');
+    const dark = document.getElementById('themeDarkBtn');
+    const system = document.getElementById('themeSystemBtn');
+
+    [light, dark, system].forEach(el => {
+      el.classList.remove('ring-2', 'ring-ocean-blue');
+      el.classList.add('opacity-70');
+    });
+
+    if (mode === 'light') {
+      light.classList.add('ring-2', 'ring-ocean-blue');
+      light.classList.remove('opacity-70');
+    } else if (mode === 'dark') {
+      dark.classList.add('ring-2', 'ring-ocean-blue');
+      dark.classList.remove('opacity-70');
+    } else {
+      system.classList.add('ring-2', 'ring-ocean-blue');
+      system.classList.remove('opacity-70');
+    }
+  }
+
+  function toggleSetting(checkbox) {
+    // Micro feedback for toggle states
+    const toast = document.getElementById('saveToast');
+    const now = new Date();
+    document.getElementById('toastTimestamp').textContent = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC+7';
+    toast.classList.remove('hidden');
+  }
+
+  // 5. Logout Modal Logic
+  function openLogoutModal() {
+    const modal = document.getElementById('logoutModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function closeLogoutModal() {
+    const modal = document.getElementById('logoutModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+
+  function executeLogout() {
+    closeLogoutModal();
+    alert("Sesi autentikasi telah dihentikan secara aman. Mengarahkan kembali ke portal otorisasi VSB...");
+  }
+</script></main><footer class="w-full bg-surface-container-low py-space-md shadow-[0_1px_8px_rgba(0,43,76,0.04)]"><div class="w-full px-space-md flex flex-col sm:flex-row items-center justify-between gap-space-xs"><div class="font-caption-meta text-caption-meta text-slate-blue">VSB &amp; Death Battle Epistemic Powerscaling System • Non-speculative Feat Audit Engine</div><div class="font-label-md text-label-md font-semibold text-slate-blue">Creator: Ellias</div></div></footer></div></body></html>

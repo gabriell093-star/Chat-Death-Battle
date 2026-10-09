@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","on-tertiary":"#ffffff","tertiary-container":"#4a1b00","secondary-fixed-dim":"#a2cde0","on-error":"#ffffff","secondary":"#3a6475","inverse-primary":"#a8c9f2","surface-dim":"#d7dadc","glacier-white":"#F5F8FA","on-secondary-fixed":"#001f29","tertiary":"#290c00","on-surface":"#181c1e","surface-variant":"#e0e3e5","status-error":"#D9383A","surface-container-lowest":"#ffffff","on-secondary-container":"#406a7b","primary-fixed-dim":"#a8c9f2","on-tertiary-fixed-variant":"#733511","outline":"#73777f","surface-bright":"#f7fafc","ice-effect":"#C0EBFF","error-container":"#ffdad6","on-error-container":"#93000a","secondary-container":"#bee9fd","summer-orange":"#F59E71","tertiary-fixed":"#ffdbcb","on-primary-fixed-variant":"#27496b","primary-fixed":"#d1e4ff","surface-tint":"#406184","surface":"#f7fafc","status-warning":"#E5852C","primary-container":"#002b4c","on-secondary":"#ffffff","background":"#f7fafc","slate-blue":"#567184","on-primary-fixed":"#001d35","on-tertiary-container":"#cc7c52","tertiary-fixed-dim":"#ffb691","surface-container-highest":"#e0e3e5","inverse-on-surface":"#eef1f3","on-secondary-fixed-variant":"#204c5c","mint-mist":"#DCECE6","on-tertiary-fixed":"#341100","surface-container":"#ebeef0","outline-variant":"#c3c7cf","primary":"#00162b","error":"#ba1a1a","ocean-blue":"#002B4C","surface-container-high":"#e5e9eb","on-background":"#181c1e","on-primary":"#ffffff","secondary-fixed":"#bee9fd","on-surface-variant":"#43474e","on-primary-container":"#7393ba"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-lg":"2rem","space-md":"1.5rem","space-2xs":"0.5rem","margin-mobile":"1rem","space-xl":"3rem","space-xs":"0.75rem","gutter":"1.5rem","gutter-mobile":"0.75rem","space-3xs":"0.25rem","space-sm":"1rem","margin":"2rem"},"fontFamily":{"display-hero-mobile":["Manrope"],"headline-md":["Manrope"],"body-lg":["Manrope"],"body-md":["Manrope"],"data-dense-body":["Inter"],"label-sm":["Inter"],"headline-lg-mobile":["Manrope"],"display-hero":["Manrope"],"label-md":["Inter"],"data-dense-numeric":["Inter"],"body-sm":["Manrope"],"headline-sm":["Manrope"],"caption-meta":["Inter"],"headline-lg":["Manrope"]},"fontSize":{"display-hero-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"data-dense-body":["13px",{"lineHeight":"18px","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"display-hero":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"800"}],"label-md":["13px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"500"}],"data-dense-numeric":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"caption-meta":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface min-h-screen"><div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-40 hidden lg:hidden" id="mobile-drawer-backdrop" onclick="document.getElementById('sidebar-drawer').classList.add('-translate-x-full');this.classList.add('hidden');"></div><aside class="fixed left-0 top-0 h-full w-72 bg-ocean-blue text-glacier-white z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 shadow-[0_8px_24px_-4px_rgba(0,43,76,0.25)]" id="sidebar-drawer"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center justify-between border-b border-slate-blue/20"><div class="flex items-center gap-space-xs"><img alt="VSB Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Uh-Nh77hWqK1LFPpk7SS-5j_r-L06ukqv0XMeO1emfgCPq-8nJCoP084_8DBfUirP5NGtTLRZ4-FbMpd3IQ-6itEnzpwR7gwP202VIETZAMg5daF5eruY_5DQUcjaaX3vGvym_hZK8U7DLF6WHnLa-jrcFLdNAPFii7nQF1iUpW-nPyBzaQUDAwtsdE8yQeYR-_HjYzGSwagFHxB1AUaEGEUuGtF6N-Fo4a8dKAAY230sadGgAXmRfTYyl"/><span class="font-headline-sm text-headline-sm text-glacier-white tracking-tight">VSB Arena</span></div><button class="lg:hidden p-space-3xs text-secondary-fixed-dim hover:text-glacier-white" onclick="document.getElementById('sidebar-drawer').classList.add('-translate-x-full');document.getElementById('mobile-drawer-backdrop').classList.add('hidden');" type="button"><span class="material-symbols-outlined">close</span></button></div><div class="px-space-md pt-space-md pb-space-xs"><span class="font-label-sm text-label-sm text-secondary-fixed-dim uppercase tracking-wider">Navigasi Analisis</span></div><nav class="flex flex-col gap-space-3xs px-space-sm" data-active-classes="bg-ice-effect text-ocean-blue font-headline-sm"><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="beranda" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Beranda</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="konsultasi-ai" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>Konsultasi AI</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="chat-death-battle" href="#"><span class="material-symbols-outlined text-[20px]">swords</span><span>Chat Death Battle</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="riwayat" href="#"><span class="material-symbols-outlined text-[20px]">history</span><span>Riwayat</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="profil-dan-pengaturan" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span><span>Profil &amp; Pengaturan</span></a></nav></div><div class="p-space-md border-t border-slate-blue/20"><div class="bg-primary/50 rounded-xl p-space-sm flex items-center justify-between"><div class="flex flex-col"><span class="font-label-sm text-label-sm text-secondary-fixed-dim">Platform Arsitek</span><span class="font-label-md text-label-md text-glacier-white font-semibold">Creator: Ellias</span></div><span class="material-symbols-outlined text-summer-orange text-[20px]">verified</span></div></div></aside><div class="lg:pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-surface/90 backdrop-blur-xl z-30 shadow-[0_1px_8px_rgba(0,43,76,0.05)]"><div class="h-16 w-full px-space-md lg:px-space-lg flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button class="lg:hidden p-space-2xs text-ocean-blue hover:bg-surface-container rounded-lg" onclick="document.getElementById('sidebar-drawer').classList.remove('-translate-x-full');document.getElementById('mobile-drawer-backdrop').classList.remove('hidden');" type="button"><span class="material-symbols-outlined">menu</span></button><div class="flex items-center gap-space-2xs text-slate-blue font-label-md text-label-md"><span class="hover:text-ocean-blue cursor-pointer">VSB Studio</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-ocean-blue font-semibold">Audit Analisis Feat</span></div></div><div class="flex items-center gap-space-sm"><div class="flex items-center bg-surface-container-high rounded-lg p-space-3xs font-label-sm text-label-sm"><button class="px-space-2xs py-1 rounded bg-ocean-blue text-on-primary font-bold" type="button">ID</button><button class="px-space-2xs py-1 rounded text-on-surface-variant hover:text-on-surface" type="button">EN</button></div><div class="flex items-center bg-surface-container-high rounded-lg p-space-3xs text-on-surface-variant"><button class="p-1 rounded bg-surface text-ocean-blue shadow-sm" type="button"><span class="material-symbols-outlined text-[18px]">light_mode</span></button><button class="p-1 rounded hover:text-ocean-blue" type="button"><span class="material-symbols-outlined text-[18px]">dark_mode</span></button></div><div class="flex items-center gap-space-xs pl-space-2xs border-l border-outline-variant/30"><div class="flex flex-col items-end hidden sm:flex"><span class="font-label-md text-label-md text-on-surface font-semibold">Analis Utama</span><span class="font-label-sm text-label-sm text-summer-orange font-bold uppercase">Tier 1-A Auditor</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_6px_rgba(0,43,76,0.15)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1umNN9tF9qoOgtzbffaUZK6KTMkkcyazEwkBgwiDr8vN8oF4Fje9aQpTQi-Yj4t7OUB9EdJOalsiqUM9ckTJNxxxjOePb_eHqyD4bVVy0DyDc3KpSZYyQ16pNOMbRKKsGMZMC0Fu3Dvxdaxz5c5lIC-PnUU94xQE6Hua7nz9cw0vHAoQoRPLIvyhzmuCVQA_XDQugp7X2Ew2tLVPekzj63G0ZR77xrLbMxIoV3gicc2sahMR6PiY7og"/></div></div></div></header><main class="relative pt-16 w-full flex-1 bg-glacier-white"><div class="flex flex-col w-full">
+<!-- Top Micro Context Bar & Actions -->
+<section class="w-full px-space-md lg:px-space-lg py-space-sm bg-surface-container-low shadow-sm">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-space-sm">
+<div class="flex flex-wrap items-center gap-space-2xs text-slate-blue font-label-md text-label-md">
+<span class="hover:text-ocean-blue cursor-pointer">VSB Studio</span>
+<span class="material-symbols-outlined text-[15px]">chevron_right</span>
+<span class="hover:text-ocean-blue cursor-pointer">Chat Death Battle</span>
+<span class="material-symbols-outlined text-[15px]">chevron_right</span>
+<span class="text-ocean-blue font-semibold">Konfigurasi &amp; Audit Matriks Laga (1v1)</span>
+</div>
+<div class="flex items-center gap-space-xs flex-wrap">
+<div class="flex items-center gap-space-3xs bg-mint-mist text-ocean-blue px-space-xs py-1 rounded-xl shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-ocean-blue" style="font-variation-settings: 'FILL' 1;">gavel</span>
+<span class="font-label-sm text-label-sm font-semibold tracking-wide">SBA Engine v2.4 Aktif</span>
+</div>
+<div class="hidden sm:flex items-center gap-1 text-slate-blue font-caption-meta text-caption-meta">
+<span>Standard Battle Assumptions (Neutral Void)</span>
+</div>
+<div class="flex items-center gap-space-3xs ml-space-xs">
+<button class="flex items-center gap-1 bg-ocean-blue text-on-primary font-label-sm text-label-sm px-space-xs py-1.5 rounded-xl shadow-sm hover:opacity-95 transition-all" id="btn-new-sim">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span>Pertarungan Baru</span>
+</button>
+<button class="flex items-center gap-1 bg-surface-container text-ocean-blue font-label-sm text-label-sm px-space-xs py-1.5 rounded-xl hover:bg-surface-container-high transition-all" id="btn-doc-sba">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+<span>Dokumentasi SBA</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Space -->
+<div class="w-full px-space-md lg:px-space-lg py-space-md max-w-7xl mx-auto flex flex-col gap-space-lg">
+<!-- State Simulation Switcher (Dev & Audit Sandbox Bar) -->
+<div class="w-full bg-surface-container p-space-xs rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-slate-blue text-[20px]">tune</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-ocean-blue font-bold">Simulator Integritas Audit</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Simulasi penanganan respon data powerscaling &amp; edge case</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-space-2xs w-full md:w-auto">
+<label class="font-label-sm text-label-sm text-slate-blue" for="state-selector">Status Komputasi:</label>
+<select class="bg-surface-container-lowest text-ocean-blue font-label-sm text-label-sm rounded-xl px-space-xs py-1.5 shadow-sm focus:outline-none" id="state-selector">
+<option selected="" value="state-normal">Normal / Diverifikasi Lengkap (Goku vs Superman)</option>
+<option value="state-not-found">Karakter C/D: Profil Tidak Ditemukan</option>
+<option value="state-insufficient">Data Tidak Cukup (Tier Spekulatif / Inconclusive)</option>
+<option value="state-api-down">Gangguan Sinkronisasi VSB Core Engine</option>
+</select>
+</div>
+</div>
+<!-- Error/Fallback Warning Banner (Dynamically shown by selector) -->
+<div class="hidden w-full p-space-md rounded-2xl bg-error-container text-on-error-container shadow-sm flex-col gap-space-3xs" id="status-alert-box">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-status-error text-[22px]">warning</span>
+<span class="font-headline-sm text-headline-sm text-on-error-container" id="status-alert-title">Pemberitahuan Sistem</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-error-container" id="status-alert-desc">Deskripsi status fallback.</p>
+</div>
+<!-- STAGE 1 & 2: DUAL COMBATANT SELECTION & VALIDATION SLABS -->
+<section class="grid grid-cols-1 lg:grid-cols-11 gap-space-md items-stretch" id="combatant-selection-zone">
+<!-- Combatant A: Son Goku -->
+<div class="lg:col-span-5 bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-40 h-40 bg-ice-effect/30 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex flex-col gap-space-sm relative z-10">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-slate-blue font-bold">Kombatan Alfa (Primer)</span>
+<span class="flex items-center gap-1 bg-mint-mist text-ocean-blue px-2.5 py-0.5 rounded-full font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+              Kanonik VSB #142
+            </span>
+</div>
+<!-- Combatant Header & Identity -->
+<div class="flex items-start gap-space-sm">
+<img alt="Son Goku" class="w-20 h-20 rounded-2xl object-cover shadow-sm bg-surface-container-high" data-alt="Tactile sculpted portrait of Son Goku in Super Saiyan Full Power stance with golden spiky hair, wearing dark blue and orange martial arts gi, neutral studio illumination, soft depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1-MuEpIJ3mxh_ZEy10aWGGfEUe35rmVKp5G5kHhFWbNCdcwVg4YlS_km7pqROtoyacc5Q_l8lxCXwpPqeuyxRrGc_XHeWlJNRU-BGXJ3ccRh_QTOhf8yHwRZ4DCuINzCpvIZj_NpS8N_iTg3Qj00xzk_B8Zs2PHv25LZIEHcfgdP253e-6NeaJfy4YZ24H_7rA4SoFlilwsTt2nKqiasok2Z9HrQb5HNZqxkWruA4D01HzZbzZsbicw"/>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center gap-space-2xs">
+<span class="font-headline-md text-headline-md text-ocean-blue font-bold truncate">Son Goku</span>
+<span class="font-label-sm text-label-sm text-slate-blue">(孫悟空)</span>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Verse: Dragon Ball (Canon Toriyama Universe)</span>
+<!-- Incarnation Badge & Dropdown -->
+<div class="mt-space-2xs bg-surface-container-low p-space-3xs rounded-xl flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-caption-meta text-caption-meta text-slate-blue">Inkarnasi Terkunci:</span>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">Cell Games Saga (SSJ Full Power)</span>
+</div>
+<button class="text-ocean-blue hover:text-slate-blue p-1 rounded" title="Ganti Inkarnasi">
+<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Chips Selection Alternative -->
+<div class="flex items-center gap-space-3xs flex-wrap">
+<span class="font-caption-meta text-caption-meta text-slate-blue mr-1">Versi lain:</span>
+<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">Saiyan Saga</span>
+<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">Frieza Saga (Namek)</span>
+<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">Buu Saga</span>
+</div>
+<!-- Mini Powerscaling Card -->
+<div class="bg-surface-container-low rounded-2xl p-space-sm flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between pb-space-2xs bg-surface-container-low">
+<span class="font-label-sm text-label-sm text-slate-blue font-semibold">Tingkatan Dimensi (Tier)</span>
+<span class="font-headline-sm text-headline-sm text-ocean-blue font-bold">High 4-C (Large Star Level)</span>
+</div>
+<div class="grid grid-cols-2 gap-space-2xs font-data-dense-body text-data-dense-body text-slate-blue pt-1">
+<div><strong class="text-ocean-blue">AP:</strong> ~2.3×10⁴⁵ Joule (Solar Flare)</div>
+<div><strong class="text-ocean-blue">Speed:</strong> FTL+ (15c - 30c)</div>
+<div><strong class="text-ocean-blue">Daya Tahan:</strong> Large Star level</div>
+<div><strong class="text-ocean-blue">Stamina:</strong> Superhuman (Ki Depletable)</div>
+</div>
+<div class="pt-space-3xs text-slate-blue font-caption-meta text-caption-meta flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">auto_stories</span>
+<span>Rujukan: Manga Bab 390-415 &amp; Daizenshuu 7 hal. 82</span>
+</div>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between">
+<button class="text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm flex items-center gap-1 py-1">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span>Ubah Profil Karakter A</span>
+</button>
+<span class="font-label-sm text-label-sm text-ocean-blue font-semibold bg-ice-effect/60 px-2 py-1 rounded-lg">Verifikasi Valid</span>
+</div>
+</div>
+<!-- Center Pillar: Tactical VS Emblem & Verse Equalization Rules -->
+<div class="lg:col-span-1 flex flex-col items-center justify-center py-space-sm lg:py-0">
+<div class="relative flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-ocean-blue text-on-primary flex flex-col items-center justify-center shadow-lg transform hover:scale-105 transition-all">
+<span class="material-symbols-outlined text-[20px] text-summer-orange">swords</span>
+<span class="font-headline-sm text-headline-sm font-extrabold tracking-tighter leading-none mt-0.5">VS</span>
+</div>
+</div>
+<div class="mt-space-sm bg-surface-container rounded-xl p-space-2xs flex flex-col items-center text-center max-w-[140px]">
+<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">Standardisasi</span>
+<span class="font-label-sm text-label-sm text-ocean-blue font-bold">Verse Eq. ON</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue text-center leading-tight mt-1">Ki ↔ Bio-Energi Radiasi Surya</span>
+</div>
+</div>
+<!-- Combatant B: Superman -->
+<div class="lg:col-span-5 bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-40 h-40 bg-summer-orange/15 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex flex-col gap-space-sm relative z-10">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-slate-blue font-bold">Kombatan Beta (Sekunder)</span>
+<span class="flex items-center gap-1 bg-mint-mist text-ocean-blue px-2.5 py-0.5 rounded-full font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+              Kanonik VSB #088
+            </span>
+</div>
+<!-- Combatant Header & Identity -->
+<div class="flex items-start gap-space-sm">
+<img alt="Superman" class="w-20 h-20 rounded-2xl object-cover shadow-sm bg-surface-container-high" data-alt="Tactile clay style portrait of Post-Crisis Superman with prominent S-shield emblem on dark blue suit, calm analytical expression, crimson cape draped over shoulders, subtle atmospheric lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf2MkjLYSgmpeVXiFHsry26XGXEf-HZEWbC3AtCydyzusZtR8XnCvLQtkx8WDq4ZkuygRuVRSLojCEX9cERDkSOKpVFUZe3I72gl6cO_nCrxtL9PX17oiJAt5b0yz-TyxvZfuBpU80QAHtNabUq1U9pbbc85RaH6N5z9wBo9oRgAeQIp-8Sgi4XkQN7wN1ByE4S2fGLZ_MfhxT9HprMs1_Qo-fhTSzuxVrzUiNnIW8dpfTlPaKEYNTfQ"/>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center gap-space-2xs">
+<span class="font-headline-md text-headline-md text-ocean-blue font-bold truncate">Superman</span>
+<span class="font-label-sm text-label-sm text-slate-blue">(Kal-El / Clark Kent)</span>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Verse: DC Comics (Post-Crisis Prime Canon)</span>
+<!-- Incarnation Badge & Dropdown -->
+<div class="mt-space-2xs bg-surface-container-low p-space-3xs rounded-xl flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-caption-meta text-caption-meta text-slate-blue">Inkarnasi Terkunci:</span>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">Post-Crisis (Mid-Late Era, Base)</span>
+</div>
+<button class="text-ocean-blue hover:text-slate-blue p-1 rounded" title="Ganti Inkarnasi">
+<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Chips Selection Alternative -->
+<div class="flex items-center gap-space-3xs flex-wrap">
+<span class="font-caption-meta text-caption-meta text-slate-blue mr-1">Versi lain:</span>
+<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">Pre-Crisis (Silver Age)</span>
+<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">New 52</span>
+<span class="bg-surface-container text-slate-blue font-label-sm text-label-sm px-2 py-0.5 rounded-lg opacity-70">DC Rebirth</span>
+</div>
+<!-- Mini Powerscaling Card -->
+<div class="bg-surface-container-low rounded-2xl p-space-sm flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between pb-space-2xs bg-surface-container-low">
+<span class="font-label-sm text-label-sm text-slate-blue font-semibold">Tingkatan Dimensi (Tier)</span>
+<span class="font-headline-sm text-headline-sm text-ocean-blue font-bold">4-B hingga 4-A (Solar System Level)</span>
+</div>
+<div class="grid grid-cols-2 gap-space-2xs font-data-dense-body text-data-dense-body text-slate-blue pt-1">
+<div><strong class="text-ocean-blue">AP:</strong> ~1.8×10⁴⁶ Joule (Supernova Hold)</div>
+<div><strong class="text-ocean-blue">Speed:</strong> MFTL+ (&gt;1000c Vacuum)</div>
+<div><strong class="text-ocean-blue">Daya Tahan:</strong> Solar System level</div>
+<div><strong class="text-ocean-blue">Stamina:</strong> Hampir Tak Terbatas (Yellow Sun)</div>
+</div>
+<div class="pt-space-3xs text-slate-blue font-caption-meta text-caption-meta flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">auto_stories</span>
+<span>Rujukan: Action Comics #847, JLA Vol. 3 #72-77</span>
+</div>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between">
+<button class="text-slate-blue hover:text-ocean-blue font-label-sm text-label-sm flex items-center gap-1 py-1">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span>Ubah Profil Karakter B</span>
+</button>
+<span class="font-label-sm text-label-sm text-ocean-blue font-semibold bg-ice-effect/60 px-2 py-1 rounded-lg">Verifikasi Valid</span>
+</div>
+</div>
+</section>
+<!-- STAGE 3: STANDARD BATTLE ASSUMPTIONS (SBA) CONDITIONS CARD -->
+<section class="bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-2xs">
+<div class="flex items-center gap-space-2xs">
+<div class="w-8 h-8 rounded-xl bg-ice-effect text-ocean-blue flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Kondisi Pertarungan Resmi (Parameter SBA Terkunci)</h3>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Parameter baku untuk membatasi spekulasi liar dan bias skenario</span>
+</div>
+</div>
+<div class="flex items-center gap-space-3xs bg-surface-container px-3 py-1.5 rounded-xl text-ocean-blue font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-summer-orange">shield</span>
+<span>Protokol Netral Bebas Eksternalitas</span>
+</div>
+</div>
+<!-- Parameters Bento Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-sm">
+<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-1">
+<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">State Mental</span>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">In-Character (Willing to Kill)</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue leading-snug">Tetap mempertahankan gaya bertarung asli, namun rela membunuh jika situasi mendesak.</span>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-1">
+<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">Arena Pertempuran</span>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">Dimensi Tak Berpenghuni</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue leading-snug">Gurun planet netral, atmosfer 1 atm, matahari kuning 1 AU aktif tanpa hambatan.</span>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-1">
+<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">Jarak &amp; Info Awal</span>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">4.000 Meter • Zero Info</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue leading-snug">Pertemuan pertama tanpa pengetahuan tentang kelemahan biologi atau energi lawan.</span>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-1">
+<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">Perlengkapan Standar</span>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">Kanon Standar Saja</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue leading-snug">Goku: Gi tanpa Senzu Bean. Superman: Kostum standar Kryptonian tanpa sundip gear.</span>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-1">
+<span class="font-caption-meta text-caption-meta text-slate-blue uppercase font-bold">Kondisi Kemenangan</span>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">KO, Mati, atau BFR &gt; 1 Jam</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue leading-snug">Ketidakmampuan bertarung total tanpa bantuan pihak ketiga.</span>
+</div>
+</div>
+</section>
+<!-- REAL-TIME AUDIT INTEGRITY INDICATOR -->
+<div class="w-full bg-surface-container-low rounded-2xl p-space-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-space-xs shadow-sm">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-2.5 rounded-full bg-summer-orange animate-pulse"></div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-ocean-blue font-bold">Status Analisis VSB Core Engine: Diverifikasi Penuh</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Komputasi deterministik selesai dalam 312ms • Berlandaskan 14 thread kalkulasi peer-reviewed &amp; 6 guidebook kanon.</span>
+</div>
+</div>
+<div class="flex items-center gap-space-3xs text-slate-blue font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-ocean-blue">verified_user</span>
+<span>Anti-Slop Epistemic: Tanpa Generator Persentase Arbitrer</span>
+</div>
+</div>
+<!-- STAGE 4: DETAILED STATISTICAL COMPARISON MATRIX (VSB COMPILATION) -->
+<section class="bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-2xs">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Matriks Komparasi Statistik Kanonik</h3>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Penyelarasan metrik fisik, dimensionalitas, kelemahan, dan toleransi hax</span>
+</div>
+<div class="flex items-center gap-space-3xs">
+<button class="bg-surface-container text-ocean-blue font-label-sm text-label-sm px-3 py-1.5 rounded-xl hover:bg-surface-container-high transition-all flex items-center gap-1" id="toggle-dense-view">
+<span class="material-symbols-outlined text-[16px]">view_agenda</span>
+<span>Tampilan Rinci</span>
+</button>
+</div>
+</div>
+<!-- Comparison Matrix Table / Clay Rows -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-data-dense-body text-data-dense-body border-collapse">
+<thead>
+<tr class="bg-surface-container text-ocean-blue font-label-sm text-label-sm">
+<th class="p-space-sm rounded-l-xl w-1/4">Atribut / Metrik Laga</th>
+<th class="p-space-sm w-3/8 text-ocean-blue">Son Goku (Cell Games SSJ)</th>
+<th class="p-space-sm rounded-r-xl w-3/8 text-ocean-blue">Superman (Post-Crisis Base)</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-slate-blue">
+<!-- Row 1: Attack Potency -->
+<tr class="bg-glacier-white">
+<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Attack Potency (AP)</td>
+<td class="p-space-sm">
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">High 4-C (Large Star level)</span>
+<span class="text-caption-meta block">Skala output Kamehameha ~2.3×10⁴⁵ J. Melebihi batas ledakan bintang kelas Frieza Namek.</span>
+<span class="inline-block mt-1 bg-mint-mist text-ocean-blue font-caption-meta text-caption-meta px-2 py-0.5 rounded">Sitasi: Calc #104 (Daizenshuu)</span>
+</td>
+<td class="p-space-sm">
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">4-B ke 4-A (Solar System level)</span>
+<span class="text-caption-meta block">Konsisten menahan &amp; menghasilkan energi ~1.8×10⁴⁶ J (mencegah runtuhnya tata surya dari Mageddon/Imperiex probes).</span>
+<span class="inline-block mt-1 bg-mint-mist text-ocean-blue font-caption-meta text-caption-meta px-2 py-0.5 rounded">Sitasi: Action Comics #847 Calc</span>
+</td>
+</tr>
+<!-- Row 2: Speed -->
+<tr class="bg-surface-container-low">
+<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Kecepatan Tempur &amp; Reaksi</td>
+<td class="p-space-sm">
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">FTL+ (Faster Than Light)</span>
+<span class="text-caption-meta block">Reaksi refleks ~15c hingga 30c. Diperkuat kemampuan Instant Transmission untuk perpindahan koordinat 0-frame.</span>
+</td>
+<td class="p-space-sm">
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">Massively FTL+ (MFTL+)</span>
+<span class="text-caption-meta block">Kecepatan tempur nanosekon dalam atmosfer, mencapai ribuan kali kecepatan cahaya (&gt;1000c) dalam vacuum ruang angkasa.</span>
+</td>
+</tr>
+<!-- Row 3: Durability -->
+<tr class="bg-glacier-white">
+<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Durability (Ketahanan)</td>
+<td class="p-space-sm">
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">Large Star level</span>
+<span class="text-caption-meta block">Dapat menahan ledakan setara energi penghancur bintang masif saat perisai Ki aktif pada kapasitas 100%.</span>
+</td>
+<td class="p-space-sm">
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">Solar System level</span>
+<span class="text-caption-meta block">Kepadatan seluler Kryptonian tahan terhadap radiasi singularitas dan tumbukan benturan benda kosmik padat.</span>
+</td>
+</tr>
+<!-- Row 4: Striking Strength -->
+<tr class="bg-surface-container-low">
+<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Daya Pukul Fisik (Striking)</td>
+<td class="p-space-sm">
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">Class XT (Exaton punch scaling)</span>
+<span class="text-caption-meta block">Fokus pukulan Ki yang terkonsentrasi untuk menembus cangkang Perfect Cell.</span>
+</td>
+<td class="p-space-sm">
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue block">Class Multi-Stellar</span>
+<span class="text-caption-meta block">Mampu menggeser massa planet seukuran bumi dan membelah asteroid padat tanpa bantuan proyektil.</span>
+</td>
+</tr>
+<!-- Row 5: Hax & Abilities -->
+<tr class="bg-glacier-white">
+<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Hax &amp; Kemampuan Taktis</td>
+<td class="p-space-sm">
+<ul class="list-disc pl-4 space-y-1 text-caption-meta">
+<li><strong>Instant Transmission:</strong> Teleportasi instan via penguncian Ki.</li>
+<li><strong>Ki Manipulation:</strong> Kamehameha, Explosive Wave, Kiai (Shockwave).</li>
+<li><strong>Analisis Tempur Instingtif:</strong> Pembaca pola bertarung lawan dalam hitungan detik.</li>
+</ul>
+</td>
+<td class="p-space-sm">
+<ul class="list-disc pl-4 space-y-1 text-caption-meta">
+<li><strong>Heat Vision:</strong> Sinar energi termal mikroskopis hingga tingkat bintang.</li>
+<li><strong>Super-Hearing &amp; Telescopic Vision:</strong> Penginderaan frekuensi tinggi lintas planet.</li>
+<li><strong>Torquasm-Vo:</strong> Seni meditasi Kryptonian untuk resistansi psikis &amp; mental.</li>
+<li><strong>Bio-Electric Aura:</strong> Melindungi pakaian dan benda yang disentuhnya.</li>
+</ul>
+</td>
+</tr>
+<!-- Row 6: Weaknesses & Limitations -->
+<tr class="bg-surface-container-low">
+<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Kelemahan Eksplisit (Kanon)</td>
+<td class="p-space-sm">
+<span class="text-caption-meta block text-status-error font-medium">Penurunan Stamina Signifikan:</span>
+<span class="text-caption-meta block">Penggunaan energi Ki konstan menguras cadangan tubuh biologis manusia/Saiyan. Membutuhkan oksigen untuk bernapas (tidak bisa bertarung di vacuum mutlak).</span>
+</td>
+<td class="p-space-sm">
+<span class="text-caption-meta block text-status-error font-medium">Sensitivitas Sihir &amp; Pengurangan Surya:</span>
+<span class="text-caption-meta block">Rentan jika pasokan matahari kuning diblokir total (meski membutuhkan waktu lama untuk habis). Tidak memiliki perisai alami terhadap sihir sejati.</span>
+</td>
+</tr>
+<!-- Row 7: Reality Warping / Dimensional Tiering -->
+<tr class="bg-glacier-white">
+<td class="p-space-sm font-label-md text-label-md text-ocean-blue font-semibold">Manipulasi Dimensi Lanjutan</td>
+<td class="p-space-sm">
+<span class="bg-surface-container text-slate-blue px-2 py-0.5 rounded font-caption-meta text-caption-meta inline-block">Data Unavailable (Tidak Ada Bukti di Cell Saga)</span>
+</td>
+<td class="p-space-sm">
+<span class="bg-surface-container text-slate-blue px-2 py-0.5 rounded font-caption-meta text-caption-meta inline-block">Data Unavailable (Pada Base Post-Crisis Form)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- STAGE 5: FINAL EPISTEMIC VERDICT & EXECUTIVE REPORT -->
+<section class="bg-surface-container-lowest rounded-[28px] p-space-md lg:p-space-lg shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col gap-space-md">
+<!-- Verdict Header Card -->
+<div class="bg-ice-effect/50 p-space-md rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-14 h-14 rounded-2xl bg-ocean-blue text-on-primary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[28px] text-summer-orange">trophy</span>
+</div>
+<div class="flex flex-col">
+<span class="font-caption-meta text-caption-meta text-slate-blue font-bold uppercase tracking-wider">Hasil Evaluasi Deterministik Laga</span>
+<span class="font-headline-lg text-headline-lg text-ocean-blue font-extrabold leading-tight">Pemenang: Superman (Post-Crisis, Base)</span>
+<span class="font-label-sm text-label-sm text-slate-blue">Probabilitas Kemenangan SBA Netral: Keunggulan Statis Deterministik</span>
+</div>
+</div>
+<div class="flex flex-col sm:items-end">
+<span class="font-caption-meta text-caption-meta text-slate-blue">Klasifikasi Keputusan:</span>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">Mid-High Difficulty (Bukan Neg-Diff)</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Toleransi adaptasi Goku memperpanjang durasi laga</span>
+</div>
+</div>
+<!-- Decisive Factors Breakdown -->
+<div class="flex flex-col gap-space-xs">
+<h4 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Faktor Penentu Utama (Decisive Audit Factors):</h4>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-space-3xs">
+<div class="flex items-center gap-2 text-ocean-blue font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-summer-orange text-[20px]">bolt</span>
+<span>1. Disparitas Kecepatan (Speed Gap)</span>
+</div>
+<p class="font-body-sm text-body-sm text-slate-blue leading-relaxed">
+              Meskipun Goku menguasai <em>Instant Transmission</em> (perpindahan 0-frame), kecepatan reaksi biologis Goku pada Cell Games adalah FTL+ (~15-30c). Reaksi dan manuver pertempuran Superman berada di tingkatan MFTL+ (&gt;1000c). Superman memiliki waktu respons beberapa orde magnitudo lebih cepat untuk mengantisipasi lintasan serangan setelah teleportasi terjadi.
+            </p>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-space-3xs">
+<div class="flex items-center gap-2 text-ocean-blue font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-summer-orange text-[20px]">shield_with_heart</span>
+<span>2. Kesenjangan AP &amp; Durability (High 4-C vs 4-B)</span>
+</div>
+<p class="font-body-sm text-body-sm text-slate-blue leading-relaxed">
+              Kamehameha skala maksimum Goku pada Cell Games (~2.3×10⁴⁵ Joule) berada pada batas Large Star level. Ketahanan Superman Post-Crisis secara konsisten menahan kompresi energi setara Supernova (~1.8×10⁴⁶ Joule). Goku membutuhkan output beruntun di atas batas maksimalnya untuk menembus pertahanan dasar Kryptonian.
+            </p>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-2xl flex flex-col gap-space-3xs">
+<div class="flex items-center gap-2 text-ocean-blue font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-summer-orange text-[20px]">battery_charging_full</span>
+<span>3. Daya Tahan &amp; Asimetri Stamina</span>
+</div>
+<p class="font-body-sm text-body-sm text-slate-blue leading-relaxed">
+              SBA menetapkan keberadaan matahari kuning aktif 1 AU. Selama matahari tersebut bersinar, Superman terus meregenerasi sel dan energi kinetiknya. Sebaliknya, bentuk Super Saiyan Full Power Goku—meski meminimalkan kebocoran Ki—tetap menguras tenaga fisik secara linier seiring waktu.
+            </p>
+</div>
+</div>
+</div>
+<!-- Epistemic Disclaimer Box -->
+<div class="bg-mint-mist/40 p-space-sm rounded-2xl flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-ocean-blue text-[22px] mt-0.5">info</span>
+<div class="flex flex-col gap-1">
+<span class="font-label-md text-label-md text-ocean-blue font-bold">Batasan Epistemik &amp; Spesifisitas Versi:</span>
+<p class="font-body-sm text-body-sm text-slate-blue leading-normal">
+            Hasil audit ini <strong>hanya berlaku secara ketat</strong> untuk parameter inkarnasi yang dipilih: <em>Son Goku (Cell Games Saga SSJ)</em> melawan <em>Superman (Post-Crisis Mid Era Base)</em>. Apabila Goku diganti ke inkarnasi <em>Dragon Ball Super (Ultra Instinct - Tier Low 2-C / 2-C)</em> atau Superman dialihkan ke inkarnasi <em>New 52</em> atau <em>Cosmic Armor</em>, seluruh matriks deterministik berubah secara radikal.
+          </p>
+</div>
+</div>
+<!-- Citations & Reference Deck -->
+<div class="flex flex-col gap-space-2xs pt-space-xs">
+<span class="font-caption-meta text-caption-meta text-slate-blue font-bold uppercase tracking-wider">Dek Rujukan &amp; Audit Trail:</span>
+<div class="flex flex-wrap items-center gap-space-2xs">
+<a class="bg-surface-container px-3 py-1.5 rounded-xl font-label-sm text-label-sm text-ocean-blue hover:bg-surface-container-high transition-all flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">link</span>
+<span>Profil VSB Goku #142 (Cell Arc Revision)</span>
+</a>
+<a class="bg-surface-container px-3 py-1.5 rounded-xl font-label-sm text-label-sm text-ocean-blue hover:bg-surface-container-high transition-all flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">link</span>
+<span>Profil VSB Superman #088 (Post-Crisis Prime)</span>
+</a>
+<a class="bg-surface-container px-3 py-1.5 rounded-xl font-label-sm text-label-sm text-ocean-blue hover:bg-surface-container-high transition-all flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">calculate</span>
+<span>Thread Kalkulasi AP #209: Solar Cell Destruction Scale</span>
+</a>
+<a class="bg-surface-container px-3 py-1.5 rounded-xl font-label-sm text-label-sm text-ocean-blue hover:bg-surface-container-high transition-all flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+<span>DC Comics Canon Guide: Post-Crisis Feat Hierarchy</span>
+</a>
+</div>
+</div>
+<!-- Action Trigger Buttons -->
+<div class="pt-space-sm flex flex-wrap items-center gap-space-xs justify-between">
+<div class="flex flex-wrap items-center gap-space-xs">
+<button class="bg-summer-orange text-ocean-blue font-headline-sm text-headline-sm px-space-md py-space-xs rounded-xl shadow-md hover:opacity-95 transition-all flex items-center gap-2" id="btn-re-evaluate">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+<span>Uji Ulang dengan Modifikasi Kondisi</span>
+</button>
+<button class="bg-ocean-blue text-on-primary font-label-md text-label-md px-space-sm py-space-xs rounded-xl hover:opacity-95 transition-all flex items-center gap-2" id="btn-switch-versions">
+<span class="material-symbols-outlined text-[18px]">transform</span>
+<span>Ganti Versi Inkarnasi (DBS vs Rebirth)</span>
+</button>
+</div>
+<div class="flex items-center gap-space-2xs">
+<button class="bg-surface-container text-ocean-blue font-label-md text-label-md px-space-sm py-space-xs rounded-xl hover:bg-surface-container-high transition-all flex items-center gap-1.5" id="btn-open-consult">
+<span class="material-symbols-outlined text-[18px]">smart_toy</span>
+<span>Buka di Konsultasi AI</span>
+</button>
+<button class="bg-surface-container text-ocean-blue font-label-md text-label-md p-space-xs rounded-xl hover:bg-surface-container-high transition-all" id="btn-save-history" title="Simpan ke Riwayat">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RECENT QUICK COMPARISONS SHORTCUTS (HISTORICAL AUDIT FEED) -->
+<section class="bg-surface-container-low rounded-2xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-slate-blue text-[20px]">history</span>
+<span class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Riwayat Komparasi Terkait Cepat</span>
+</div>
+<a class="font-label-sm text-label-sm text-ocean-blue font-semibold hover:underline" href="#">Lihat Semua Riwayat (142)</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-caption-meta text-caption-meta text-slate-blue">Audit Kemarin • SBA Match</span>
+<span class="bg-mint-mist text-ocean-blue px-2 py-0.5 rounded text-caption-meta font-bold">Selesai</span>
+</div>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">Kizaru (Borsalino) vs Minato Namikaze</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">High 6-A vs 7-A • Putusan: Kizaru (Disparitas AP &amp; Logia Intangibility)</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-caption-meta text-caption-meta text-slate-blue">3 Hari Lalu • Hax Audit</span>
+<span class="bg-mint-mist text-ocean-blue px-2 py-0.5 rounded text-caption-meta font-bold">Selesai</span>
+</div>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">Rimuru Tempest (LN) vs Anos Voldigoad</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Tier 2-A vs 2-A • Putusan: Inconclusive (Acasualty Paradox Equalized)</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-caption-meta text-caption-meta text-slate-blue">1 Minggu Lalu • Cosmic Tier</span>
+<span class="bg-mint-mist text-ocean-blue px-2 py-0.5 rounded text-caption-meta font-bold">Selesai</span>
+</div>
+<span class="font-label-md text-label-md text-ocean-blue font-bold">Thor (Herald of None) vs Vegeta (Ultra Ego)</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Tier Low 2-C vs Low 2-C • Putusan: Thor (God Blast Penetration)</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Toast Notification Template for Micro-interactions -->
+<div class="fixed bottom-6 right-6 z-50 bg-ocean-blue text-on-primary px-space-md py-space-sm rounded-2xl shadow-xl flex items-center gap-space-xs transition-opacity duration-300 opacity-0 pointer-events-none" id="toast-notification">
+<span class="material-symbols-outlined text-summer-orange text-[22px]">check_circle</span>
+<span class="font-label-md text-label-md" id="toast-message">Status berhasil diperbarui</span>
+</div>
+</div>
+<script>
+  (function() {
+    const stateSelector = document.getElementById('state-selector');
+    const statusAlertBox = document.getElementById('status-alert-box');
+    const statusAlertTitle = document.getElementById('status-alert-title');
+    const statusAlertDesc = document.getElementById('status-alert-desc');
+    const combatantSelectionZone = document.getElementById('combatant-selection-zone');
+    const toast = document.getElementById('toast-notification');
+    const toastMsg = document.getElementById('toast-message');
+
+    function showToast(msg) {
+      if (!toast) return;
+      toastMsg.textContent = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 3200);
+    }
+
+    if (stateSelector) {
+      stateSelector.addEventListener('change', function(e) {
+        const val = e.target.value;
+        if (val === 'state-normal') {
+          statusAlertBox.classList.add('hidden');
+          statusAlertBox.classList.remove('flex');
+          combatantSelectionZone.style.opacity = '1';
+          showToast('Mode Audit Normal: Goku (Cell Games) vs Superman (Post-Crisis) Aktif');
+        } else if (val === 'state-not-found') {
+          statusAlertBox.classList.remove('hidden');
+          statusAlertBox.classList.add('flex');
+          statusAlertTitle.textContent = 'Karakter C/D: Profil Tidak Ditemukan (404 Not Found)';
+          statusAlertDesc.textContent = 'Query pencarian "Character C" tidak memiliki entri terverifikasi dalam database VSB. Sistem tidak akan mensintesis profil palsu atau estimasi spekulatif liar. Silakan pilih karakter resmi.';
+          combatantSelectionZone.style.opacity = '0.75';
+          showToast('State: Entri karakter belum terdaftar di kanon VSB');
+        } else if (val === 'state-insufficient') {
+          statusAlertBox.classList.remove('hidden');
+          statusAlertBox.classList.add('flex');
+          statusAlertTitle.textContent = 'Data Tidak Cukup (Status: Inconclusive / Feat Ambigu)';
+          statusAlertDesc.textContent = 'Karakter terdeteksi memiliki feat kontradiktif tanpa konsensus thread kalkulasi resmi. Standar VSB mengunci hasil pada status "Inconclusive" demi menjaga integritas data powerscaling.';
+          combatantSelectionZone.style.opacity = '0.75';
+          showToast('State: Inconclusive Data Integrity Triggered');
+        } else if (val === 'state-api-down') {
+          statusAlertBox.classList.remove('hidden');
+          statusAlertBox.classList.add('flex');
+          statusAlertTitle.textContent = 'Gangguan Sinkronisasi VSB Core Engine';
+          statusAlertDesc.textContent = 'Gagal menyinkronkan thread kalkulasi terbaru secara real-time. Memuat versi cache lokal terverifikasi per 2025-02-15.';
+          combatantSelectionZone.style.opacity = '0.75';
+          showToast('State: Cache fallback diaktifkan');
+        }
+      });
+    }
+
+    // Interactive button micro-triggers
+    const btnSave = document.getElementById('btn-save-history');
+    if (btnSave) {
+      btnSave.addEventListener('click', function() {
+        showToast('Simulasi laga berhasil disimpan ke Riwayat Workspace Anda.');
+      });
+    }
+
+    const btnReEval = document.getElementById('btn-re-evaluate');
+    if (btnReEval) {
+      btnReEval.addEventListener('click', function() {
+        showToast('Menghitung ulang simulasi dengan penyesuaian parameter...');
+      });
+    }
+
+    const btnSwitch = document.getElementById('btn-switch-versions');
+    if (btnSwitch) {
+      btnSwitch.addEventListener('click', function() {
+        showToast('Membuka dialog pemilihan inkarnasi multi-verse...');
+      });
+    }
+
+    const btnConsult = document.getElementById('btn-open-consult');
+    if (btnConsult) {
+      btnConsult.addEventListener('click', function() {
+        showToast('Mengarahkan ke modul Konsultasi AI dengan konteks laga terkunci...');
+      });
+    }
+  })();
+</script></main><footer class="w-full bg-surface-container-low py-space-sm px-space-md lg:px-space-lg shadow-[0_-1px_6px_rgba(0,43,76,0.03)]"><div class="w-full flex flex-col sm:flex-row items-center justify-between gap-space-2xs"><span class="font-label-sm text-label-sm text-slate-blue">© 2025 VSB &amp; Chat Death Battle. Epistemic Powerscaling System.</span><span class="font-label-md text-label-md text-slate-blue font-medium">Creator: Ellias</span></div></footer></div></body></html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-surface":"#2d3133","surface-container-low":"#f1f4f6","on-tertiary":"#ffffff","tertiary-container":"#4a1b00","secondary-fixed-dim":"#a2cde0","on-error":"#ffffff","secondary":"#3a6475","inverse-primary":"#a8c9f2","surface-dim":"#d7dadc","glacier-white":"#F5F8FA","on-secondary-fixed":"#001f29","tertiary":"#290c00","on-surface":"#181c1e","surface-variant":"#e0e3e5","status-error":"#D9383A","surface-container-lowest":"#ffffff","on-secondary-container":"#406a7b","primary-fixed-dim":"#a8c9f2","on-tertiary-fixed-variant":"#733511","outline":"#73777f","surface-bright":"#f7fafc","ice-effect":"#C0EBFF","error-container":"#ffdad6","on-error-container":"#93000a","secondary-container":"#bee9fd","summer-orange":"#F59E71","tertiary-fixed":"#ffdbcb","on-primary-fixed-variant":"#27496b","primary-fixed":"#d1e4ff","surface-tint":"#406184","surface":"#f7fafc","status-warning":"#E5852C","primary-container":"#002b4c","on-secondary":"#ffffff","background":"#f7fafc","slate-blue":"#567184","on-primary-fixed":"#001d35","on-tertiary-container":"#cc7c52","tertiary-fixed-dim":"#ffb691","surface-container-highest":"#e0e3e5","inverse-on-surface":"#eef1f3","on-secondary-fixed-variant":"#204c5c","mint-mist":"#DCECE6","on-tertiary-fixed":"#341100","surface-container":"#ebeef0","outline-variant":"#c3c7cf","primary":"#00162b","error":"#ba1a1a","ocean-blue":"#002B4C","surface-container-high":"#e5e9eb","on-background":"#181c1e","on-primary":"#ffffff","secondary-fixed":"#bee9fd","on-surface-variant":"#43474e","on-primary-container":"#7393ba"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-lg":"2rem","space-md":"1.5rem","space-2xs":"0.5rem","margin-mobile":"1rem","space-xl":"3rem","space-xs":"0.75rem","gutter":"1.5rem","gutter-mobile":"0.75rem","space-3xs":"0.25rem","space-sm":"1rem","margin":"2rem"},"fontFamily":{"display-hero-mobile":["Manrope"],"headline-md":["Manrope"],"body-lg":["Manrope"],"body-md":["Manrope"],"data-dense-body":["Inter"],"label-sm":["Inter"],"headline-lg-mobile":["Manrope"],"display-hero":["Manrope"],"label-md":["Inter"],"data-dense-numeric":["Inter"],"body-sm":["Manrope"],"headline-sm":["Manrope"],"caption-meta":["Inter"],"headline-lg":["Manrope"]},"fontSize":{"display-hero-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"data-dense-body":["13px",{"lineHeight":"18px","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"display-hero":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"800"}],"label-md":["13px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"500"}],"data-dense-numeric":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"caption-meta":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface min-h-screen"><div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-40 hidden lg:hidden" id="mobile-drawer-backdrop" onclick="document.getElementById('sidebar-drawer').classList.add('-translate-x-full');this.classList.add('hidden');"></div><aside class="fixed left-0 top-0 h-full w-72 bg-ocean-blue text-glacier-white z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 shadow-[0_8px_24px_-4px_rgba(0,43,76,0.25)]" id="sidebar-drawer"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center justify-between border-b border-slate-blue/20"><div class="flex items-center gap-space-xs"><img alt="VSB Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Uh-Nh77hWqK1LFPpk7SS-5j_r-L06ukqv0XMeO1emfgCPq-8nJCoP084_8DBfUirP5NGtTLRZ4-FbMpd3IQ-6itEnzpwR7gwP202VIETZAMg5daF5eruY_5DQUcjaaX3vGvym_hZK8U7DLF6WHnLa-jrcFLdNAPFii7nQF1iUpW-nPyBzaQUDAwtsdE8yQeYR-_HjYzGSwagFHxB1AUaEGEUuGtF6N-Fo4a8dKAAY230sadGgAXmRfTYyl"/><span class="font-headline-sm text-headline-sm text-glacier-white tracking-tight">VSB Arena</span></div><button class="lg:hidden p-space-3xs text-secondary-fixed-dim hover:text-glacier-white" onclick="document.getElementById('sidebar-drawer').classList.add('-translate-x-full');document.getElementById('mobile-drawer-backdrop').classList.add('hidden');" type="button"><span class="material-symbols-outlined">close</span></button></div><div class="px-space-md pt-space-md pb-space-xs"><span class="font-label-sm text-label-sm text-secondary-fixed-dim uppercase tracking-wider">Navigasi Analisis</span></div><nav class="flex flex-col gap-space-3xs px-space-sm" data-active-classes="bg-ice-effect text-ocean-blue font-headline-sm"><a aria-current="page" class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl transition-all bg-ice-effect text-ocean-blue font-headline-sm" data-path="beranda" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Beranda</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="konsultasi-ai" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>Konsultasi AI</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="chat-death-battle" href="#"><span class="material-symbols-outlined text-[20px]">swords</span><span>Chat Death Battle</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="riwayat" href="#"><span class="material-symbols-outlined text-[20px]">history</span><span>Riwayat</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="profil-dan-pengaturan" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span><span>Profil &amp; Pengaturan</span></a></nav></div><div class="p-space-md border-t border-slate-blue/20"><div class="bg-primary/50 rounded-xl p-space-sm flex items-center justify-between"><div class="flex flex-col"><span class="font-label-sm text-label-sm text-secondary-fixed-dim">Platform Arsitek</span><span class="font-label-md text-label-md text-glacier-white font-semibold">Creator: Ellias</span></div><span class="material-symbols-outlined text-summer-orange text-[20px]">verified</span></div></div></aside><div class="lg:pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-surface/90 backdrop-blur-xl z-30 shadow-[0_1px_8px_rgba(0,43,76,0.05)]"><div class="h-16 w-full px-space-md lg:px-space-lg flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button class="lg:hidden p-space-2xs text-ocean-blue hover:bg-surface-container rounded-lg" onclick="document.getElementById('sidebar-drawer').classList.remove('-translate-x-full');document.getElementById('mobile-drawer-backdrop').classList.remove('hidden');" type="button"><span class="material-symbols-outlined">menu</span></button><div class="flex items-center gap-space-2xs text-slate-blue font-label-md text-label-md"><span class="hover:text-ocean-blue cursor-pointer">VSB Studio</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-ocean-blue font-semibold">Audit Analisis Feat</span></div></div><div class="flex items-center gap-space-sm"><div class="flex items-center bg-surface-container-high rounded-lg p-space-3xs font-label-sm text-label-sm"><button class="px-space-2xs py-1 rounded bg-ocean-blue text-on-primary font-bold" type="button">ID</button><button class="px-space-2xs py-1 rounded text-on-surface-variant hover:text-on-surface" type="button">EN</button></div><div class="flex items-center bg-surface-container-high rounded-lg p-space-3xs text-on-surface-variant"><button class="p-1 rounded bg-surface text-ocean-blue shadow-sm" type="button"><span class="material-symbols-outlined text-[18px]">light_mode</span></button><button class="p-1 rounded hover:text-ocean-blue" type="button"><span class="material-symbols-outlined text-[18px]">dark_mode</span></button></div><div class="flex items-center gap-space-xs pl-space-2xs border-l border-outline-variant/30"><div class="flex flex-col items-end hidden sm:flex"><span class="font-label-md text-label-md text-on-surface font-semibold">Analis Utama</span><span class="font-label-sm text-label-sm text-summer-orange font-bold uppercase">Tier 1-A Auditor</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_6px_rgba(0,43,76,0.15)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1umNN9tF9qoOgtzbffaUZK6KTMkkcyazEwkBgwiDr8vN8oF4Fje9aQpTQi-Yj4t7OUB9EdJOalsiqUM9ckTJNxxxjOePb_eHqyD4bVVy0DyDc3KpSZYyQ16pNOMbRKKsGMZMC0Fu3Dvxdaxz5c5lIC-PnUU94xQE6Hua7nz9cw0vHAoQoRPLIvyhzmuCVQA_XDQugp7X2Ew2tLVPekzj63G0ZR77xrLbMxIoV3gicc2sahMR6PiY7og"/></div></div></div></header><main class="relative pt-16 w-full flex-1 bg-glacier-white"><div class="flex flex-col w-full">
+<section class="relative w-full overflow-hidden bg-glacier-white px-space-md lg:px-space-lg pt-space-lg pb-space-xl">
+<div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+<div class="flex flex-col gap-space-xs max-w-4xl">
+<div class="inline-flex items-center gap-space-2xs bg-surface-container-high w-fit px-space-xs py-1 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-ocean-blue">verified_user</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-ocean-blue font-bold">Standard Metrik VS Battles Wiki</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">· Sistem Epistemik 2025</span>
+</div>
+<h1 class="font-display-hero text-display-hero text-primary tracking-tight text-balance">
+          Analisis Karakter &amp; Simulasi Death Battle Berbasis Data VSB
+        </h1>
+<p class="font-body-lg text-body-lg text-slate-blue max-w-3xl text-balance">
+          Platform analitis bertenaga AI yang membedah tiering, kalkulasi feat, dan simulasi pertarungan secara transparan berdasarkan basis pengetahuan VS Battles Wiki.
+        </p>
+</div>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-md pt-space-xs">
+<a class="group flex items-center justify-between sm:justify-start gap-space-sm px-space-md py-space-xs rounded-2xl bg-summer-orange text-ocean-blue shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200" data-path="konsultasi-ai" href="#">
+<div class="flex flex-col text-left">
+<span class="font-headline-sm text-headline-sm font-bold tracking-tight text-ocean-blue">Konsultasi AI</span>
+<span class="font-caption-meta text-caption-meta text-ocean-blue/80 font-medium">Tanya tier, statistik &amp; feat</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-white/30 flex items-center justify-center text-ocean-blue group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">smart_toy</span>
+</div>
+</a>
+<a class="group flex items-center justify-between sm:justify-start gap-space-sm px-space-md py-space-xs rounded-2xl bg-ocean-blue text-glacier-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200" data-path="chat-death-battle" href="#">
+<div class="flex flex-col text-left">
+<span class="font-headline-sm text-headline-sm font-bold tracking-tight text-glacier-white">Mulai Death Battle</span>
+<span class="font-caption-meta text-caption-meta text-secondary-fixed-dim font-medium">Simulasi komparatif 1 vs 1</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-ice-effect/20 flex items-center justify-center text-ice-effect group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">swords</span>
+</div>
+</a>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md pt-space-sm">
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-3xl p-space-md shadow-md flex flex-col justify-between gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-2xs">
+<span class="w-2.5 h-2.5 rounded-full bg-summer-orange"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-blue font-semibold">Live Sandbox Preview</span>
+</div>
+<div class="flex items-center gap-space-3xs bg-surface-container px-space-2xs py-1 rounded-lg">
+<span class="font-caption-meta text-caption-meta font-medium text-ocean-blue">Standard SBA 2025</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-space-2xs bg-surface-container-low p-space-sm rounded-2xl">
+<div class="flex items-center gap-space-2xs">
+<span class="font-label-md text-label-md font-bold text-ocean-blue">Combatant Alpha</span>
+<span class="px-1.5 py-0.5 rounded bg-mint-mist text-[10px] font-bold text-[#1E5945]">Tier 2-C</span>
+</div>
+<p class="font-data-dense-body text-data-dense-body text-slate-blue">Kalkulasi AP: Low Complex Multiverse Level (Kinetic Vector Inversion feat)</p>
+<div class="flex items-center gap-space-3xs text-[11px] text-slate-blue mt-auto">
+<span class="material-symbols-outlined text-[14px] text-ocean-blue">verified</span>
+<span>Sumber: VSB Canon Profile #810</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-2xs bg-surface-container-low p-space-sm rounded-2xl">
+<div class="flex items-center gap-space-2xs">
+<span class="font-label-md text-label-md font-bold text-ocean-blue">Combatant Beta</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-container text-[10px] font-bold text-ocean-blue">Tier 2-C</span>
+</div>
+<p class="font-data-dense-body text-data-dense-body text-slate-blue">Kecepatan: Immeasurable (Dimensional Warp Shift standard)</p>
+<div class="flex items-center gap-space-3xs text-[11px] text-slate-blue mt-auto">
+<span class="material-symbols-outlined text-[14px] text-ocean-blue">verified</span>
+<span>Sumber: VSB Canon Profile #492</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container p-space-xs rounded-xl flex items-center justify-between text-slate-blue">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[18px] text-summer-orange">shield_with_heart</span>
+<span class="font-caption-meta text-caption-meta">Cross-Dimensional Scaling: Verse Equalization Aktif</span>
+</div>
+<span class="font-caption-meta text-caption-meta font-semibold text-ocean-blue">Deterministic Bias: 0.00%</span>
+</div>
+</div>
+<div class="lg:col-span-5 bg-ocean-blue text-glacier-white rounded-3xl p-space-md shadow-md flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-3xs">
+<div class="flex items-center gap-space-2xs text-secondary-fixed-dim">
+<span class="material-symbols-outlined text-[18px]">balance</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Tolak Persentase Spekulatif</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-glacier-white font-bold">
+              Kemenangan Berbasis Bukti Nyata
+            </h3>
+<p class="font-body-sm text-body-sm text-secondary-fixed-dim/90">
+              Sistem tidak melempar dadu atau mengarang skor 54% vs 46%. Setiap argumen ditakar berdasarkan interaksi Hax, Dimensional Tiering, dan keterbatasan kanonik.
+            </p>
+</div>
+<div class="flex flex-col gap-space-2xs bg-primary/60 p-space-sm rounded-2xl">
+<div class="flex items-center justify-between text-secondary-fixed-dim">
+<span class="font-caption-meta text-caption-meta">Validasi Canon VSB</span>
+<span class="font-caption-meta text-caption-meta font-semibold text-summer-orange">Strict Epistemic</span>
+</div>
+<div class="w-full bg-slate-blue/30 h-2 rounded-full overflow-hidden">
+<div class="bg-ice-effect h-full w-[100%]"></div>
+</div>
+<span class="font-caption-meta text-caption-meta text-secondary-fixed-dim/70">
+              Atribut tidak tertera akan dilabeli "Data Unavailable" secara transparan.
+            </span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full bg-surface-container-low px-space-md lg:px-space-lg py-space-xl">
+<div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+<div class="flex flex-col gap-space-3xs">
+<div class="flex items-center gap-space-2xs text-ocean-blue">
+<span class="material-symbols-outlined text-[20px]">fact_check</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-bold">Integritas Epistemik</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary font-bold">
+          Prinsip &amp; Batasan Sistem Analisis
+        </h2>
+<p class="font-body-md text-body-md text-slate-blue max-w-2xl">
+          Pemisahan ketat tiga lapisan informasi untuk memastikan seluruh kesimpulan Death Battle dapat dipertanggungjawabkan secara logis.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-lowest p-space-md rounded-3xl shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="w-12 h-12 rounded-2xl bg-mint-mist flex items-center justify-center text-[#1E5945]">
+<span class="material-symbols-outlined text-[26px]">task_alt</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="px-2 py-0.5 rounded-full bg-mint-mist text-[#1E5945] font-label-sm text-label-sm w-fit font-bold">Tingkat 1</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-ocean-blue">Fakta Terverifikasi Canon</h3>
+</div>
+<p class="font-body-sm text-body-sm text-slate-blue">
+              Statistik, tier dimensional, dan feat resmi yang telah diaudit dan disepakati dalam profil VS Battles Wiki. Bersumber langsung dari bab, episode, atau kalkulasi kanon.
+            </p>
+</div>
+<div class="bg-surface-container-low p-space-xs rounded-xl flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px] text-[#1E5945]">verified</span>
+<span class="font-caption-meta text-caption-meta font-medium text-slate-blue">Status: Zero Fabrication</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-3xl shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="w-12 h-12 rounded-2xl bg-ice-effect flex items-center justify-center text-ocean-blue">
+<span class="material-symbols-outlined text-[26px]">psychology</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-ocean-blue font-label-sm text-label-sm w-fit font-bold">Tingkat 2</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-ocean-blue">Inferensi Komputasional AI</h3>
+</div>
+<p class="font-body-sm text-body-sm text-slate-blue">
+              Deduksi rasional ketika dua kemampuan fiksi yang berbeda semesta bersinggungan. AI menganalisis interaksi kausalitas, resistansi hax, dan kecepatan reaksi tanpa bias subjektif.
+            </p>
+</div>
+<div class="bg-surface-container-low p-space-xs rounded-xl flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px] text-ocean-blue">neurology</span>
+<span class="font-caption-meta text-caption-meta font-medium text-slate-blue">Status: Transparent Logical Chain</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-3xl shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center text-slate-blue">
+<span class="material-symbols-outlined text-[26px]">tune</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-slate-blue font-label-sm text-label-sm w-fit font-bold">Tingkat 3</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-ocean-blue">Asumsi Pertarungan (SBA)</h3>
+</div>
+<p class="font-body-sm text-body-sm text-slate-blue">
+              Standar parameter pertarungan: Standard Battle Assumptions (SBA), arena netral, penyesuaian energi (Cosmology Equalization), serta batas kesiapan (Bloodlust vs In-Character).
+            </p>
+</div>
+<div class="bg-surface-container-low p-space-xs rounded-xl flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px] text-slate-blue">gavel</span>
+<span class="font-caption-meta text-caption-meta font-medium text-slate-blue">Status: Explicitly Declared</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container p-space-md rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-summer-orange text-[24px]">info</span>
+<span class="font-body-sm text-body-sm text-ocean-blue font-medium">
+            Tidak ada skor presentase fiktif. Jika data feat sebuah versi karakter tidak tertera di VSB, antarmuka akan menampilkan tanda <strong>Data Unavailable</strong>.
+          </span>
+</div>
+<button class="px-space-sm py-1.5 rounded-xl bg-surface-container-highest text-ocean-blue font-label-sm text-label-sm hover:bg-surface-container-low transition-colors font-bold whitespace-nowrap" onclick="document.getElementById('audit-detail').classList.toggle('hidden')" type="button">
+          Lihat Protokol
+        </button>
+</div>
+<div class="hidden bg-surface-container-lowest p-space-md rounded-2xl shadow-sm" id="audit-detail">
+<h4 class="font-headline-sm text-headline-sm font-bold text-ocean-blue mb-space-2xs">Standar Audit Feat &amp; Kalkulasi</h4>
+<p class="font-body-sm text-body-sm text-slate-blue mb-space-xs">
+          Setiap entri feat yang diproses melalui VSB Arena mematuhi panduan evaluasi VS Battles Wiki:
+        </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-xs font-data-dense-body text-data-dense-body text-slate-blue">
+<div class="p-space-2xs bg-surface-container-low rounded-lg">1. Kalkulasi Joule untuk Attack Potency harus diverifikasi staf VSB.</div>
+<div class="p-space-2xs bg-surface-container-low rounded-lg">2. Anti-feat ditimbang terhadap konsistensi naratif seluruh karya.</div>
+<div class="p-space-2xs bg-surface-container-low rounded-lg">3. Dimensional Tiering wajib melampirkan bukti ontologis struktur semesta.</div>
+<div class="p-space-2xs bg-surface-container-low rounded-lg">4. Speed blitz hanya diakui jika perbedaan tier kecepatan melebihi margin 4x.</div>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full bg-glacier-white px-space-md lg:px-space-lg py-space-xl">
+<div class="max-w-7xl mx-auto flex flex-col gap-space-xl">
+<div class="flex flex-col gap-space-3xs text-center items-center">
+<div class="flex items-center gap-space-2xs text-summer-orange">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-bold">Dua Modul Inti</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary font-bold">
+          Eksplorasi Kekuatan &amp; Simulasi Epik
+        </h2>
+<p class="font-body-md text-body-md text-slate-blue max-w-xl">
+          Pilih jalur analisis yang Anda butuhkan: konsultasi eksploratif satu karakter atau pertempuran komparatif 1 vs 1.
+        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
+<div class="bg-surface-container-lowest rounded-3xl p-space-lg shadow-md flex flex-col justify-between gap-space-md relative overflow-hidden">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="w-14 h-14 rounded-2xl bg-ice-effect flex items-center justify-center text-ocean-blue">
+<span class="material-symbols-outlined text-[30px]">smart_toy</span>
+</div>
+<span class="px-space-xs py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-ocean-blue font-bold">Modul 01</span>
+</div>
+<div class="flex flex-col gap-space-3xs">
+<h3 class="font-headline-md text-headline-md font-bold text-ocean-blue">Konsultasi AI Powerscaling</h3>
+<p class="font-body-md text-body-md text-slate-blue">
+                Dialog interaktif mengenai profil karakter tunggal. AI menyajikan telaah mendalam terkait hierarki kosmologi, Attack Potency (AP), Speed, Durability, dan katalog resistansi.
+              </p>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<div class="flex items-center gap-space-xs bg-surface-container-low p-space-xs rounded-xl">
+<span class="material-symbols-outlined text-ocean-blue text-[20px]">toggle_on</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-ocean-blue">Mode Ringkas vs Audit Mendalam</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Beralih antara rangkuman cepat atau inspeksi bukti bab demi bab</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-low p-space-xs rounded-xl">
+<span class="material-symbols-outlined text-ocean-blue text-[20px]">speed</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-ocean-blue">Katalog Metrik VSB Lengkap</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Penelusuran Attack Potency, Striking Strength, Lifting Strength &amp; Hax</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-low p-space-xs rounded-xl">
+<span class="material-symbols-outlined text-ocean-blue text-[20px]">menu_book</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-ocean-blue">Rujukan Halaman Resmi</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Tautan sitasi langsung ke basis pengetahuan VS Battles Wiki</span>
+</div>
+</div>
+</div>
+</div>
+<a class="mt-space-sm w-full py-space-xs rounded-xl bg-ice-effect text-ocean-blue font-headline-sm text-headline-sm font-bold flex items-center justify-center gap-space-2xs hover:bg-secondary-fixed transition-colors" data-path="konsultasi-ai" href="#">
+<span>Buka Ruang Konsultasi</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</a>
+</div>
+<div class="bg-surface-container-lowest rounded-3xl p-space-lg shadow-md flex flex-col justify-between gap-space-md relative overflow-hidden">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="w-14 h-14 rounded-2xl bg-tertiary-fixed flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined text-[30px]">swords</span>
+</div>
+<span class="px-space-xs py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-ocean-blue font-bold">Modul 02</span>
+</div>
+<div class="flex flex-col gap-space-3xs">
+<h3 class="font-headline-md text-headline-md font-bold text-ocean-blue">Simulasi Death Battle 1v1</h3>
+<p class="font-body-md text-body-md text-slate-blue">
+                Perbandingan matriks komparatif dua karakter dengan 4 langkah analisis terstruktur tanpa asumsi sepihak.
+              </p>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<div class="flex items-start gap-space-xs bg-surface-container-low p-space-xs rounded-xl">
+<span class="w-6 h-6 rounded-full bg-ocean-blue text-glacier-white text-[12px] font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-ocean-blue">Pilih Karakter &amp; Inkarnasi Versi A</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Tentukan kunci form spesifik (cth: Pre-Crisis, EoS, Awakening)</span>
+</div>
+</div>
+<div class="flex items-start gap-space-xs bg-surface-container-low p-space-xs rounded-xl">
+<span class="w-6 h-6 rounded-full bg-ocean-blue text-glacier-white text-[12px] font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-ocean-blue">Pilih Karakter &amp; Versi B</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Sinkronisasi parameter kanonisasi dari data VSB</span>
+</div>
+</div>
+<div class="flex items-start gap-space-xs bg-surface-container-low p-space-xs rounded-xl">
+<span class="w-6 h-6 rounded-full bg-ocean-blue text-glacier-white text-[12px] font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-ocean-blue">Atur Aturan VSB &amp; Lingkungan</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">SBA default, verse equal, jarak awal, atau bloodlust</span>
+</div>
+</div>
+<div class="flex items-start gap-space-xs bg-surface-container-low p-space-xs rounded-xl">
+<span class="w-6 h-6 rounded-full bg-summer-orange text-ocean-blue text-[12px] font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-ocean-blue">Dapatkan Laporan Komparatif Transparan</span>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Kesimpulan determinan dengan sitasi feat dan disclaimer batas data</span>
+</div>
+</div>
+</div>
+</div>
+<a class="mt-space-sm w-full py-space-xs rounded-xl bg-summer-orange text-ocean-blue font-headline-sm text-headline-sm font-bold flex items-center justify-center gap-space-2xs hover:shadow-md transition-shadow" data-path="chat-death-battle" href="#">
+<span>Konfigurasi Arena 1v1</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full bg-surface-container-low px-space-md lg:px-space-lg py-space-xl">
+<div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm">
+<div class="flex flex-col gap-space-3xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-bold text-ocean-blue">Akses Langsung Ruang Kerja</span>
+<h2 class="font-headline-lg text-headline-lg font-bold text-primary">Navigasi Cepat Workspace</h2>
+</div>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Pilih instrumen analisis yang ingin dibuka</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-lowest p-space-md rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-2xs">
+<div class="w-10 h-10 rounded-xl bg-ice-effect flex items-center justify-center text-ocean-blue">
+<span class="material-symbols-outlined text-[22px]">smart_toy</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-ocean-blue">Modul Konsultasi AI</h3>
+<p class="font-body-sm text-body-sm text-slate-blue">
+              Ajukan pertanyaan seputar stat, hax, dan kalkulasi energi suatu karakter.
+            </p>
+</div>
+<a class="flex items-center justify-between text-ocean-blue font-label-md text-label-md font-bold pt-space-xs hover:text-summer-orange transition-colors" data-path="konsultasi-ai" href="#">
+<span>Masuk Konsultasi</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</a>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-2xs">
+<div class="w-10 h-10 rounded-xl bg-secondary-container flex items-center justify-center text-ocean-blue">
+<span class="material-symbols-outlined text-[22px]">swords</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-ocean-blue">Chat Death Battle</h3>
+<p class="font-body-sm text-body-sm text-slate-blue">
+              Adu dua petarung fiksi dalam simulasi berbasis aturan SBA terverifikasi.
+            </p>
+</div>
+<a class="flex items-center justify-between text-ocean-blue font-label-md text-label-md font-bold pt-space-xs hover:text-summer-orange transition-colors" data-path="chat-death-battle" href="#">
+<span>Masuk Arena Battle</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</a>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-2xs">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-ocean-blue">
+<span class="material-symbols-outlined text-[22px]">history</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-ocean-blue">Riwayat &amp; Log Analisis</h3>
+<p class="font-body-sm text-body-sm text-slate-blue">
+              Akses kembali perdebatan lampau, catatan feat, dan resume pertarungan tersimpan.
+            </p>
+</div>
+<a class="flex items-center justify-between text-ocean-blue font-label-md text-label-md font-bold pt-space-xs hover:text-summer-orange transition-colors" data-path="riwayat" href="#">
+<span>Buka Arsip Riwayat</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full bg-ocean-blue text-glacier-white px-space-md lg:px-space-lg py-space-lg">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex flex-col gap-1 text-center md:text-left">
+<span class="font-headline-sm text-headline-sm font-bold text-glacier-white">Siap Menguji Skala Kekuatan?</span>
+<span class="font-body-sm text-body-sm text-secondary-fixed-dim">Mulai eksplorasi tanpa bias fandom dengan epistemologi VS Battles Wiki.</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<a class="px-space-md py-space-xs rounded-xl bg-summer-orange text-ocean-blue font-label-md text-label-md font-bold shadow-md hover:shadow-lg transition-shadow" data-path="konsultasi-ai" href="#">
+          Jalankan Konsultasi Sekarang
+        </a>
+</div>
+</div>
+</section>
+</div></main><footer class="w-full bg-surface-container-low py-space-sm px-space-md lg:px-space-lg shadow-[0_-1px_6px_rgba(0,43,76,0.03)]"><div class="w-full flex flex-col sm:flex-row items-center justify-between gap-space-2xs"><span class="font-label-sm text-label-sm text-slate-blue">© 2025 VSB &amp; Chat Death Battle. Epistemic Powerscaling System.</span><span class="font-label-md text-label-md text-slate-blue font-medium">Creator: Ellias</span></div></footer></div></body></html>
