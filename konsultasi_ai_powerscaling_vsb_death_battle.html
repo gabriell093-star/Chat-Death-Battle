@@ -200,7 +200,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 <div class="flex items-center justify-between px-space-2xs pt-1 text-slate-blue font-caption-meta text-caption-meta">
 <span class="flex items-center gap-1">
 <span class="material-symbols-outlined text-mint-mist text-[14px]">shield</span>
-            Dilindungi Anti-Slop Filter &amp; Standard Battle Assumptions
+            Jawaban memisahkan sumber yang ditemukan dari analisis dan keterbatasan data.
           </span>
 <span class="font-medium text-ocean-blue">Creator: Ellias</span>
 </div>
@@ -311,6 +311,11 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
     output.classList.remove('hidden');
   }
 
+  function redirectToConsultLogin() {
+    const next = window.location.pathname.replace(/^\\/+/, '') + window.location.search;
+    window.location.replace('portal_autentikasi_epistemik_vsb_death_battle.html?next=' + encodeURIComponent(next));
+  }
+
   async function initConsultAuth() {
     if (!window.supabase || typeof window.supabase.createClient !== 'function') {
       showStatus('error', 'Library Supabase tidak dapat dimuat. Periksa koneksi lalu muat ulang halaman.');
@@ -322,7 +327,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
     });
     const { data, error } = await client.auth.getSession();
     if (error || !data.session || !data.session.user) {
-      window.location.replace('portal_autentikasi_epistemik_vsb_death_battle.html');
+      redirectToConsultLogin();
       return null;
     }
     if (!data.session.user.email_confirmed_at) {
