@@ -72,76 +72,29 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
     }
 
     function searchAuditCards() {
-      const query = document.getElementById('search-audit-input').value.toLowerCase().trim();
-      const allCards = document.querySelectorAll('.history-card');
-      let visibleCount = 0;
-
-      allCards.forEach(c => {
-        const text = c.innerText.toLowerCase();
-        const type = c.getAttribute('data-activity-type');
+      const query = (document.getElementById('search-audit-input')?.value || '').toLowerCase().trim();
+      const cards = document.querySelectorAll('.history-card');
+      let visible = 0;
+      cards.forEach(function(card) {
+        const type = card.getAttribute('data-activity-type');
         const matchesTab = activeAuditTab === 'all' || type === activeAuditTab;
-        const matchesQuery = text.includes(query);
-        if (matchesTab && matchesQuery) {
-          c.classList.remove('hidden');
-          visibleCount++;
-        } else {
-          c.classList.add('hidden');
-        }
+        const matchesQuery = card.textContent.toLowerCase().includes(query);
+        card.classList.toggle('hidden', !(matchesTab && matchesQuery));
+        if (matchesTab && matchesQuery) visible++;
       });
-
-      const emptyFilterState = document.getElementById('preview-state-filter-empty');
-      const standardList = document.getElementById('activity-history-container');
-      const searchKeywordElem = document.getElementById('filter-empty-query');
-
-      if (visibleCount === 0 && query !== '') {
-        standardList.classList.add('hidden');
-        emptyFilterState.classList.remove('hidden');
-        if (searchKeywordElem) searchKeywordElem.textContent = query;
-      } else {
-        standardList.classList.remove('hidden');
-        emptyFilterState.classList.add('hidden');
-      }
-    }
-
-    function switchSimulatedState(stateName) {
-      const stateBtns = document.querySelectorAll('.state-switcher-btn');
-      stateBtns.forEach(btn => {
-        btn.classList.remove('bg-summer-orange', 'text-ocean-blue', 'font-bold', 'shadow-sm');
-        btn.classList.add('bg-surface-container-high', 'text-on-surface-variant');
-      });
-
-      const activeBtn = document.getElementById('state-btn-' + stateName);
-      if (activeBtn) {
-        activeBtn.classList.add('bg-summer-orange', 'text-ocean-blue', 'font-bold', 'shadow-sm');
-        activeBtn.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
-      }
-
-      const standardList = document.getElementById('activity-history-container');
-      const userEmpty = document.getElementById('preview-state-user-empty');
-      const filterEmpty = document.getElementById('preview-state-filter-empty');
-      const apiError = document.getElementById('preview-state-api-error');
-
-      standardList.classList.add('hidden');
-      userEmpty.classList.add('hidden');
-      filterEmpty.classList.add('hidden');
-      apiError.classList.add('hidden');
-
-      if (stateName === 'normal') {
-        standardList.classList.remove('hidden');
-      } else if (stateName === 'user-empty') {
-        userEmpty.classList.remove('hidden');
-      } else if (stateName === 'filter-empty') {
-        filterEmpty.classList.remove('hidden');
-      } else if (stateName === 'error') {
-        apiError.classList.remove('hidden');
-      }
+      document.getElementById('activity-history-container')?.classList.toggle('hidden', visible === 0);
+      document.getElementById('cdb-history-loading')?.classList.add('hidden');
+      document.getElementById('cdb-history-empty')?.classList.toggle('hidden', cards.length > 0 || query.length > 0);
+      document.getElementById('cdb-history-filter-empty')?.classList.toggle('hidden', !(cards.length > 0 && visible === 0));
+      const total = document.getElementById('history-total-count');
+      if (total && total.textContent === 'Memuat…') total.textContent = String(cards.length);
     }
 
     function resetSearchFilter() {
       const input = document.getElementById('search-audit-input');
       if (input) input.value = '';
       switchAuditTab('all');
-      switchSimulatedState('normal');
+      searchAuditCards();
     }
   </script>
 <!-- Main Activity Records Canvas -->
@@ -157,7 +110,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 <!-- Cloud Storage Sync Indicator Badge -->
 <div class="inline-flex items-center gap-space-2xs px-space-xs py-space-3xs rounded-xl bg-mint-mist text-[#1E5945] shadow-[0_2px_8px_rgba(30,89,69,0.08)]">
 <span class="material-symbols-outlined text-[16px]">cloud_done</span>
-<span class="font-label-sm text-label-sm tracking-wide">Sinkronisasi Cloud Akun: Aktif (Ellias • Tier 1-A Auditor)</span>
+<span class="font-label-sm text-label-sm tracking-wide">Riwayat percakapan akun Anda</span>
 </div>
 </div>
 <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-sm pt-space-3xs">
@@ -175,7 +128,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 <span class="material-symbols-outlined text-ocean-blue text-[20px]">inventory_2</span>
 <div class="flex flex-col">
 <span class="font-caption-meta text-caption-meta text-slate-blue">Total Entri</span>
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue">6 Tercatat</span>
+<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue"><span id="history-total-count">Memuat…</span></span>
 </div>
 </div>
 <div class="flex items-center gap-space-2xs px-space-sm py-space-xs rounded-2xl bg-surface-container-low shadow-[0_4px_16px_rgba(0,43,76,0.04)]">
@@ -245,464 +198,14 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 </section>
 <!-- Main Activity Feed (Chronological Stack) -->
 <div class="flex flex-col gap-space-md" id="activity-history-container">
-<!-- Item 1: Death Battle 1v1 - Selesai -->
-<article class="history-card bg-surface-container-lowest rounded-[24px] p-space-md lg:p-space-lg shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),0_2px_6px_0px_rgba(0,43,76,0.03)] hover:shadow-[0_14px_32px_-4px_rgba(0,43,76,0.10)] transition-all flex flex-col gap-space-sm" data-activity-type="battle">
-<!-- Top Metadata & Provenance Header -->
-<div class="flex flex-wrap items-center justify-between gap-space-2xs">
-<div class="flex items-center gap-space-xs">
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-ice-effect text-ocean-blue font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[16px]">swords</span>
-              Chat Death Battle 1v1
-            </span>
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-mint-mist text-[#1E5945] font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[14px]">check_circle</span>
-              Audit Selesai • KO Deterministik (SBA Netral)
-            </span>
+<div id="cdb-history-loading" class="rounded-2xl bg-surface-container-low p-space-md text-slate-blue">Memuat riwayat akun…</div>
 </div>
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[14px]">schedule</span>
-<span>2 jam lalu (Hari ini, 10:42 WIB)</span>
-<span>•</span>
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue font-semibold">#DB-8921</span>
-<span>•</span>
-<span>312ms Komputasi</span>
+<div id="cdb-history-empty" class="hidden rounded-2xl bg-surface-container-low p-space-lg text-center">
+<h3 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Belum ada riwayat</h3>
+<p class="font-body-sm text-body-sm text-slate-blue mt-2">Mulai konsultasi AI atau simulasi Death Battle. Percakapan yang berhasil diproses akan tersimpan di sini.</p>
 </div>
-</div>
-<!-- Combatant Matchup Title & Visual Avatars -->
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm bg-glacier-white p-space-sm rounded-[20px]">
-<div class="flex items-center gap-space-sm">
-<div class="flex items-center -space-x-3">
-<div class="w-12 h-12 rounded-full bg-summer-orange flex items-center justify-center text-ocean-blue font-headline-sm text-headline-sm shadow-md">
-                G
-              </div>
-<div class="w-12 h-12 rounded-full bg-ocean-blue flex items-center justify-center text-glacier-white font-headline-sm text-headline-sm shadow-md">
-                S
-              </div>
-</div>
-<div class="flex flex-col">
-<h2 class="font-headline-md text-headline-md text-ocean-blue tracking-tight">
-                Son Goku (Cell Games SSJ) vs Superman (Post-Crisis Base)
-              </h2>
-<span class="font-label-sm text-label-sm text-slate-blue">
-                Simulasi Resolusi Kanon • VSB Standar Tier: 4-B High Solar vs 4-B+ Cosmic
-              </span>
-</div>
-</div>
-<div class="flex items-center self-start md:self-auto px-space-xs py-1 rounded-xl bg-summer-orange/15 text-ocean-blue font-label-sm text-label-sm font-bold">
-<span class="material-symbols-outlined text-[16px] text-summer-orange mr-1">military_tech</span>
-            Superman Menang (Mid-High Diff)
-          </div>
-</div>
-<!-- Parameter Metrics & Canon Evidentiary Deck -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm">
-<div class="p-space-sm rounded-[16px] bg-surface-container-low flex flex-col gap-space-3xs">
-<div class="flex items-center gap-space-3xs text-ocean-blue font-label-sm text-label-sm">
-<span class="material-symbols-outlined text-[16px]">tune</span>
-<span class="font-semibold uppercase tracking-wider">Kondisi &amp; Cuplikan Parameter:</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant">
-              Kondisi: SBA Standar, Kecepatan Equalized OFF, Dimensi Gurun 4km • Hasil: Superman Menang (Mid-High Diff, Faktor AP &amp; Respon MFTL+ mengatasi Kamehameha Cell Games SSJ).
-            </p>
-</div>
-<div class="p-space-sm rounded-[16px] bg-surface-container-low flex flex-col gap-space-3xs">
-<div class="flex items-center gap-space-3xs text-ocean-blue font-label-sm text-label-sm">
-<span class="material-symbols-outlined text-[16px]">menu_book</span>
-<span class="font-semibold uppercase tracking-wider">Rujukan Canon &amp; Sumber Audit:</span>
-</div>
-<p class="font-caption-meta text-caption-meta text-slate-blue">
-              VSB Profile #142 vs #088 • Action Comics #847 • Manga Bab 410 • Epistemic Rigor Score: 98.4%
-            </p>
-<div class="flex flex-wrap gap-1 pt-1">
-<span class="px-2 py-0.5 rounded-md bg-mint-mist text-[#1E5945] font-caption-meta text-caption-meta">Canon Validated</span>
-<span class="px-2 py-0.5 rounded-md bg-ice-effect text-ocean-blue font-caption-meta text-caption-meta">Speed Metric Verified</span>
-</div>
-</div>
-</div>
-<!-- Action Row -->
-<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-3xs">
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[16px]">person</span>
-<span>Auditor: Ellias</span>
-</div>
-<div class="flex items-center gap-space-xs">
-<button class="px-space-sm py-space-2xs rounded-[14px] bg-surface-container-high text-ocean-blue hover:bg-ice-effect font-label-md text-label-md transition-all flex items-center gap-space-3xs">
-<span class="material-symbols-outlined text-[16px]">refresh</span>
-<span>Uji Ulang dengan SBA Baru</span>
-</button>
-<button class="px-space-md py-space-2xs rounded-[14px] bg-summer-orange text-ocean-blue font-headline-sm text-label-md font-bold hover:opacity-95 shadow-[0_4px_12px_rgba(245,158,113,0.3)] transition-all flex items-center gap-space-3xs">
-<span>Buka Hasil &amp; Matriks Lengkap</span>
-<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Item 2: Konsultasi AI - Selesai -->
-<article class="history-card bg-surface-container-lowest rounded-[24px] p-space-md lg:p-space-lg shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),0_2px_6px_0px_rgba(0,43,76,0.03)] hover:shadow-[0_14px_32px_-4px_rgba(0,43,76,0.10)] transition-all flex flex-col gap-space-sm" data-activity-type="feat">
-<div class="flex flex-wrap items-center justify-between gap-space-2xs">
-<div class="flex items-center gap-space-xs">
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-mint-mist text-[#1E5945] font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[16px]">smart_toy</span>
-              Konsultasi AI Feat
-            </span>
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-ice-effect text-ocean-blue font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[14px]">psychology</span>
-              Terverifikasi • Mode Mendalam (4-Layer Framework)
-            </span>
-</div>
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[14px]">history</span>
-<span>Kemarin, 19:40 WIB</span>
-<span>•</span>
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue font-semibold">#KA-4412</span>
-<span>•</span>
-<span>VSB Epistemic Core v2.4</span>
-</div>
-</div>
-<div class="flex flex-col gap-space-3xs">
-<h2 class="font-headline-md text-headline-md text-ocean-blue tracking-tight">
-            Audit Kecepatan Gerak Kizaru (Borsalino) &amp; Akselerasi FTL Pika Pika no Mi
-          </h2>
-<span class="font-label-sm text-label-sm text-slate-blue">
-            Topik: Ambang Batas Relativistik vs Superluminal • Universe: One Piece (Egghead Arc)
-          </span>
-</div>
-<!-- QA Inset Well -->
-<div class="p-space-sm rounded-[18px] bg-glacier-white shadow-[inset_0_2px_4px_rgba(0,43,76,0.05)] flex flex-col gap-space-2xs">
-<div class="flex items-start gap-space-xs">
-<span class="px-2 py-0.5 rounded bg-ocean-blue text-glacier-white font-label-sm text-label-sm font-bold shrink-0 mt-0.5">T</span>
-<p class="font-body-sm text-body-sm text-ocean-blue font-medium">
-              "Apakah gerak Kizaru di Egghead Arc murni Speed of Light c atau FTL?"
-            </p>
-</div>
-<div class="flex items-start gap-space-xs pt-1">
-<span class="px-2 py-0.5 rounded bg-mint-mist text-[#1E5945] font-label-sm text-label-sm font-bold shrink-0 mt-0.5">J</span>
-<p class="font-body-sm text-body-sm text-on-surface-variant">
-              Terverifikasi akselerasi kinetik ~2.14c hingga 2.45c saat menendang Luffy Gear 4 Snakeman pasca akselerasi vektor jarak jauh. Kecepatan dasar adalah c (299,792 km/s), namun teknik lanjutan menunjukkan feat percepatan FTL lokal.
-            </p>
-</div>
-</div>
-<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-3xs">
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[16px]">menu_book</span>
-<span>One Piece Ch. 1092 &amp; 1093 • Vivre Card SBS Oda • VSB Calc Thread #442</span>
-</div>
-<div class="flex items-center gap-space-xs">
-<button class="px-space-sm py-space-2xs rounded-[14px] bg-surface-container-high text-ocean-blue hover:bg-ice-effect font-label-md text-label-md transition-all flex items-center gap-space-3xs">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-<span>Salin Kutipan Sumber</span>
-</button>
-<button class="px-space-md py-space-2xs rounded-[14px] bg-ocean-blue text-glacier-white font-label-md text-label-md hover:bg-primary-container shadow-md transition-all flex items-center gap-space-3xs">
-<span>Lanjutkan Percakapan</span>
-<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Item 3: Konsultasi AI - Selesai -->
-<article class="history-card bg-surface-container-lowest rounded-[24px] p-space-md lg:p-space-lg shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),0_2px_6px_0px_rgba(0,43,76,0.03)] hover:shadow-[0_14px_32px_-4px_rgba(0,43,76,0.10)] transition-all flex flex-col gap-space-sm" data-activity-type="feat">
-<div class="flex flex-wrap items-center justify-between gap-space-2xs">
-<div class="flex items-center gap-space-xs">
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-mint-mist text-[#1E5945] font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[16px]">smart_toy</span>
-              Konsultasi AI Feat
-            </span>
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-ice-effect text-ocean-blue font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[14px]">domain_verification</span>
-              Terverifikasi • Mode Mendalam
-            </span>
-</div>
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[14px]">schedule</span>
-<span>3 hari lalu (12 Okt 2025)</span>
-<span>•</span>
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue font-semibold">#KA-4389</span>
-</div>
-</div>
-<div class="flex flex-col gap-space-3xs">
-<h2 class="font-headline-md text-headline-md text-ocean-blue tracking-tight">
-            Hierarki Dimensi Kosmologi Rimuru Tempest: Web Novel vs Light Novel
-          </h2>
-<span class="font-label-sm text-label-sm text-slate-blue">
-            Topik: Evaluasi Multiversal &amp; Struktur Ruang-Waktu • Tensura Universe
-          </span>
-</div>
-<div class="p-space-sm rounded-[16px] bg-surface-container-low flex flex-col gap-space-3xs">
-<p class="font-body-sm text-body-sm text-on-surface-variant">
-            Pemisahan ketat kanonisitas antara kesinambungan Turn Over / Akasha Records WN (Tier 2-A) dan LN Kanon (Tier 2-C Low Multiverse Level hingga Volume 21). Rekomendasi audit menyarankan larangan silang kontinum non-kanon.
-          </p>
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta pt-1">
-<span class="material-symbols-outlined text-[16px]">bookmark</span>
-<span>Rujukan: Tensura LN Vol. 16-21 • WN Ch. 248-250 • Standar Kanonisitas VSB Tiering System</span>
-</div>
-</div>
-<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-3xs">
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[16px]">verified</span>
-<span>Epistemic Strictness: Level 4 Complete</span>
-</div>
-<div class="flex items-center gap-space-xs">
-<button class="px-space-sm py-space-2xs rounded-[14px] bg-surface-container-high text-ocean-blue hover:bg-ice-effect font-label-md text-label-md transition-all flex items-center gap-space-3xs">
-<span class="material-symbols-outlined text-[16px]">grid_view</span>
-<span>Buka Matriks Tier</span>
-</button>
-<button class="px-space-md py-space-2xs rounded-[14px] bg-ocean-blue text-glacier-white font-label-md text-label-md hover:bg-primary-container shadow-md transition-all flex items-center gap-space-3xs">
-<span>Lanjutkan Percakapan</span>
-<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Item 4: Death Battle 1v1 - Selesai (Inconclusive) -->
-<article class="history-card bg-surface-container-lowest rounded-[24px] p-space-md lg:p-space-lg shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),0_2px_6px_0px_rgba(0,43,76,0.03)] hover:shadow-[0_14px_32px_-4px_rgba(0,43,76,0.10)] transition-all flex flex-col gap-space-sm" data-activity-type="battle">
-<div class="flex flex-wrap items-center justify-between gap-space-2xs">
-<div class="flex items-center gap-space-xs">
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-ice-effect text-ocean-blue font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[16px]">swords</span>
-              Chat Death Battle 1v1
-            </span>
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-surface-container-high text-slate-blue font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[14px]">balance</span>
-              Audit Selesai • Hasil: Inconclusive (Acasual Draw)
-            </span>
-</div>
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[14px]">schedule</span>
-<span>4 hari lalu (11 Okt 2025)</span>
-<span>•</span>
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue font-semibold">#DB-8740</span>
-</div>
-</div>
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm bg-glacier-white p-space-sm rounded-[20px]">
-<div class="flex items-center gap-space-sm">
-<div class="flex items-center -space-x-3">
-<div class="w-12 h-12 rounded-full bg-ice-effect flex items-center justify-center text-ocean-blue font-headline-sm text-headline-sm shadow-sm">
-                R
-              </div>
-<div class="w-12 h-12 rounded-full bg-slate-blue flex items-center justify-center text-glacier-white font-headline-sm text-headline-sm shadow-sm">
-                A
-              </div>
-</div>
-<div class="flex flex-col">
-<h2 class="font-headline-md text-headline-md text-ocean-blue tracking-tight">
-                Rimuru Tempest (LN) vs Anos Voldigoad (Militia World)
-              </h2>
-<span class="font-label-sm text-label-sm text-slate-blue">
-                Simulasi Resolusi Kanon • VSB Tier: 2-A Multiverse Level vs 2-A High Tier
-              </span>
-</div>
-</div>
-<div class="flex items-center self-start md:self-auto px-space-xs py-1 rounded-xl bg-surface-container-high text-slate-blue font-label-sm text-label-sm font-bold">
-<span class="material-symbols-outlined text-[16px] mr-1">safety_divider</span>
-            Inconclusive (Stalemate Hax)
-          </div>
-</div>
-<div class="p-space-sm rounded-[16px] bg-surface-container-low flex flex-col gap-space-3xs">
-<p class="font-body-sm text-body-sm text-on-surface-variant">
-            Kondisi: Tier 2-A vs 2-A • Analisis: Interaksi NEP (Non-Existent Physiology) vs Sword of Destruction Venuzdonoa tidak menghasilkan KO definitif. Resistensi Akausalitas Tipe 4 kedua kombatan menggugurkan vektor penentu kemenangan dalam 100 putaran simulasi.
-          </p>
-</div>
-<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-3xs">
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[16px]">rule</span>
-<span>Standar SBA: Netral Dimensional Axiom</span>
-</div>
-<div class="flex items-center gap-space-xs">
-<button class="px-space-sm py-space-2xs rounded-[14px] bg-surface-container-high text-ocean-blue hover:bg-ice-effect font-label-md text-label-md transition-all flex items-center gap-space-3xs">
-<span class="material-symbols-outlined text-[16px]">history_edu</span>
-<span>Audit Epistemik Ulang</span>
-</button>
-<button class="px-space-md py-space-2xs rounded-[14px] bg-summer-orange text-ocean-blue font-headline-sm text-label-md font-bold hover:opacity-95 shadow-[0_4px_12px_rgba(245,158,113,0.3)] transition-all flex items-center gap-space-3xs">
-<span>Buka Hasil &amp; Matriks Lengkap</span>
-<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Item 5: Konsultasi AI - Selesai (Mode Ringkas) -->
-<article class="history-card bg-surface-container-lowest rounded-[24px] p-space-md lg:p-space-lg shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),0_2px_6px_0px_rgba(0,43,76,0.03)] hover:shadow-[0_14px_32px_-4px_rgba(0,43,76,0.10)] transition-all flex flex-col gap-space-sm" data-activity-type="feat">
-<div class="flex flex-wrap items-center justify-between gap-space-2xs">
-<div class="flex items-center gap-space-xs">
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-mint-mist text-[#1E5945] font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[16px]">smart_toy</span>
-              Konsultasi AI Feat
-            </span>
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-surface-container-high text-slate-blue font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[14px]">short_text</span>
-              Selesai • Mode Ringkas
-            </span>
-</div>
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[14px]">schedule</span>
-<span>1 minggu lalu</span>
-<span>•</span>
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue font-semibold">#KA-4105</span>
-</div>
-</div>
-<div class="flex flex-col gap-space-3xs">
-<h2 class="font-headline-md text-headline-md text-ocean-blue tracking-tight">
-            Kalkulasi Joules Penghancuran Solar System oleh Perfect Cell
-          </h2>
-<span class="font-label-sm text-label-sm text-slate-blue">
-            Topik: Attack Potency GBE Solar System • Manga Bab 415 Statement
-          </span>
-</div>
-<div class="p-space-sm rounded-[16px] bg-glacier-white shadow-[inset_0_2px_4px_rgba(0,43,76,0.05)]">
-<p class="font-body-sm text-body-sm text-on-surface-variant">
-            Validasi pernyataan Cell di Bab 415: Estimasi minimum batas energi penghancuran sistem tata surya ~1.8e45 Joule hingga 4.5e45 Joule (Kategori High 4-C Large Star / 4-B Solar System Level). Pernyataan diakui kanon berkat konfirmasi Daizenshuu #7.
-          </p>
-</div>
-<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-3xs">
-<span class="text-slate-blue font-caption-meta text-caption-meta">Daizenshuu #7 • Toriyama Canonical Guidance</span>
-<button class="px-space-md py-space-2xs rounded-[14px] bg-ocean-blue text-glacier-white font-label-md text-label-md hover:bg-primary-container shadow-md transition-all flex items-center gap-space-3xs">
-<span>Lanjutkan Percakapan</span>
-<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
-</div>
-</article>
-<!-- Item 6: Gagal Memuat / Sinkronisasi Tertunda (Amber Warning) -->
-<article class="history-card bg-surface-container-lowest rounded-[24px] p-space-md lg:p-space-lg shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06),0_2px_6px_0px_rgba(0,43,76,0.03)] border-l-4 border-summer-orange transition-all flex flex-col gap-space-sm" data-activity-type="feat">
-<div class="flex flex-wrap items-center justify-between gap-space-2xs">
-<div class="flex items-center gap-space-xs">
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-summer-orange/20 text-[#8F4312] font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[16px]">warning</span>
-              Sesi Tidak Lengkap / Gangguan Jaringan
-            </span>
-<span class="inline-flex items-center gap-space-3xs px-space-xs py-1 rounded-[10px] bg-surface-container-high text-slate-blue font-label-sm text-label-sm font-semibold">
-<span class="material-symbols-outlined text-[14px]">cloud_off</span>
-              Sinkronisasi Terputus (Offline Cache)
-            </span>
-</div>
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[14px]">schedule</span>
-<span>2 minggu lalu</span>
-<span>•</span>
-<span class="font-data-dense-numeric text-data-dense-numeric text-ocean-blue font-semibold">#KA-3990</span>
-</div>
-</div>
-<div class="flex flex-col gap-space-3xs">
-<h2 class="font-headline-md text-headline-md text-ocean-blue tracking-tight">
-            Perbandingan AP Kage vs Espada (Gotei 13 Arc)
-          </h2>
-<span class="font-label-sm text-label-sm text-status-warning">
-            Draft Lokal: Data transmisi terhenti sebelum pengesahan verifikasi AI
-          </span>
-</div>
-<div class="p-space-sm rounded-[16px] bg-summer-orange/10 flex flex-col gap-space-3xs">
-<p class="font-body-sm text-body-sm text-on-surface-variant">
-            Data percakapan lokal tersimpan namun sitasi kanon VSB belum sempat tervalidasi sebelum sesi terputus. Kuota sesi tidak terpotong. Sesi dapat dipulihkan tanpa kehilangan riwayat draft prompt.
-          </p>
-</div>
-<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-3xs">
-<div class="flex items-center gap-space-2xs text-slate-blue font-caption-meta text-caption-meta">
-<span class="material-symbols-outlined text-[16px]">cached</span>
-<span>Ukuran Cache Lokal: 14.2 KB</span>
-</div>
-<div class="flex items-center gap-space-xs">
-<button class="px-space-sm py-space-2xs rounded-[14px] bg-surface-container-high text-error hover:bg-error-container font-label-md text-label-md transition-all flex items-center gap-space-3xs">
-<span class="material-symbols-outlined text-[16px]">delete</span>
-<span>Hapus Draf</span>
-</button>
-<button class="px-space-md py-space-2xs rounded-[14px] bg-summer-orange text-ocean-blue font-headline-sm text-label-md font-bold hover:opacity-95 shadow-sm transition-all flex items-center gap-space-3xs">
-<span class="material-symbols-outlined text-[18px]">sync</span>
-<span>Sinkronkan Ulang Sekarang</span>
-</button>
-</div>
-</div>
-</article>
-</div>
-<!-- Empty & Error States Preview Container (Simulated) -->
-<!-- State 1: Pengguna Baru (Belum Ada Riwayat) -->
-<div class="hidden bg-surface-container-lowest rounded-[28px] p-space-xl shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col items-center justify-center text-center gap-space-md" id="preview-state-user-empty">
-<!-- Claymorphic Empty Illustration -->
-<div class="w-24 h-24 rounded-full bg-ice-effect flex items-center justify-center text-ocean-blue shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),0_8px_16px_rgba(0,43,76,0.08)]">
-<span class="material-symbols-outlined text-[44px]">auto_stories</span>
-</div>
-<div class="flex flex-col gap-space-3xs max-w-lg">
-<h3 class="font-headline-lg text-headline-lg text-ocean-blue tracking-tight">
-          Belum Ada Riwayat Audit
-        </h3>
-<p class="font-body-md text-body-md text-slate-blue">
-          Arsip audit Anda saat ini masih kosong. Mulai sesi Konsultasi AI pertama untuk validasi feat karakter atau jalankan simulasi Chat Death Battle 1v1 dengan standar SBA.
-        </p>
-</div>
-<div class="flex flex-wrap items-center justify-center gap-space-sm pt-space-xs">
-<button class="px-space-md py-space-2xs rounded-[14px] bg-ice-effect text-ocean-blue font-headline-sm text-label-md font-bold hover:bg-secondary-container transition-all flex items-center gap-space-2xs">
-<span class="material-symbols-outlined text-[20px]">smart_toy</span>
-<span>Mulai Konsultasi Pertama</span>
-</button>
-<button class="px-space-md py-space-2xs rounded-[14px] bg-summer-orange text-ocean-blue font-headline-sm text-label-md font-bold hover:opacity-95 shadow-[0_4px_12px_rgba(245,158,113,0.3)] transition-all flex items-center gap-space-2xs">
-<span class="material-symbols-outlined text-[20px]">swords</span>
-<span>Mulai Death Battle 1v1</span>
-</button>
-</div>
-</div>
-<!-- State 2: Empty Filter / Pencarian Tidak Ditemukan -->
-<div class="hidden bg-surface-container-lowest rounded-[28px] p-space-xl shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col items-center justify-center text-center gap-space-md" id="preview-state-filter-empty">
-<div class="w-24 h-24 rounded-full bg-surface-container-high flex items-center justify-center text-slate-blue shadow-inner">
-<span class="material-symbols-outlined text-[44px]">search_off</span>
-</div>
-<div class="flex flex-col gap-space-3xs max-w-lg">
-<h3 class="font-headline-lg text-headline-lg text-ocean-blue tracking-tight">
-          Pencarian Tidak Ditemukan
-        </h3>
-<p class="font-body-md text-body-md text-slate-blue">
-          Tidak ada riwayat aktivitas yang cocok dengan kata kunci <span class="font-semibold text-ocean-blue" id="filter-empty-query">"[query]"</span>. Pastikan penulisan nama karakter atau ID kalkulasi sudah tepat.
-        </p>
-</div>
-<button class="px-space-md py-space-2xs rounded-[14px] bg-ocean-blue text-glacier-white font-label-md text-label-md hover:bg-primary-container shadow-md transition-all flex items-center gap-space-2xs" onclick="resetSearchFilter()">
-<span class="material-symbols-outlined text-[18px]">restart_alt</span>
-<span>Reset Filter &amp; Pencarian</span>
-</button>
-</div>
-<!-- State 3: Error State API Server -->
-<div class="hidden bg-surface-container-lowest rounded-[28px] p-space-xl shadow-[0_8px_24px_-4px_rgba(0,43,76,0.06)] flex flex-col items-center justify-center text-center gap-space-md" id="preview-state-api-error">
-<div class="w-24 h-24 rounded-full bg-error-container flex items-center justify-center text-error shadow-inner">
-<span class="material-symbols-outlined text-[44px]">cloud_sync</span>
-</div>
-<div class="flex flex-col gap-space-3xs max-w-lg">
-<h3 class="font-headline-lg text-headline-lg text-status-error tracking-tight">
-          Gagal Mengambil Riwayat dari Cloud Server
-        </h3>
-<p class="font-body-md text-body-md text-slate-blue">
-          Terjadi kendala saat menghubungkan ke kluster basis data VSB Epistemic Core. Data offline tersimpan aman di peramban lokal Anda.
-        </p>
-</div>
-<button class="px-space-md py-space-2xs rounded-[14px] bg-summer-orange text-ocean-blue font-headline-sm text-label-md font-bold hover:opacity-95 shadow-md transition-all flex items-center gap-space-2xs" onclick="switchSimulatedState('normal')">
-<span class="material-symbols-outlined text-[20px]">refresh</span>
-<span>Coba Lagi (Retry Fetch)</span>
-</button>
-</div>
-<!-- Interactive State Switcher Preview Utility -->
-<section class="bg-surface-container-low rounded-[24px] p-space-md shadow-[inset_0_2px_4px_rgba(0,43,76,0.03)] flex flex-col gap-space-sm">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-2xs">
-<div class="flex items-center gap-space-2xs">
-<span class="material-symbols-outlined text-ocean-blue text-[20px]">developer_mode</span>
-<span class="font-headline-sm text-headline-sm text-ocean-blue">Demonstrasi Multi-State Tampilan Riwayat</span>
-</div>
-<span class="font-caption-meta text-caption-meta text-slate-blue">
-          Alat Uji Responsif &amp; Simulasi Edge Cases UX
-        </span>
-</div>
-<!-- State Selection Buttons -->
-<div class="grid grid-cols-2 lg:grid-cols-4 gap-space-2xs">
-<button class="state-switcher-btn px-space-sm py-space-xs rounded-[14px] bg-summer-orange text-ocean-blue font-bold shadow-sm font-label-sm text-label-sm flex items-center justify-center gap-space-3xs transition-all" id="state-btn-normal" onclick="switchSimulatedState('normal')">
-<span class="material-symbols-outlined text-[16px]">view_list</span>
-<span>State Normal (6 Riwayat)</span>
-</button>
-<button class="state-switcher-btn px-space-sm py-space-xs rounded-[14px] bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm flex items-center justify-center gap-space-3xs transition-all hover:bg-surface-variant" id="state-btn-user-empty" onclick="switchSimulatedState('user-empty')">
-<span class="material-symbols-outlined text-[16px]">person_off</span>
-<span>Empty State (Pengguna Baru)</span>
-</button>
-<button class="state-switcher-btn px-space-sm py-space-xs rounded-[14px] bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm flex items-center justify-center gap-space-3xs transition-all hover:bg-surface-variant" id="state-btn-filter-empty" onclick="switchSimulatedState('filter-empty')">
-<span class="material-symbols-outlined text-[16px]">filter_alt_off</span>
-<span>Filter / Hasil Kosong</span>
-</button>
-<button class="state-switcher-btn px-space-sm py-space-xs rounded-[14px] bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm flex items-center justify-center gap-space-3xs transition-all hover:bg-surface-variant" id="state-btn-error" onclick="switchSimulatedState('error')">
-<span class="material-symbols-outlined text-[16px]">error_outline</span>
-<span>Error State (Koneksi API)</span>
-</button>
-</div>
-</section>
+<div id="cdb-history-filter-empty" class="hidden rounded-2xl bg-surface-container-low p-space-md text-slate-blue">Tidak ada hasil yang cocok dengan filter atau pencarian.</div>
+<div id="cdb-history-error" class="hidden rounded-2xl bg-error-container p-space-md text-on-error-container" role="alert">Riwayat belum dapat dimuat. Periksa koneksi lalu muat ulang halaman.</div>
 <!-- Kebijakan Persistensi & Privasi Footer Sub-Card -->
 <section class="bg-surface-container-lowest rounded-[20px] p-space-sm shadow-[0_2px_8px_rgba(0,43,76,0.03)] flex flex-col md:flex-row items-center justify-between gap-space-sm text-slate-blue">
 <div class="flex items-center gap-space-xs">
@@ -793,6 +296,71 @@ if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)')
     window.dispatchEvent(new CustomEvent('cdb-auth-ready', { detail: { client: client, user: data.session.user } }));
   }
   guard().catch(function () { redirectToLogin(); });
+})();
+</script>
+<script id="cdb-history-live-integration">
+(function(){
+'use strict';
+const list=document.getElementById('activity-history-container');
+if(!list)return;
+function show(id,yes){const el=document.getElementById(id);if(el)el.classList.toggle('hidden',!yes)}
+function make(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e}
+function fmt(value){const d=new Date(value);return Number.isNaN(d.getTime())?'':d.toLocaleString(document.documentElement.lang==='en'?'en-US':'id-ID',{dateStyle:'medium',timeStyle:'short',timeZone:'Asia/Jakarta'})}
+function refreshFilters(){if(typeof window.searchAuditCards==='function')window.searchAuditCards()}
+async function loadHistory(){
+ const client=window.CDB_AUTH_CLIENT;
+ if(!client){show('cdb-history-loading',false);show('cdb-history-error',true);return}
+ try{
+  const {data:authData,error:authError}=await client.auth.getUser();
+  if(authError||!authData.user||!authData.user.email_confirmed_at)throw new Error('Sesi tidak valid.');
+  const {data:sessions,error}=await client.from('chat_sessions').select('id,title,mode,character_a,character_a_version,character_b,character_b_version,created_at,updated_at').order('updated_at',{ascending:false}).limit(100);
+  if(error)throw error;
+  const rows=sessions||[],ids=rows.map(x=>x.id);
+  let messages=[];
+  if(ids.length){const r=await client.from('chat_messages').select('session_id,role,content,created_at').in('session_id',ids).order('created_at',{ascending:false}).limit(300);if(r.error)throw r.error;messages=r.data||[]}
+  const latest=new Map();messages.forEach(m=>{if(!latest.has(m.session_id))latest.set(m.session_id,m)});
+  list.replaceChildren();
+  rows.forEach(function(session){
+   const isBattle=session.mode==='battle';
+   const article=make('article','history-card rounded-2xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-3');
+   article.dataset.activityType=isBattle?'battle':'feat';
+   const top=make('div','flex flex-wrap items-center justify-between gap-2');
+   top.append(make('span','px-3 py-1 rounded-lg bg-ice-effect text-ocean-blue text-sm font-semibold',isBattle?'Death Battle 1v1':'Konsultasi AI'));
+   top.append(make('span','text-xs text-slate-blue',fmt(session.updated_at||session.created_at)));
+   article.append(top);
+   article.append(make('h2','font-headline-sm text-headline-sm text-ocean-blue font-bold',session.title||((session.character_a||'Karakter A')+' vs '+(session.character_b||'Karakter B'))));
+   const matchup=[session.character_a,session.character_a_version,session.character_b,session.character_b_version].filter(Boolean).join(' • ');
+   if(isBattle&&matchup)article.append(make('p','text-sm text-slate-blue',matchup));
+   const last=latest.get(session.id);
+   article.append(make('p','text-sm text-slate-blue line-clamp-3',last?String(last.content||'').slice(0,260):'Belum ada pesan tersimpan.'));
+   const actions=make('div','flex flex-wrap gap-2 pt-1');
+   const link=make('a','inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-container text-ocean-blue text-sm font-semibold',isBattle?'Buka simulasi':'Lanjutkan konsultasi');
+   link.href=(isBattle?'simulasi_chat_death_battle_1v1_vsb_matrix.html':'konsultasi_ai_powerscaling_vsb_death_battle.html')+'?sessionId='+encodeURIComponent(session.id);
+   actions.append(link);
+   const del=make('button','px-3 py-2 rounded-lg text-sm text-status-error border border-outline-variant','Hapus');del.type='button';
+   del.addEventListener('click',async function(){
+    if(!window.confirm('Hapus percakapan ini beserta pesannya?'))return;
+    del.disabled=true;
+    const {data:userData}=await client.auth.getUser(),userId=userData?.user?.id;
+    if(!userId){del.disabled=false;return}
+    const m=await client.from('chat_messages').delete().eq('session_id',session.id).eq('user_id',userId);
+    if(m.error){window.alert('Pesan tidak dapat dihapus.');del.disabled=false;return}
+    const s=await client.from('chat_sessions').delete().eq('id',session.id).eq('user_id',userId);
+    if(s.error){window.alert('Sesi tidak dapat dihapus.');del.disabled=false;return}
+    article.remove();refreshFilters();
+   });
+   actions.append(del);article.append(actions);list.append(article);
+  });
+  show('cdb-history-loading',false);show('cdb-history-error',false);
+  show('cdb-history-empty',rows.length===0);list.classList.toggle('hidden',rows.length===0);
+  const total=document.getElementById('history-total-count');if(total)total.textContent=String(rows.length);
+  refreshFilters();
+ }catch(error){
+  show('cdb-history-loading',false);show('cdb-history-error',true);
+  const el=document.getElementById('cdb-history-error');if(el)el.textContent='Riwayat belum dapat dimuat: '+(error.message||'Kesalahan koneksi.');
+ }
+}
+loadHistory();
 })();
 </script>
 </body></html>
