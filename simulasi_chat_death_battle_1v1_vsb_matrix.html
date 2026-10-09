@@ -343,7 +343,32 @@ document.getElementById('btn-copy-battle-answer')?.addEventListener('click',asyn
  if(!latestAnswer){showStatus('error','Belum ada hasil untuk disalin.');return}
  try{await navigator.clipboard.writeText(latestAnswer);showStatus('success','Hasil analisis berhasil disalin.')}catch(_){showStatus('error','Clipboard tidak tersedia. Salin teks hasil secara manual.')}
 });
-if(sessionId){clientReady().then(async function(client){if(!client)return;const {data:authData}=await client.auth.getUser();if(!authData?.user?.email_confirmed_at){authRedirect();return}const r=await client.from('chat_messages').select('role,content,created_at').eq('session_id',sessionId).order('created_at',{ascending:true}).limit(100);if(r.error){showStatus('error','Riwayat sesi tidak dapat dimuat.');return}const rows=r.data||[];if(rows.length){answer.textContent=rows.map(m=>(m.role==='user'?'Anda':'AI')+':\n'+m.content).join('\n\n');latestAnswer=rows.filter(m=>m.role==='assistant').map(m=>m.content).join('\n\n');result.classList.remove('hidden');showStatus('success','Riwayat battle berhasil dimuat. Kirim ulang permintaan untuk melanjutkan analisis.')}})}
+if(sessionId){clientReady().then(async function(client){
+ if(!client)return;
+ const {data:authData}=await client.auth.getUser();
+ if(!authData?.user?.email_confirmed_at){authRedirect();return}
+ const sessionResult=await client.from('chat_sessions').select('id,title,character_a,character_a_version,character_b,character_b_version,battle_rules').eq('id',sessionId).maybeSingle();
+ if(sessionResult.error||!sessionResult.data){showStatus('error','Sesi battle tidak ditemukan atau tidak dapat diakses.');return}
+ const s=sessionResult.data;
+ document.getElementById('battle-character-a').value=s.character_a||'';
+ document.getElementById('battle-version-a').value=s.character_a_version||'';
+ document.getElementById('battle-character-b').value=s.character_b||'';
+ document.getElementById('battle-version-b').value=s.character_b_version||'';
+ if(s.battle_rules&&typeof s.battle_rules.standard_battle_assumptions==='string')document.getElementById('battle-rules').value=s.battle_rules.standard_battle_assumptions;
+ if(s.battle_rules&&typeof s.battle_rules.custom_instructions==='string')document.getElementById('battle-custom-instructions').value=s.battle_rules.custom_instructions;
+ const r=await client.from('chat_messages').select('role,content,created_at').eq('session_id',sessionId).order('created_at',{ascending:true}).limit(100);
+ if(r.error){showStatus('error','Riwayat sesi tidak dapat dimuat.');return}
+ const rows=r.data||[];
+ if(rows.length){answer.textContent=rows.map(m=>(m.role==='user'?'Anda':'AI')+':\n'+m.content).join('\n\n');latestAnswer=rows.filter(m=>m.role==='assistant').map(m=>m.content).join('\n\n');result.classList.remove('hidden');showStatus('success','Riwayat battle berhasil dimuat. Kirim ulang untuk melanjutkan analisis.')}
+ }).catch(function(){showStatus('error','Riwayat battle tidak dapat dimuat.')})}
+['battle-character-a','battle-character-b','battle-version-a','battle-version-b'].forEach(function(id){
+ document.getElementById(id)?.addEventListener('change',function(){
+  if(!sessionId)return;
+  sessionId=null;
+  const url=new URL(window.location.href);url.searchParams.delete('sessionId');window.history.replaceState({},'',url);
+  showStatus('info','Parameter karakter berubah. Analisis berikutnya akan disimpan sebagai sesi battle baru.');
+ });
+});
 })();
 </script>
 </body></html>
