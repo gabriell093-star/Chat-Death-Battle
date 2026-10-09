@@ -45,20 +45,12 @@
 <span class="hidden sm:inline">Pemulihan</span>
 </button>
 </nav>
+<div id="auth-status" class="hidden p-space-sm rounded-xl font-body-sm text-body-sm" role="status" aria-live="polite"></div>
 <!-- 3. TAB 1: FORM LOGIN -->
 <section class="tab-panel flex flex-col gap-space-md" id="panel-login">
 <!-- Error & Security State Callouts -->
 <div class="flex flex-col gap-space-xs">
-<!-- Rate limiting & Safe error alert -->
-<div class="flex items-start gap-space-xs p-space-sm rounded-xl bg-error-container text-on-error-container">
-<span class="material-symbols-outlined text-headline-sm shrink-0">error</span>
-<div class="flex flex-col gap-space-3xs">
-<span class="font-label-sm text-label-sm uppercase tracking-wider font-bold">Autentikasi Tertunda</span>
-<p class="font-body-sm text-body-sm leading-relaxed">
-                Kombinasi email atau kata sandi tidak cocok. Percobaan tersisa 4 kali sebelum jeda keamanan sistem 15 menit diterapkan.
-              </p>
-</div>
-</div>
+<!-- Kesalahan autentikasi ditampilkan melalui status global agar tidak menampilkan contoh error palsu. -->
 <!-- Loading Indicator Example -->
 <div class="hidden items-center gap-space-xs p-space-xs rounded-lg bg-ice-effect text-ocean-blue" id="login-loading-bar">
 <span class="material-symbols-outlined animate-spin text-label-md">progress_activity</span>
@@ -118,7 +110,7 @@
 <div class="flex flex-col gap-space-3xs">
 <span class="font-label-sm text-label-sm uppercase tracking-wider font-bold">Pendaftaran Berhasil Disimpan</span>
 <p class="font-body-sm text-body-sm leading-relaxed">
-              Pendaftaran berhasil! Email aktivasi telah dikirimkan ke kotak masuk Anda. Harap verifikasi sebelum menggunakan fitur simulasi AI.
+              Status pendaftaran akan ditampilkan setelah Supabase memproses formulir Anda.
             </p>
 </div>
 </div>
@@ -210,22 +202,26 @@
 <div class="flex flex-col gap-space-2xs max-w-lg">
 <h2 class="font-headline-md text-headline-md text-ocean-blue">Verifikasi Alamat Email Anda</h2>
 <p class="font-body-sm text-body-sm text-slate-blue leading-relaxed">
-            Sesuai regulasi integritas data, fitur komputasi <strong class="text-ocean-blue">Konsultasi AI</strong> dan simulasi <strong class="text-ocean-blue">Chat Death Battle</strong> hanya dapat diakses oleh akun yang telah menyelesaikan verifikasi email.
+            Klik tautan verifikasi yang dikirim ke email Anda. Jika email menampilkan kode 6 digit, masukkan kode itu di bawah. Fitur <strong class="text-ocean-blue">Konsultasi AI</strong> dan <strong class="text-ocean-blue">Chat Death Battle</strong> baru dapat digunakan setelah email terverifikasi.
           </p>
 <div class="mt-space-2xs px-space-sm py-space-xs rounded-xl bg-ice-effect text-ocean-blue font-data-dense-body text-data-dense-body inline-flex items-center justify-center gap-space-2xs mx-auto">
 <span class="material-symbols-outlined text-label-md">alternate_email</span>
-<span class="font-semibold">ellias.auditor@vsb-arena.id</span>
+<span class="font-semibold" id="verify-email-label">Email belum dipilih</span>
 </div>
 </div>
 <!-- 6-Digit OTP Boxes -->
 <form class="w-full flex flex-col items-center gap-space-md" onsubmit="handleOtpSubmit(event)">
+<div class="w-full max-w-sm flex flex-col gap-space-3xs text-left">
+<label class="font-label-md text-label-md text-ocean-blue font-semibold" for="verify-email">Alamat email untuk verifikasi</label>
+<input class="w-full bg-surface-container-low text-ocean-blue font-body-md text-body-md px-space-sm py-space-xs rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" id="verify-email" autocomplete="email" placeholder="nama@domain.com" required type="email"/>
+</div>
 <div class="flex items-center justify-center gap-space-2xs sm:gap-space-xs">
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" oninput="handleOtpInput(this, 0)" type="text"/>
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" oninput="handleOtpInput(this, 1)" type="text"/>
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" oninput="handleOtpInput(this, 2)" type="text"/>
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" oninput="handleOtpInput(this, 3)" type="text"/>
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" oninput="handleOtpInput(this, 4)" type="text"/>
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" oninput="handleOtpInput(this, 5)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="0" oninput="handleOtpInput(this, 0)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="1" oninput="handleOtpInput(this, 1)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="2" oninput="handleOtpInput(this, 2)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="3" oninput="handleOtpInput(this, 3)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="4" oninput="handleOtpInput(this, 4)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="5" oninput="handleOtpInput(this, 5)" type="text"/>
 </div>
 <div class="w-full max-w-sm flex flex-col gap-space-xs">
 <button class="w-full py-space-xs px-space-md rounded-xl bg-ocean-blue text-glacier-white font-label-md text-label-md font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-space-xs min-h-[44px]" type="submit">
@@ -314,12 +310,61 @@
 </footer>
 </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  const SUPABASE_URL = 'https://wfczzmajuhrlpdmhnkpm.supabase.co';
+  // Publishable key is intended for browser use. Never place service_role or private API keys here.
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_gIX5KsthWfuY689W9H8IxA_IMN6_MbR';
+  let authClient = null;
+  let cooldownInterval = null;
+  let redirectPending = false;
+  let passwordRecoveryMode = false;
+
+  function showAuthStatus(kind, message) {
+    const el = document.getElementById('auth-status');
+    if (!el) return;
+    const styles = {
+      error: 'bg-error-container text-on-error-container',
+      success: 'bg-mint-mist text-secondary',
+      info: 'bg-ice-effect text-ocean-blue'
+    };
+    el.className = 'p-space-sm rounded-xl font-body-sm text-body-sm ' + (styles[kind] || styles.info);
+    el.textContent = message;
+    el.classList.remove('hidden');
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function hideAuthStatus() {
+    const el = document.getElementById('auth-status');
+    if (el) {
+      el.classList.add('hidden');
+      el.textContent = '';
+    }
+  }
+
+  function authRedirectUrl() {
+    if (!window.location.origin || window.location.origin === 'null' || window.location.protocol === 'file:') return null;
+    return window.location.origin + window.location.pathname;
+  }
+
+  function emailInputValue(id) {
+    return (document.getElementById(id)?.value || '').trim().toLowerCase();
+  }
+
+  function setVerifyEmail(email) {
+    const input = document.getElementById('verify-email');
+    const label = document.getElementById('verify-email-label');
+    if (input && email) input.value = email;
+    if (label) label.textContent = email || 'Email belum dipilih';
+  }
+
   function switchAuthTab(tabName) {
     const panels = ['login', 'register', 'verify', 'recover'];
     panels.forEach(p => {
       const el = document.getElementById('panel-' + p);
       const btn = document.getElementById('tab-btn-' + p);
+      if (!el || !btn) return;
       if (p === tabName) {
         el.classList.remove('hidden');
         btn.classList.add('bg-ocean-blue', 'text-glacier-white', 'shadow-sm', 'font-semibold');
@@ -335,6 +380,7 @@
   function togglePasswordVisibility(fieldId, triggerBtn) {
     const input = document.getElementById(fieldId);
     const icon = triggerBtn.querySelector('.material-symbols-outlined');
+    if (!input || !icon) return;
     if (input.type === 'password') {
       input.type = 'text';
       icon.textContent = 'visibility_off';
@@ -344,9 +390,298 @@
     }
   }
 
-  function handleLoginSubmit(e) {
-    e.preventDefault();
-    alert('Mode pratinjau: login belum terhubung ke backend. Data tidak dikirim dan sesi tidak dibuat.');
+  function setFormBusy(form, busy, busyText) {
+    const button = form?.querySelector('button[type="submit"]');
+    if (!button) return;
+    if (busy) {
+      if (!button.dataset.originalHtml) button.dataset.originalHtml = button.innerHTML;
+      button.disabled = true;
+      button.classList.add('opacity-60', 'cursor-wait');
+      const label = button.querySelector('span:last-child');
+      if (label) label.textContent = busyText || 'Memproses...';
+    } else {
+      button.disabled = false;
+      button.classList.remove('opacity-60', 'cursor-wait');
+      if (button.dataset.originalHtml) {
+        button.innerHTML = button.dataset.originalHtml;
+        delete button.dataset.originalHtml;
+      }
+    }
+  }
+
+  function friendlyAuthError(error) {
+    const message = String(error?.message || '').toLowerCase();
+    if (message.includes('invalid login credentials')) return 'Email atau kata sandi tidak cocok.';
+    if (message.includes('email not confirmed')) return 'Email belum terverifikasi. Periksa email Anda atau buka tab Verifikasi Email.';
+    if (message.includes('user already registered')) return 'Pendaftaran tidak dapat diselesaikan. Coba masuk atau gunakan alamat email lain.';
+    if (message.includes('password should be at least') || message.includes('weak password')) return 'Kata sandi belum memenuhi persyaratan keamanan Supabase.';
+    if (message.includes('rate limit') || message.includes('too many requests')) return 'Terlalu banyak permintaan. Tunggu beberapa saat sebelum mencoba lagi.';
+    if (message.includes('fetch') || message.includes('network')) return 'Tidak dapat terhubung ke Supabase. Periksa koneksi internet dan coba lagi.';
+    return 'Permintaan autentikasi gagal. Periksa data Anda lalu coba lagi.';
+  }
+
+  function scheduleWorkspaceRedirect(message) {
+    if (redirectPending) return;
+    redirectPending = true;
+    showAuthStatus('success', message || 'Autentikasi berhasil. Membuka workspace...');
+    window.setTimeout(function () {
+      window.location.href = 'beranda_workspace_user_dashboard.html';
+    }, 900);
+  }
+
+  async function handleLoginSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    hideAuthStatus();
+    if (!authClient) {
+      showAuthStatus('error', 'Layanan autentikasi belum siap. Muat ulang halaman dan coba lagi.');
+      return;
+    }
+    const email = emailInputValue('login-email');
+    const password = document.getElementById('login-pass').value;
+    setFormBusy(form, true, 'Memeriksa akun...');
+    try {
+      const { data, error } = await authClient.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      if (!data.user?.email_confirmed_at) {
+        await authClient.auth.signOut();
+        setVerifyEmail(email);
+        switchAuthTab('verify');
+        showAuthStatus('info', 'Email harus diverifikasi sebelum Anda dapat menggunakan fitur AI. Periksa email atau kirim ulang verifikasi.');
+        setFormBusy(form, false);
+        return;
+      }
+      scheduleWorkspaceRedirect('Login berhasil. Membuka workspace...');
+    } catch (error) {
+      showAuthStatus('error', friendlyAuthError(error));
+    } finally {
+      setFormBusy(form, false);
+    }
+  }
+
+  async function handleRegisterSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    hideAuthStatus();
+    if (!authClient) {
+      showAuthStatus('error', 'Layanan autentikasi belum siap. Muat ulang halaman dan coba lagi.');
+      return;
+    }
+    const name = (document.getElementById('reg-name').value || '').trim();
+    const email = emailInputValue('reg-email');
+    const password = document.getElementById('reg-pass').value;
+    const confirmPassword = document.getElementById('reg-confirm-pass').value;
+    if (password.length < 8) {
+      showAuthStatus('error', 'Kata sandi harus memiliki minimal 8 karakter.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      showAuthStatus('error', 'Kata sandi dan konfirmasi tidak sama.');
+      return;
+    }
+    const redirectTo = authRedirectUrl();
+    if (!redirectTo) {
+      showAuthStatus('error', 'Jangan buka file HTML langsung dari penyimpanan. Jalankan situs melalui HTTPS, Vercel, GitHub Pages, atau localhost terlebih dahulu agar tautan verifikasi memiliki alamat yang valid.');
+      return;
+    }
+    setFormBusy(form, true, 'Membuat akun...');
+    try {
+      const { data, error } = await authClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { display_name: name },
+          emailRedirectTo: redirectTo
+        }
+      });
+      if (error) throw error;
+      setVerifyEmail(email);
+      switchAuthTab('verify');
+      if (data.session && data.user?.email_confirmed_at) {
+        scheduleWorkspaceRedirect('Akun berhasil dibuat dan email sudah terverifikasi. Membuka workspace...');
+      } else {
+        showAuthStatus('success', 'Permintaan pendaftaran diterima. Buka email dari Supabase dan klik tautan verifikasi. Jika email berisi kode 6 digit, masukkan pada tab Verifikasi Email. Akun belum dapat memakai fitur AI sebelum terverifikasi.');
+      }
+    } catch (error) {
+      showAuthStatus('error', friendlyAuthError(error));
+    } finally {
+      setFormBusy(form, false);
+    }
+  }
+
+  function handleOtpInput(currentInput, index) {
+    const inputs = Array.from(document.querySelectorAll('.otp-input'));
+    currentInput.value = currentInput.value.replace(/\D/g, '').slice(-1);
+    if (currentInput.value && index < inputs.length - 1) inputs[index + 1].focus();
+  }
+
+  document.addEventListener('paste', function (event) {
+    const target = event.target;
+    if (!target?.classList?.contains('otp-input')) return;
+    const pasted = (event.clipboardData?.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+    if (!pasted) return;
+    event.preventDefault();
+    const inputs = Array.from(document.querySelectorAll('.otp-input'));
+    inputs.forEach((input, index) => input.value = pasted[index] || '');
+    inputs[Math.min(pasted.length, inputs.length) - 1]?.focus();
+  });
+
+  async function handleOtpSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    hideAuthStatus();
+    const email = emailInputValue('verify-email');
+    const token = Array.from(document.querySelectorAll('.otp-input')).map(input => input.value.trim()).join('');
+    if (!email) {
+      showAuthStatus('error', 'Masukkan alamat email yang menerima kode verifikasi.');
+      return;
+    }
+    if (!/^\d{6}$/.test(token)) {
+      showAuthStatus('error', 'Masukkan seluruh 6 digit kode dari email. Jika email hanya menyediakan tautan, klik tautan itu langsung.');
+      return;
+    }
+    setFormBusy(form, true, 'Memvalidasi kode...');
+    try {
+      const { data, error } = await authClient.auth.verifyOtp({ email, token, type: 'email' });
+      if (error) throw error;
+      if (!data.user?.email_confirmed_at && !data.session?.user?.email_confirmed_at) {
+        showAuthStatus('info', 'Kode diterima, tetapi status konfirmasi belum terlihat. Coba masuk kembali setelah beberapa saat.');
+        return;
+      }
+      scheduleWorkspaceRedirect('Email berhasil diverifikasi. Membuka workspace...');
+    } catch (error) {
+      showAuthStatus('error', friendlyAuthError(error));
+    } finally {
+      setFormBusy(form, false);
+    }
+  }
+
+  async function startCooldown() {
+    const email = emailInputValue('verify-email') || emailInputValue('reg-email');
+    const button = document.getElementById('resend-btn');
+    const label = document.getElementById('resend-text');
+    if (!authClient) {
+      showAuthStatus('error', 'Layanan autentikasi belum siap. Muat ulang halaman dan coba lagi.');
+      return;
+    }
+    if (!email) {
+      showAuthStatus('error', 'Masukkan email pada kolom verifikasi atau isi email di tab Daftar Akun terlebih dahulu.');
+      return;
+    }
+    const redirectTo = authRedirectUrl();
+    if (!redirectTo) {
+      showAuthStatus('error', 'Buka situs melalui HTTPS atau localhost agar tautan verifikasi kembali ke halaman ini.');
+      return;
+    }
+    if (button?.disabled) return;
+    if (button) button.disabled = true;
+    if (label) label.textContent = 'Mengirim email...';
+    try {
+      const { error } = await authClient.auth.resend({
+        type: 'signup',
+        email,
+        options: { emailRedirectTo: redirectTo }
+      });
+      if (error) throw error;
+      setVerifyEmail(email);
+      showAuthStatus('success', 'Permintaan kirim ulang berhasil. Periksa inbox dan folder spam, lalu klik tautan verifikasi atau masukkan kode jika disediakan.');
+      let seconds = 60;
+      if (label) label.textContent = 'Kirim ulang (' + seconds + 's)';
+      if (cooldownInterval) window.clearInterval(cooldownInterval);
+      cooldownInterval = window.setInterval(function () {
+        seconds -= 1;
+        if (label) label.textContent = seconds > 0 ? 'Kirim ulang (' + seconds + 's)' : 'Kirim Ulang Email Verifikasi';
+        if (seconds <= 0) {
+          window.clearInterval(cooldownInterval);
+          cooldownInterval = null;
+          if (button) button.disabled = false;
+        }
+      }, 1000);
+    } catch (error) {
+      showAuthStatus('error', friendlyAuthError(error));
+      if (button) button.disabled = false;
+      if (label) label.textContent = 'Kirim Ulang Email Verifikasi';
+    }
+  }
+
+  async function handleRecoverSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    hideAuthStatus();
+    if (!authClient) {
+      showAuthStatus('error', 'Layanan autentikasi belum siap. Muat ulang halaman dan coba lagi.');
+      return;
+    }
+    const email = emailInputValue('recover-email');
+    const redirectTo = authRedirectUrl();
+    if (!redirectTo) {
+      showAuthStatus('error', 'Buka situs melalui HTTPS atau localhost agar tautan pemulihan kembali ke halaman ini.');
+      return;
+    }
+    setFormBusy(form, true, 'Mengirim instruksi...');
+    try {
+      const { error } = await authClient.auth.resetPasswordForEmail(email, { redirectTo });
+      if (error) throw error;
+      const box = document.getElementById('recover-success-box');
+      box?.classList.remove('hidden');
+      box?.classList.add('flex');
+      showAuthStatus('success', 'Jika alamat itu terdaftar, email pemulihan akan dikirim. Buka tautannya untuk membuat kata sandi baru.');
+    } catch (error) {
+      showAuthStatus('error', friendlyAuthError(error));
+    } finally {
+      setFormBusy(form, false);
+    }
+  }
+
+  function renderPasswordResetForm() {
+    passwordRecoveryMode = true;
+    switchAuthTab('recover');
+    let form = document.getElementById('reset-password-form');
+    if (form) return;
+    const panel = document.getElementById('panel-recover');
+    if (!panel) return;
+    form = document.createElement('form');
+    form.id = 'reset-password-form';
+    form.className = 'flex flex-col gap-space-sm p-space-sm rounded-xl bg-ice-effect';
+    form.innerHTML = '<h3 class="font-headline-sm text-headline-sm text-ocean-blue">Buat Kata Sandi Baru</h3>' +
+      '<label class="font-label-md text-label-md text-ocean-blue font-semibold" for="new-password">Kata sandi baru</label>' +
+      '<input id="new-password" class="w-full bg-surface-container-lowest text-ocean-blue font-body-md text-body-md px-space-sm py-space-xs rounded-xl" type="password" minlength="8" autocomplete="new-password" required>' +
+      '<label class="font-label-md text-label-md text-ocean-blue font-semibold" for="new-password-confirm">Konfirmasi kata sandi baru</label>' +
+      '<input id="new-password-confirm" class="w-full bg-surface-container-lowest text-ocean-blue font-body-md text-body-md px-space-sm py-space-xs rounded-xl" type="password" minlength="8" autocomplete="new-password" required>' +
+      '<button class="w-full py-space-xs px-space-md rounded-xl bg-ocean-blue text-glacier-white font-label-md font-bold min-h-[44px]" type="submit">Simpan Kata Sandi Baru</button>';
+    form.addEventListener('submit', handlePasswordUpdate);
+    panel.appendChild(form);
+    showAuthStatus('info', 'Tautan pemulihan valid. Masukkan kata sandi baru di bawah.');
+  }
+
+  async function handlePasswordUpdate(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const password = document.getElementById('new-password').value;
+    const confirmPassword = document.getElementById('new-password-confirm').value;
+    if (password.length < 8) {
+      showAuthStatus('error', 'Kata sandi baru harus memiliki minimal 8 karakter.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      showAuthStatus('error', 'Konfirmasi kata sandi baru tidak cocok.');
+      return;
+    }
+    setFormBusy(form, true, 'Menyimpan...');
+    try {
+      const { error } = await authClient.auth.updateUser({ password });
+      if (error) throw error;
+      await authClient.auth.signOut();
+      passwordRecoveryMode = false;
+      form.remove();
+      switchAuthTab('login');
+      document.getElementById('login-email').value = emailInputValue('recover-email');
+      showAuthStatus('success', 'Kata sandi berhasil diperbarui. Masuk kembali dengan kata sandi baru.');
+    } catch (error) {
+      showAuthStatus('error', friendlyAuthError(error));
+    } finally {
+      if (document.body.contains(form)) setFormBusy(form, false);
+    }
   }
 
   function validateEmailField(input) {
@@ -361,27 +696,26 @@
     }
   }
 
-  function checkPassStrength(val) {
+  function checkPassStrength(value) {
     const bar = document.getElementById('strength-meter-bar');
     const label = document.getElementById('strength-label');
     let strength = 0;
-    if (val.length >= 8) strength++;
-    if (/[A-Z]/.test(val)) strength++;
-    if (/[0-9]/.test(val)) strength++;
-    if (/[^A-Za-z0-9]/.test(val)) strength++;
-
+    if (value.length >= 8) strength++;
+    if (/[A-Z]/.test(value)) strength++;
+    if (/[0-9]/.test(value)) strength++;
+    if (/[^A-Za-z0-9]/.test(value)) strength++;
     if (strength <= 1) {
       bar.style.width = '25%';
       bar.className = 'h-full transition-all duration-300 bg-status-error';
       label.textContent = 'Kekuatan: Lemah';
-    } else if (strength === 2 || strength === 3) {
+    } else if (strength <= 3) {
       bar.style.width = '60%';
       bar.className = 'h-full transition-all duration-300 bg-status-warning';
       label.textContent = 'Kekuatan: Menengah';
-    } else if (strength >= 4) {
+    } else {
       bar.style.width = '100%';
       bar.className = 'h-full transition-all duration-300 bg-mint-mist';
-      label.textContent = 'Kekuatan: Sangat Kuat (Memenuhi Standar Kanon)';
+      label.textContent = 'Kekuatan: Sangat Kuat';
     }
   }
 
@@ -398,42 +732,52 @@
     }
   }
 
-  function handleRegisterSubmit(e) {
-    e.preventDefault();
-    const banner = document.getElementById('register-success-banner');
-    const title = banner.querySelector('.font-label-sm');
-    const description = banner.querySelector('p');
-    if (title) title.textContent = 'Backend Belum Terhubung';
-    if (description) description.textContent = 'Ini hanya pratinjau antarmuka. Akun belum dibuat dan email verifikasi tidak dikirim. Integrasi autentikasi Supabase perlu dipasang terlebih dahulu.';
-    banner.classList.remove('hidden');
-    banner.classList.add('flex');
-    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  function handleOtpInput(currentInput, index) {
-    const inputs = document.querySelectorAll('.otp-input');
-    if (currentInput.value.length === 1 && index < inputs.length - 1) {
-      inputs[index + 1].focus();
+  async function initializeAuthPortal() {
+    if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+      showAuthStatus('error', 'Library Supabase gagal dimuat. Periksa koneksi internet lalu muat ulang halaman.');
+      return;
+    }
+    authClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+      auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true }
+    });
+    authClient.auth.onAuthStateChange(function (event, session) {
+      if (event === 'PASSWORD_RECOVERY') {
+        renderPasswordResetForm();
+        return;
+      }
+      if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at && !passwordRecoveryMode) {
+        scheduleWorkspaceRedirect('Login atau verifikasi email berhasil. Membuka workspace...');
+      }
+    });
+    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    const queryParams = new URLSearchParams(window.location.search);
+    const linkError = hashParams.get('error_description') || queryParams.get('error_description');
+    if (linkError) {
+      showAuthStatus('error', 'Tautan autentikasi tidak dapat digunakan atau sudah kedaluwarsa. Minta tautan baru lalu coba kembali.');
+    }
+    const storedEmail = window.sessionStorage.getItem('cdb_auth_email');
+    if (storedEmail) setVerifyEmail(storedEmail);
+    const { data } = await authClient.auth.getSession();
+    if (data?.session?.user?.email) {
+      setVerifyEmail(data.session.user.email);
+    }
+    if (queryParams.get('type') === 'recovery' || hashParams.get('type') === 'recovery') {
+      renderPasswordResetForm();
     }
   }
 
-  function startCooldown() {
-    alert('Mode pratinjau: pengiriman email verifikasi belum tersedia karena backend belum terhubung.');
-  }
+  // Keep the current email handy when navigating between the register and verification tabs.
+  document.getElementById('reg-email')?.addEventListener('change', function () {
+    const value = emailInputValue('reg-email');
+    if (value) {
+      window.sessionStorage.setItem('cdb_auth_email', value);
+      setVerifyEmail(value);
+    }
+  });
+  document.getElementById('verify-email')?.addEventListener('change', function () {
+    const value = emailInputValue('verify-email');
+    if (value) window.sessionStorage.setItem('cdb_auth_email', value);
+  });
 
-  function handleOtpSubmit(e) {
-    e.preventDefault();
-    alert('Mode pratinjau: verifikasi email belum terhubung ke backend. Status akun tidak berubah.');
-  }
-
-  function handleRecoverSubmit(e) {
-    e.preventDefault();
-    const successBox = document.getElementById('recover-success-box');
-    const title = successBox.querySelector('.font-label-sm');
-    const description = successBox.querySelector('p');
-    if (title) title.textContent = 'Backend Belum Terhubung';
-    if (description) description.textContent = 'Ini hanya pratinjau antarmuka. Email pemulihan tidak dikirim dan kata sandi tidak berubah karena layanan autentikasi belum dipasang.';
-    successBox.classList.remove('hidden');
-    successBox.classList.add('flex');
-  }
-</script></main></body></html>
+  initializeAuthPortal();
+</script></script></main></body></html>
