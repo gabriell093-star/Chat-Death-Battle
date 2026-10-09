@@ -89,7 +89,7 @@
       const sourceLinks = [...document.querySelectorAll('a[href*="vsbattles.fandom.com"]')];
       const uniqueLinks = [...new Map(sourceLinks.map((link) => [link.href, link])).values()];
       const citationText = uniqueLinks.length
-        ? uniqueLinks.map((link) => `${link.textContent.trim()} — ${link.href}`).join("\\n")
+        ? uniqueLinks.map((link) => `${link.textContent.trim()} — ${link.href}`).join("\n")
         : "Sumber utama: https://vsbattles.fandom.com/wiki/VS_Battles_Wiki";
 
       try {

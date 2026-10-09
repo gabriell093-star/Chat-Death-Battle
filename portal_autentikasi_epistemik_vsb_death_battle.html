@@ -417,24 +417,8 @@
     }
   }
 
-  let cooldownTimer = null;
   function startCooldown() {
-    const btn = document.getElementById('resend-btn');
-    const text = document.getElementById('resend-text');
-    let seconds = 60;
-    btn.disabled = true;
-    btn.classList.add('opacity-50', 'cursor-not-allowed');
-    clearInterval(cooldownTimer);
-    cooldownTimer = setInterval(() => {
-      seconds--;
-      text.textContent = 'Kirim Ulang Email Verifikasi (' + seconds + 's)';
-      if (seconds <= 0) {
-        clearInterval(cooldownTimer);
-        btn.disabled = false;
-        btn.classList.remove('opacity-50', 'cursor-not-allowed');
-        text.textContent = 'Kirim Ulang Email Verifikasi';
-      }
-    }, 1000);
+    alert('Mode pratinjau: pengiriman email verifikasi belum tersedia karena backend belum terhubung.');
   }
 
   function handleOtpSubmit(e) {

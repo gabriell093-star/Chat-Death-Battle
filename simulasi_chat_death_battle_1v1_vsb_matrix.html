@@ -601,28 +601,28 @@
     const btnSave = document.getElementById('btn-save-history');
     if (btnSave) {
       btnSave.addEventListener('click', function() {
-        showToast('Simulasi laga berhasil disimpan ke Riwayat Workspace Anda.');
+        showToast('Pratinjau saja: riwayat belum tersimpan karena backend belum terhubung.');
       });
     }
 
     const btnReEval = document.getElementById('btn-re-evaluate');
     if (btnReEval) {
       btnReEval.addEventListener('click', function() {
-        showToast('Menghitung ulang simulasi dengan penyesuaian parameter...');
+        showToast('Mode pratinjau: kalkulasi ulang belum tersedia; tidak ada hasil baru yang dihitung.');
       });
     }
 
     const btnSwitch = document.getElementById('btn-switch-versions');
     if (btnSwitch) {
       btnSwitch.addEventListener('click', function() {
-        showToast('Membuka dialog pemilihan inkarnasi multi-verse...');
+        showToast('Pemilihan inkarnasi belum tersedia pada frontend pratinjau ini.');
       });
     }
 
     const btnConsult = document.getElementById('btn-open-consult');
     if (btnConsult) {
       btnConsult.addEventListener('click', function() {
-        showToast('Mengarahkan ke modul Konsultasi AI dengan konteks laga terkunci...');
+        window.location.href = 'konsultasi_ai_powerscaling_vsb_death_battle.html';
       });
     }
   })();
