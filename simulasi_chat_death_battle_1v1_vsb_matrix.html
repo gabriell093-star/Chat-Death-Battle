@@ -743,6 +743,7 @@ if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)')
     client.auth.onAuthStateChange(function (event, session) {
       if (event === 'SIGNED_OUT' || (session && !session.user.email_confirmed_at)) redirectToLogin();
     });
+    window.dispatchEvent(new CustomEvent('cdb-auth-ready', { detail: { client: client, user: data.session.user } }));
   }
   guard().catch(function () { redirectToLogin(); });
 })();
