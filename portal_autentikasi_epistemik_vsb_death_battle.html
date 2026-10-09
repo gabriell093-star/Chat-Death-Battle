@@ -216,12 +216,12 @@
 <input class="w-full bg-surface-container-low text-ocean-blue font-body-md text-body-md px-space-sm py-space-xs rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" id="verify-email" autocomplete="email" placeholder="nama@domain.com" required type="email"/>
 </div>
 <div class="flex items-center justify-center gap-space-2xs sm:gap-space-xs">
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="0" oninput="handleOtpInput(this, 0)" type="text"/>
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="1" oninput="handleOtpInput(this, 1)" type="text"/>
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="2" oninput="handleOtpInput(this, 2)" type="text"/>
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="3" oninput="handleOtpInput(this, 3)" type="text"/>
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="4" oninput="handleOtpInput(this, 4)" type="text"/>
-<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="5" oninput="handleOtpInput(this, 5)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="one-time-code" oninput="handleOtpInput(this, 0)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" oninput="handleOtpInput(this, 1)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" oninput="handleOtpInput(this, 2)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" oninput="handleOtpInput(this, 3)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" oninput="handleOtpInput(this, 4)" type="text"/>
+<input class="otp-input w-11 h-14 sm:w-12 sm:h-16 text-center text-headline-sm font-data-dense-numeric text-ocean-blue bg-surface-container-low rounded-xl focus:outline-none focus:bg-surface-container-lowest transition-all" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" oninput="handleOtpInput(this, 5)" type="text"/>
 </div>
 <div class="w-full max-w-sm flex flex-col gap-space-xs">
 <button class="w-full py-space-xs px-space-md rounded-xl bg-ocean-blue text-glacier-white font-label-md text-label-md font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-space-xs min-h-[44px]" type="submit">
@@ -496,6 +496,7 @@
       });
       if (error) throw error;
       setVerifyEmail(email);
+      window.sessionStorage.setItem('cdb_auth_email', email);
       switchAuthTab('verify');
       if (data.session && data.user?.email_confirmed_at) {
         scheduleWorkspaceRedirect('Akun berhasil dibuat dan email sudah terverifikasi. Membuka workspace...');
@@ -584,6 +585,7 @@
       });
       if (error) throw error;
       setVerifyEmail(email);
+      window.sessionStorage.setItem('cdb_auth_email', email);
       showAuthStatus('success', 'Permintaan kirim ulang berhasil. Periksa inbox dan folder spam, lalu klik tautan verifikasi atau masukkan kode jika disediakan.');
       let seconds = 60;
       if (label) label.textContent = 'Kirim ulang (' + seconds + 's)';
@@ -613,6 +615,7 @@
       return;
     }
     const email = emailInputValue('recover-email');
+    window.sessionStorage.setItem('cdb_recover_email', email);
     const redirectTo = authRedirectUrl();
     if (!redirectTo) {
       showAuthStatus('error', 'Buka situs melalui HTTPS atau localhost agar tautan pemulihan kembali ke halaman ini.');
@@ -675,7 +678,7 @@
       passwordRecoveryMode = false;
       form.remove();
       switchAuthTab('login');
-      document.getElementById('login-email').value = emailInputValue('recover-email');
+      document.getElementById('login-email').value = window.sessionStorage.getItem('cdb_recover_email') || emailInputValue('recover-email');
       showAuthStatus('success', 'Kata sandi berhasil diperbarui. Masuk kembali dengan kata sandi baru.');
     } catch (error) {
       showAuthStatus('error', friendlyAuthError(error));
@@ -757,6 +760,8 @@
     }
     const storedEmail = window.sessionStorage.getItem('cdb_auth_email');
     if (storedEmail) setVerifyEmail(storedEmail);
+    const recoverEmail = window.sessionStorage.getItem('cdb_recover_email');
+    if (recoverEmail && document.getElementById('recover-email')) document.getElementById('recover-email').value = recoverEmail;
     const { data } = await authClient.auth.getSession();
     if (data?.session?.user?.email) {
       setVerifyEmail(data.session.user.email);
@@ -780,4 +785,4 @@
   });
 
   initializeAuthPortal();
-</script></script></main></body></html>
+</script></main></body></html>
