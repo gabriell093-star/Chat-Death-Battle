@@ -698,9 +698,20 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
     modal.classList.remove('flex');
   }
 
-  function executeLogout() {
+  async function executeLogout() {
     closeLogoutModal();
-    alert("Mode pratinjau: logout belum terhubung ke backend, sehingga tidak ada sesi autentikasi yang dihentikan.");
+    const client = window.CDB_AUTH_CLIENT;
+    if (!client) {
+      alert("Layanan autentikasi belum siap. Muat ulang halaman lalu coba lagi.");
+      return;
+    }
+    try {
+      const { error } = await client.auth.signOut();
+      if (error) throw error;
+      window.location.replace("index.html");
+    } catch (_) {
+      alert("Logout gagal. Periksa koneksi lalu coba lagi.");
+    }
   }
 </script></main><footer class="w-full bg-surface-container-low py-space-md shadow-[0_1px_8px_rgba(0,43,76,0.04)]"><div class="w-full px-space-md flex flex-col sm:flex-row items-center justify-between gap-space-xs"><div class="font-caption-meta text-caption-meta text-slate-blue">VSB &amp; Death Battle Epistemic Powerscaling System • Non-speculative Feat Audit Engine</div><div class="font-label-md text-label-md font-semibold text-slate-blue">Creator: Ellias</div></div></footer></div><script id="cdb-theme-language-preferences">
 (function(){
@@ -741,6 +752,70 @@ document.querySelectorAll('button').forEach(function(b){const label=b.textConten
 const icon=b.querySelector('.material-symbols-outlined');if(!icon)return;const name=icon.textContent.trim();if(['light_mode','dark_mode','desktop_windows'].includes(name))b.addEventListener('click',function(){const choice=name==='light_mode'?'light':name==='dark_mode'?'dark':'system';write(THEME_KEY,choice);applyTheme(choice)})});
 applyLanguage(read(LANGUAGE_KEY,'id'));applyTheme(read(THEME_KEY,'light'));
 if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)');if(mq.addEventListener)mq.addEventListener('change',function(){if(read(THEME_KEY,'light')==='system')applyTheme('system')})}
+})();
+</script>
+<script id="cdb-profile-preference-controls">
+(function(){
+  function clickControl(predicate){
+    const buttons=Array.from(document.querySelectorAll('button'));
+    const button=buttons.find(predicate);
+    if(button)button.click();
+  }
+  document.querySelectorAll('button').forEach(function(button){
+    const raw=button.textContent.replace(/light_mode|dark_mode|desktop_windows|check_circle/g,'');
+    const label=raw.replace(/\s+/g,' ').trim();
+    if(label==='Bahasa Indonesia')button.addEventListener('click',function(){
+      clickControl(function(b){return b.textContent.trim()==='ID'});
+    });
+    if(label==='English (US)')button.addEventListener('click',function(){
+      clickControl(function(b){return b.textContent.trim()==='EN'});
+    });
+    if(label==='Terang (Clay)')button.addEventListener('click',function(){
+      clickControl(function(b){return !!b.querySelector('.material-symbols-outlined') && b.querySelector('.material-symbols-outlined').textContent.trim()==='light_mode'});
+    });
+    if(label==='Deep Ocean')button.addEventListener('click',function(){
+      clickControl(function(b){return !!b.querySelector('.material-symbols-outlined') && b.querySelector('.material-symbols-outlined').textContent.trim()==='dark_mode'});
+    });
+    if(label==='Sistem')button.addEventListener('click',function(){
+      clickControl(function(b){return !!b.querySelector('.material-symbols-outlined') && b.querySelector('.material-symbols-outlined').textContent.trim()==='desktop_windows'});
+    });
+  });
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script id="cdb-private-page-guard">
+(function () {
+  'use strict';
+  const URL = 'https://wfczzmajuhrlpdmhnkpm.supabase.co';
+  const KEY = 'sb_publishable_gIX5KsthWfuY689W9H8IxA_IMN6_MbR';
+  const AUTH_PAGE = 'portal_autentikasi_epistemik_vsb_death_battle.html';
+  function redirectToLogin() {
+    const next = window.location.pathname.replace(/^\/+/, '') + window.location.search;
+    window.location.replace(AUTH_PAGE + '?next=' + encodeURIComponent(next));
+  }
+  async function guard() {
+    if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+      const box = document.createElement('p');
+      box.textContent = 'Layanan autentikasi tidak dapat dimuat. Periksa koneksi dan muat ulang halaman.';
+      box.setAttribute('role', 'alert');
+      box.className = 'm-6 rounded-xl bg-error-container p-4 text-on-error-container';
+      document.body.prepend(box);
+      return;
+    }
+    const client = window.supabase.createClient(URL, KEY, {
+      auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true }
+    });
+    window.CDB_AUTH_CLIENT = client;
+    const { data, error } = await client.auth.getSession();
+    if (error || !data.session || !data.session.user || !data.session.user.email_confirmed_at) {
+      redirectToLogin();
+      return;
+    }
+    client.auth.onAuthStateChange(function (event, session) {
+      if (event === 'SIGNED_OUT' || (session && !session.user.email_confirmed_at)) redirectToLogin();
+    });
+  }
+  guard().catch(function () { redirectToLogin(); });
 })();
 </script>
 </body></html>
