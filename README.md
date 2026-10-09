@@ -1,31 +1,18 @@
-# Chat-Death-Battle
+# Chat Death Battle
 
-AI-powered VS Battles Wiki consultation and Death Battle website.
+Website statis **HTML, CSS, dan JavaScript** untuk konsultasi powerscaling berbasis VS Battles Wiki dan simulasi Death Battle.
 
-## Current stage
+## Halaman
+- `index.html` — beranda/landing page.
+- `beranda_workspace_user_dashboard.html` — workspace/dashboard.
+- `konsultasi_ai_powerscaling_vsb_death_battle.html` — antarmuka konsultasi.
+- `simulasi_chat_death_battle_1v1_vsb_matrix.html` — antarmuka Death Battle 1v1.
+- `riwayat_arsip_audit_epistemik_vsb_death_battle.html` — riwayat dan audit.
+- `profil_dan_pengaturan_vsb_death_battle.html` — profil/pengaturan.
+- `portal_autentikasi_epistemik_vsb_death_battle.html` — antarmuka autentikasi.
 
-This repository is being built incrementally. The current commit contains only the initial Next.js + TypeScript project foundation.
+## Status fungsional
+Ini masih frontend/prototipe. Login, pendaftaran, verifikasi email, pengaturan akun, dan penyimpanan riwayat belum terhubung ke backend; UI tidak boleh dianggap menyimpan data sungguhan. Integrasi Supabase dan Groq dilakukan pada tahap berikutnya, dengan API key hanya disimpan di server/secret store.
 
-Planned integrations are intentionally deferred until the foundation is verified:
-- Supabase
-- VS Battles Wiki MediaWiki API
-- Groq API
-
-## Development
-
-Required Node.js version: 20.9 or newer.
-
-Install dependencies, then run:
-
-```bash
-npm install
-npm run dev
-```
-
-Type-check with:
-
-```bash
-npm run typecheck
-```
-
-Real API keys must stay in local environment variables and must never be committed to Git.
+## Deploy
+Situs menggunakan file statis. Untuk Vercel, konfigurasi `vercel.json` menetapkan framework `Other`, menonaktifkan langkah build/install, dan menyajikan file dari root repository. Untuk GitHub Pages, pastikan Pages menerbitkan branch `main` dari root repository.

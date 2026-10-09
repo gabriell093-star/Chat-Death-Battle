@@ -241,7 +241,7 @@
 </form>
 <p class="font-body-sm text-body-sm text-slate-blue">
           Tidak menerima email? Periksa folder spam atau 
-          <a class="text-ocean-blue font-semibold hover:underline underline-offset-4" href="#">hubungi dukungan sistem</a>.
+          <a class="text-ocean-blue font-semibold hover:underline underline-offset-4" href="https://github.com/gabriell093-star/Chat-Death-Battle/issues">hubungi dukungan sistem</a>.
         </p>
 </section>
 <!-- 6. TAB 4: PEMULIHAN AKUN (LUPA KATA SANDI) -->
@@ -306,7 +306,7 @@
 <span>•</span>
 <span>Zero Plaintext Passwords</span>
 <span>•</span>
-<a class="hover:text-ocean-blue underline underline-offset-2" href="#">Kembali ke Beranda Arena</a>
+<a class="hover:text-ocean-blue underline underline-offset-2" href="index.html">Kembali ke Beranda Arena</a>
 </div>
 <p class="font-label-md text-label-md text-slate-blue">
         © 2025 VSB &amp; Chat Death Battle. Epistemic Powerscaling System. <span class="text-ocean-blue font-semibold">Creator: Ellias</span>
@@ -346,13 +346,7 @@
 
   function handleLoginSubmit(e) {
     e.preventDefault();
-    const loading = document.getElementById('login-loading-bar');
-    loading.classList.remove('hidden');
-    loading.classList.add('flex');
-    setTimeout(() => {
-      loading.classList.add('hidden');
-      loading.classList.remove('flex');
-    }, 2000);
+    alert('Mode pratinjau: login belum terhubung ke backend. Data tidak dikirim dan sesi tidak dibuat.');
   }
 
   function validateEmailField(input) {
@@ -407,6 +401,10 @@
   function handleRegisterSubmit(e) {
     e.preventDefault();
     const banner = document.getElementById('register-success-banner');
+    const title = banner.querySelector('.font-label-sm');
+    const description = banner.querySelector('p');
+    if (title) title.textContent = 'Backend Belum Terhubung';
+    if (description) description.textContent = 'Ini hanya pratinjau antarmuka. Akun belum dibuat dan email verifikasi tidak dikirim. Integrasi autentikasi Supabase perlu dipasang terlebih dahulu.';
     banner.classList.remove('hidden');
     banner.classList.add('flex');
     banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -441,12 +439,16 @@
 
   function handleOtpSubmit(e) {
     e.preventDefault();
-    alert('Token kanonikal berhasil diverifikasi. Membuka sesi auditor...');
+    alert('Mode pratinjau: verifikasi email belum terhubung ke backend. Status akun tidak berubah.');
   }
 
   function handleRecoverSubmit(e) {
     e.preventDefault();
     const successBox = document.getElementById('recover-success-box');
+    const title = successBox.querySelector('.font-label-sm');
+    const description = successBox.querySelector('p');
+    if (title) title.textContent = 'Backend Belum Terhubung';
+    if (description) description.textContent = 'Ini hanya pratinjau antarmuka. Email pemulihan tidak dikirim dan kata sandi tidak berubah karena layanan autentikasi belum dipasang.';
     successBox.classList.remove('hidden');
     successBox.classList.add('flex');
   }
