@@ -446,7 +446,19 @@
     redirectPending = true;
     showAuthStatus('success', message || 'Autentikasi berhasil. Membuka workspace...');
     window.setTimeout(function () {
-      window.location.href = 'beranda_workspace_user_dashboard.html';
+      const allowedPages = [
+        'beranda_workspace_user_dashboard.html',
+        'konsultasi_ai_powerscaling_vsb_death_battle.html',
+        'simulasi_chat_death_battle_1v1_vsb_matrix.html',
+        'riwayat_arsip_audit_epistemik_vsb_death_battle.html',
+        'profil_dan_pengaturan_vsb_death_battle.html'
+      ];
+      const requested = new URLSearchParams(window.location.search).get('next') || '';
+      const requestedPage = requested.split('?')[0];
+      const safeTarget = allowedPages.includes(requestedPage) && !requested.startsWith('/') && !requested.includes('://')
+        ? requested
+        : 'beranda_workspace_user_dashboard.html';
+      window.location.href = safeTarget;
     }, 900);
   }
 
