@@ -342,10 +342,6 @@
   let redirectPending = false;
   let passwordRecoveryMode = false;
   let authOperationInFlight = false;
-  const AUTH_EMAIL_COOLDOWN_KEY = 'cdb_auth_email_cooldown_until';
-  const AUTH_GENERAL_COOLDOWN_KEY = 'cdb_auth_general_cooldown_until';
-  const AUTH_EMAIL_COOLDOWN_MS = 15 * 60 * 1000;
-  const AUTH_GENERAL_COOLDOWN_MS = 5 * 60 * 1000;
 
   function showAuthStatus(kind, message) {
     const el = document.getElementById('auth-status');
@@ -374,43 +370,22 @@
     return ['register', 'resend', 'recover'].includes(action) ? 'email' : 'general';
   }
 
-  function authCooldownKey(group) {
-    return group === 'email' ? AUTH_EMAIL_COOLDOWN_KEY : AUTH_GENERAL_COOLDOWN_KEY;
-  }
-
-  function readAuthCooldown(group) {
-    try { return Number(window.localStorage.getItem(authCooldownKey(group)) || 0); }
-    catch (_) { return 0; }
-  }
-
-  function writeAuthCooldown(group, until) {
-    try { window.localStorage.setItem(authCooldownKey(group), String(until)); }
-    catch (_) {}
-  }
-
   function isRateLimitError(error) {
     const message = (String(error?.message || '') + ' ' + String(error?.code || '')).toLowerCase();
     const status = Number(error?.status || error?.statusCode || 0);
     return status === 429 || /too many requests|rate.?limit|over_email_send_rate_limit|over_request_rate_limit|email rate limit/.test(message);
   }
 
-  function authCooldownMessage(group, until) {
-    const minutes = Math.max(1, Math.ceil((until - Date.now()) / 60000));
+  function authCooldownMessage(group) {
     if (group === 'email') {
-      return 'Supabase sedang membatasi pengiriman email pendaftaran/verifikasi. Permintaan email dihentikan sementara di perangkat ini selama sekitar ' + minutes + ' menit. Jangan mengulang pendaftaran atau kirim ulang berkali-kali. Jika masih terjadi setelah jeda, project memerlukan SMTP khusus karena email bawaan Supabase memiliki kuota rendah.';
+      return 'Supabase menolak pengiriman email karena batas pengiriman bawaan tercapai. Aplikasi tidak menambahkan jeda buatan. Agar pendaftaran email/password langsung tanpa email verifikasi, pemilik proyek perlu menonaktifkan Confirm email di Authentication > Providers. Jika verifikasi email tetap wajib, gunakan SMTP khusus.';
     }
-    return 'Supabase sedang membatasi permintaan autentikasi dari perangkat atau jaringan ini. Tunggu sekitar ' + minutes + ' menit sebelum mencoba lagi; jangan menekan tombol berulang.';
+    return 'Supabase menolak sementara permintaan autentikasi karena pembatasan keamanan. Aplikasi tidak menambahkan jeda buatan; tunggu sampai layanan mengizinkan permintaan berikutnya.';
   }
 
   function beginAuthRequest(form, action, busyText) {
     if (authOperationInFlight || (form && form.dataset.authSubmitting === 'true')) {
       showAuthStatus('info', 'Permintaan sebelumnya masih diproses. Tunggu sampai selesai sebelum mencoba lagi.');
-      return false;
-    }
-    const group = authCooldownGroup(action);
-    const until = readAuthCooldown(group);
-    if (until > Date.now()) {
-      showAuthStatus('error', authCooldownMessage(group, until));
       return false;
     }
     authOperationInFlight = true;
@@ -435,9 +410,7 @@
       return;
     }
     const group = authCooldownGroup(action);
-    const until = Date.now() + (group === 'email' ? AUTH_EMAIL_COOLDOWN_MS : AUTH_GENERAL_COOLDOWN_MS);
-    writeAuthCooldown(group, until);
-    showAuthStatus('error', authCooldownMessage(group, until));
+    showAuthStatus('error', authCooldownMessage(group));
   }
 
   function authRedirectUrl() {
