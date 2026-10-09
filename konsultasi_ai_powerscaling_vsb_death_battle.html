@@ -388,7 +388,7 @@
 </div>
 <!-- Recessed Inset Textarea Well -->
 <div class="relative rounded-xl bg-glacier-white p-space-xs shadow-[inset_0_2px_5px_rgba(0,43,76,0.06)]">
-<textarea class="w-full bg-transparent resize-none outline-none font-body-md text-body-md text-ocean-blue placeholder:text-slate-blue/60" placeholder="Tanyakan tier, kalkulasi AP/Speed, feat kanon, atau resistansi hax karakter (misal: 'Bagaimana perbandingan kecepatan Kizaru vs Minato Namikaze KCM?')..." rows="3"></textarea>
+<textarea id="consult-question" class="w-full bg-transparent resize-none outline-none font-body-md text-body-md text-ocean-blue placeholder:text-slate-blue/60" placeholder="Tanyakan tier, kalkulasi AP/Speed, feat kanon, atau resistansi hax karakter..." rows="3" maxlength="4000" required></textarea>
 </div>
 <!-- Bottom Input Action Bar -->
 <div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-3xs px-space-2xs">
@@ -406,7 +406,7 @@
 <span class="font-caption-meta text-caption-meta text-slate-blue hidden md:inline">
               Enter ↵ untuk kirim • Shift+Enter baris baru
             </span>
-<button class="h-10 px-space-md rounded-xl bg-summer-orange text-ocean-blue font-label-md text-label-md font-bold shadow-[0_4px_12px_rgba(245,158,113,0.3)] hover:opacity-95 transition-all flex items-center gap-space-2xs" type="button">
+<button id="consult-submit" class="h-10 px-space-md rounded-xl bg-summer-orange text-ocean-blue font-label-md text-label-md font-bold shadow-[0_4px_12px_rgba(245,158,113,0.3)] hover:opacity-95 transition-all flex items-center gap-space-2xs" type="button">
 <span>Audit Feat</span>
 <span class="material-symbols-outlined text-[18px]">send</span>
 </button>
@@ -597,4 +597,146 @@
 <span>Kutipan epistemik &amp; sumber rujukan berhasil disalin!</span>
 </div>
 </div>
-</div></main><footer class="w-full bg-surface-container-low py-space-sm px-space-md lg:px-space-lg shadow-[0_-1px_6px_rgba(0,43,76,0.03)]"><div class="w-full flex flex-col sm:flex-row items-center justify-between gap-space-2xs"><span class="font-label-sm text-label-sm text-slate-blue">© 2025 VSB &amp; Chat Death Battle. Epistemic Powerscaling System.</span><span class="font-label-md text-label-md text-slate-blue font-medium">Creator: Ellias</span></div></footer></div></body></html>
+</div></main><footer class="w-full bg-surface-container-low py-space-sm px-space-md lg:px-space-lg shadow-[0_-1px_6px_rgba(0,43,76,0.03)]"><div class="w-full flex flex-col sm:flex-row items-center justify-between gap-space-2xs"><span class="font-label-sm text-label-sm text-slate-blue">© 2025 VSB &amp; Chat Death Battle. Epistemic Powerscaling System.</span><span class="font-label-md text-label-md text-slate-blue font-medium">Creator: Ellias</span></div></footer></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  'use strict';
+  const CDB_SUPABASE_URL = 'https://wfczzmajuhrlpdmhnkpm.supabase.co';
+  const CDB_SUPABASE_KEY = 'sb_publishable_gIX5KsthWfuY689W9H8IxA_IMN6_MbR';
+  const CDB_CHAT_ENDPOINT = CDB_SUPABASE_URL + '/functions/v1/chat-ai';
+  const questionInput = document.getElementById('consult-question');
+  const submitButton = document.getElementById('consult-submit');
+  if (!questionInput || !submitButton) return;
+
+  const status = document.createElement('div');
+  status.className = 'mt-3 rounded-xl p-space-sm text-body-sm hidden';
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+  const output = document.createElement('section');
+  output.className = 'mt-4 rounded-2xl bg-surface-container-lowest p-space-md shadow-sm hidden';
+  output.setAttribute('aria-live', 'polite');
+  const inputCard = questionInput.closest('.mt-space-sm.rounded-2xl');
+  if (inputCard) {
+    inputCard.insertAdjacentElement('afterend', status);
+    status.insertAdjacentElement('afterend', output);
+  }
+
+  function showStatus(kind, message) {
+    status.className = 'mt-3 rounded-xl p-space-sm text-body-sm ' +
+      (kind === 'error' ? 'bg-error-container text-on-error-container' :
+       kind === 'success' ? 'bg-mint-mist text-secondary' : 'bg-ice-effect text-ocean-blue');
+    status.textContent = message;
+  }
+  function renderAnswer(payload) {
+    output.replaceChildren();
+    const heading = document.createElement('h2');
+    heading.className = 'font-headline-sm text-headline-sm text-ocean-blue font-bold mb-2';
+    heading.textContent = 'Jawaban AI';
+    const answer = document.createElement('p');
+    answer.className = 'font-body-md text-body-md text-on-surface whitespace-pre-wrap leading-relaxed';
+    answer.textContent = payload.answer || 'AI tidak mengembalikan jawaban.';
+    output.append(heading, answer);
+    if (Array.isArray(payload.sources) && payload.sources.length) {
+      const sourceHeading = document.createElement('h3');
+      sourceHeading.className = 'font-label-md text-label-md text-ocean-blue font-bold mt-4 mb-2';
+      sourceHeading.textContent = 'Sumber VS Battles Wiki';
+      const list = document.createElement('ul');
+      list.className = 'list-disc pl-5 space-y-1';
+      payload.sources.forEach(function (source) {
+        if (!source || typeof source.url !== 'string' || !source.url.startsWith('https://vsbattles.fandom.com/')) return;
+        const item = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = source.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.className = 'underline text-ocean-blue';
+        link.textContent = source.title || 'Halaman VSB Wiki';
+        item.appendChild(link);
+        if (source.cached) item.append(' (cache)');
+        list.appendChild(item);
+      });
+      if (list.children.length) output.append(sourceHeading, list);
+    }
+    if (payload.quota && Number.isFinite(payload.quota.used) && Number.isFinite(payload.quota.limit)) {
+      const quota = document.createElement('p');
+      quota.className = 'font-caption-meta text-caption-meta text-slate-blue mt-3';
+      quota.textContent = 'Kuota harian: ' + payload.quota.used + '/' + payload.quota.limit;
+      output.appendChild(quota);
+    }
+    output.classList.remove('hidden');
+  }
+
+  async function initConsultAuth() {
+    if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+      showStatus('error', 'Library Supabase tidak dapat dimuat. Periksa koneksi lalu muat ulang halaman.');
+      submitButton.disabled = true;
+      return null;
+    }
+    const client = window.supabase.createClient(CDB_SUPABASE_URL, CDB_SUPABASE_KEY, {
+      auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true }
+    });
+    const { data, error } = await client.auth.getSession();
+    if (error || !data.session || !data.session.user) {
+      window.location.replace('portal_autentikasi_epistemik_vsb_death_battle.html');
+      return null;
+    }
+    if (!data.session.user.email_confirmed_at) {
+      await client.auth.signOut();
+      window.location.replace('portal_autentikasi_epistemik_vsb_death_battle.html');
+      return null;
+    }
+    return client;
+  }
+
+  let authClientPromise = initConsultAuth();
+  async function sendConsult() {
+    const message = questionInput.value.trim();
+    if (!message) {
+      showStatus('error', 'Tulis pertanyaan terlebih dahulu.');
+      questionInput.focus();
+      return;
+    }
+    submitButton.disabled = true;
+    submitButton.classList.add('opacity-60');
+    showStatus('info', 'Memeriksa sesi dan mengambil data VSB Wiki, lalu meminta analisis AI...');
+    try {
+      const client = await authClientPromise;
+      if (!client) return;
+      const { data, error } = await client.auth.getSession();
+      if (error || !data.session || !data.session.user?.email_confirmed_at) {
+        showStatus('error', 'Sesi berakhir atau email belum diverifikasi. Silakan masuk kembali.');
+        window.location.replace('portal_autentikasi_epistemik_vsb_death_battle.html');
+        return;
+      }
+      const response = await fetch(CDB_CHAT_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + data.session.access_token,
+          'apikey': CDB_SUPABASE_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: message, mode: 'consult', language: 'id' })
+      });
+      const payload = await response.json().catch(function () { return {}; });
+      if (!response.ok) throw new Error(payload.error || ('Permintaan gagal (' + response.status + ').'));
+      renderAnswer(payload);
+      showStatus('success', 'Analisis selesai. Periksa jawaban dan sumber di bawah.');
+    } catch (error) {
+      showStatus('error', error && error.message ? error.message : 'Terjadi kesalahan saat menghubungi layanan AI.');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.classList.remove('opacity-60');
+    }
+  }
+  submitButton.addEventListener('click', sendConsult);
+  questionInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      sendConsult();
+    }
+  });
+})();
+</script>
+
+</body></html>
