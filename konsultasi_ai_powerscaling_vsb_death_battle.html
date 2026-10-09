@@ -657,14 +657,14 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
     header.className = 'flex items-center justify-between gap-3 mb-3';
     const heading = document.createElement('h2');
     heading.className = 'font-headline-sm text-headline-sm text-ocean-blue font-bold';
-    heading.textContent = 'Jawaban AI';
+    heading.textContent = window.CDB_SITE_LANGUAGE === 'en' ? 'AI Answer' : 'Jawaban AI';
     const copyButton = document.createElement('button');
     copyButton.type = 'button';
     copyButton.className = 'inline-flex items-center gap-2 rounded-lg bg-surface-container-high px-3 py-2 text-ocean-blue font-label-sm text-label-sm font-semibold hover:opacity-80';
-    copyButton.innerHTML = '<span class="material-symbols-outlined text-[16px]">content_copy</span><span>Salin Jawaban</span>';
+    copyButton.innerHTML = '<span class="material-symbols-outlined text-[16px]">content_copy</span><span>' + (window.CDB_SITE_LANGUAGE === 'en' ? 'Copy Answer' : 'Salin Jawaban') + '</span>';
     copyButton.addEventListener('click', async function () {
       const textToCopy = String(payload.answer || '');
-      if (!textToCopy) { showStatus('error', 'Tidak ada teks jawaban untuk disalin.'); return; }
+      if (!textToCopy) { showStatus('error', window.CDB_SITE_LANGUAGE === 'en' ? 'There is no answer text to copy.' : 'Tidak ada teks jawaban untuk disalin.'); return; }
       try {
         if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') await navigator.clipboard.writeText(textToCopy);
         else {
@@ -672,10 +672,10 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
           temp.style.position = 'fixed'; temp.style.opacity = '0'; document.body.appendChild(temp); temp.select();
           const copied = document.execCommand('copy'); temp.remove(); if (!copied) throw new Error('Clipboard tidak tersedia');
         }
-        copyButton.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span><span>Tersalin</span>';
-        showStatus('success', 'Jawaban AI berhasil disalin ke clipboard.');
-        window.setTimeout(function(){if(copyButton.isConnected)copyButton.innerHTML='<span class="material-symbols-outlined text-[16px]">content_copy</span><span>Salin Jawaban</span>'},1800);
-      } catch (_) { showStatus('error', 'Tidak dapat menyalin otomatis. Coba lagi atau salin teks jawaban secara manual.'); }
+        copyButton.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span><span>' + (window.CDB_SITE_LANGUAGE === 'en' ? 'Copied' : 'Tersalin') + '</span>';
+        showStatus('success', window.CDB_SITE_LANGUAGE === 'en' ? 'AI answer copied to clipboard.' : 'Jawaban AI berhasil disalin ke clipboard.');
+        window.setTimeout(function(){if(copyButton.isConnected)copyButton.innerHTML='<span class="material-symbols-outlined text-[16px]">content_copy</span><span>' + (window.CDB_SITE_LANGUAGE === 'en' ? 'Copy Answer' : 'Salin Jawaban') + '</span>'},1800);
+      } catch (_) { showStatus('error', window.CDB_SITE_LANGUAGE === 'en' ? 'Automatic copying failed. Please try again or copy the answer manually.' : 'Tidak dapat menyalin otomatis. Coba lagi atau salin teks jawaban secara manual.'); }
     });
     header.append(heading, copyButton);
     const answer = document.createElement('p');
@@ -686,7 +686,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
     if (Array.isArray(payload.sources) && payload.sources.length) {
       const sourceHeading = document.createElement('h3');
       sourceHeading.className = 'font-label-md text-label-md text-ocean-blue font-bold mt-4 mb-2';
-      sourceHeading.textContent = 'Sumber VS Battles Wiki';
+      sourceHeading.textContent = window.CDB_SITE_LANGUAGE === 'en' ? 'VS Battles Wiki Sources' : 'Sumber VS Battles Wiki';
       const list = document.createElement('ul');
       list.className = 'list-disc pl-5 space-y-1';
       payload.sources.forEach(function (source) {
@@ -707,7 +707,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
     if (payload.quota && Number.isFinite(payload.quota.used) && Number.isFinite(payload.quota.limit)) {
       const quota = document.createElement('p');
       quota.className = 'font-caption-meta text-caption-meta text-slate-blue mt-3';
-      quota.textContent = 'Kuota harian: ' + payload.quota.used + '/' + payload.quota.limit;
+      quota.textContent = (window.CDB_SITE_LANGUAGE === 'en' ? 'Daily quota: ' : 'Kuota harian: ') + payload.quota.used + '/' + payload.quota.limit;
       output.appendChild(quota);
     }
     output.classList.remove('hidden');
@@ -767,7 +767,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
       const payload = await response.json().catch(function () { return {}; });
       if (!response.ok) throw new Error(payload.error || ('Permintaan gagal (' + response.status + ').'));
       renderAnswer(payload);
-      showStatus('success', 'Analisis selesai. Periksa jawaban dan sumber di bawah.');
+      showStatus('success', window.CDB_SITE_LANGUAGE === 'en' ? 'Analysis complete. Review the answer and sources below.' : 'Analisis selesai. Periksa jawaban dan sumber di bawah.');
     } catch (error) {
       showStatus('error', error && error.message ? error.message : 'Terjadi kesalahan saat menghubungi layanan AI.');
     } finally {
@@ -790,7 +790,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 'use strict';
 const LANGUAGE_KEY='cdb_language',THEME_KEY='cdb_theme';
 const TEXT={
-'Beranda':'Home','Konsultasi AI':'AI Consultation','Riwayat':'History','Profil & Pengaturan':'Profile & Settings','Audit Analisis Feat':'Feat Analysis Audit','Navigasi Analisis':'Analysis Navigation','Analis Utama':'Lead Analyst','Mode Mendalam':'Deep Analysis Mode','Mode Singkat':'Brief Mode','Kesimpulan Utama (Executive Audit)':'Main Conclusion (Executive Audit)','Hierarki Pembuktian Epistemik (4-Layer Framework)':'Epistemic Evidence Hierarchy (4-Layer Framework)','Integritas Epistemik':'Epistemic Integrity','Status konektivitas sumber kanon dan transparansi epistemic pipeline saat mengevaluasi feat pertarungan.':'Canonical-source connectivity and epistemic-pipeline transparency when evaluating battle feats.','Sumber VS Battles Wiki':'VS Battles Wiki Sources','Audit Status Sistem':'System Audit Status','Topik Konsultasi Populer':'Popular Consultation Topics','Informasi Belum Terverifikasi & Keterbatasan Epistemik':'Unverified Information & Epistemic Limitations','Asumsi Pertarungan (SBA - Standard Battle Assumptions)':'Battle Assumptions (SBA - Standard Battle Assumptions)','Kirim ke Death Battle 1v1':'Send to Death Battle 1v1','Kalkulasi AP Terkait (Joule)':'Related AP Calculation (Joules)','Katalog Hax & Resistansi Kizaru':'Kizaru Hax & Resistance Catalogue','Ganti Inkarnasi':'Change Character Version','Lampirkan Manga Panel':'Attach Manga Panel','Audit Feat':'Analyze Feat','Enter ↵ untuk kirim • Shift+Enter baris baru':'Press Enter to send • Shift+Enter for a new line','Dilindungi Anti-Slop Filter & Standard Battle Assumptions':'Protected by the Anti-Slop Filter & Standard Battle Assumptions','Kutipan epistemik & sumber rujukan berhasil disalin!':'Epistemic quote and source reference copied!','Kueri konsensus VSB Wiki aktif. Seluruh perhitungan tiering 1-A hingga 1-S dapat dikalkulasikan secara real-time.':'VSB Wiki consensus query is active. Tiering calculations from 1-A to 1-S can be calculated in real time.','Semua Gateway Beroperasi Normal':'All Gateways Operating Normally','Gunakan Cache Lokal':'Use Local Cache','Coba Lagi':'Try Again','Kuota Harian Terpenuhi (25/25)':'Daily Quota Reached (25/25)','Analisis dialihkan ke Mode Ringkas untuk meminimalkan beban token komputasi. Kuota audit mendalam reset otomatis dalam 3 jam 18 menit.':'Analysis switched to Brief Mode to reduce token usage. The deep-audit quota resets automatically in 3 hours 18 minutes.','Nullifikasi & Resistansi Kausalitas':'Causality Nullification & Resistance','Platform Epistemik VSB':'VSB Epistemic Platform','Sistem Audit Komparatif Independen':'Independent Comparative Audit System','Jawaban AI':'AI Answer','Salin Jawaban':'Copy Answer','Tersalin':'Copied','Halaman VSB Wiki':'VSB Wiki Page','Tema Terang':'Light Theme','Tema Gelap':'Dark Theme','Tema Sistem':'System Theme','Terverifikasi':'Verified','VSB Studio':'VSB Studio','Belum memiliki akun analis?':'Don’t have an analyst account?','Daftar Sekarang':'Register Now','Lupa kata sandi?':'Forgot password?','Masuk ke Workspace VSB':'Sign in to VSB Workspace','Daftar Akun':'Create Account','Verifikasi Email':'Verify Email','Pemulihan':'Recovery','Kirim Ulang Email Verifikasi':'Resend Verification Email','Kembali ke Halaman Masuk':'Back to Sign In','Semua Gateway Beroperasi Normal':'All Gateways Operating Normally'
+'Beranda':'Home','Konsultasi AI':'AI Consultation','Riwayat':'History','Profil & Pengaturan':'Profile & Settings','Audit Analisis Feat':'Feat Analysis Audit','Navigasi Analisis':'Analysis Navigation','Analis Utama':'Lead Analyst','Mode Mendalam':'Deep Analysis Mode','Mode Singkat':'Brief Mode','Kesimpulan Utama (Executive Audit)':'Main Conclusion (Executive Audit)','Hierarki Pembuktian Epistemik (4-Layer Framework)':'Epistemic Evidence Hierarchy (4-Layer Framework)','Integritas Epistemik':'Epistemic Integrity','Status konektivitas sumber kanon dan transparansi epistemic pipeline saat mengevaluasi feat pertarungan.':'Canonical-source connectivity and epistemic-pipeline transparency when evaluating battle feats.','Sumber VS Battles Wiki':'VS Battles Wiki Sources','Audit Status Sistem':'System Audit Status','Topik Konsultasi Populer':'Popular Consultation Topics','Informasi Belum Terverifikasi & Keterbatasan Epistemik':'Unverified Information & Epistemic Limitations','Asumsi Pertarungan (SBA - Standard Battle Assumptions)':'Battle Assumptions (SBA - Standard Battle Assumptions)','Kirim ke Death Battle 1v1':'Send to Death Battle 1v1','Kalkulasi AP Terkait (Joule)':'Related AP Calculation (Joules)','Katalog Hax & Resistansi Kizaru':'Kizaru Hax & Resistance Catalogue','Ganti Inkarnasi':'Change Character Version','Lampirkan Manga Panel':'Attach Manga Panel','Audit Feat':'Analyze Feat','Tanyakan tier, kalkulasi AP/Speed, feat kanon, atau resistansi hax karakter...':'Ask about tiers, AP/Speed calculations, canon feats, or hax resistances...','Enter ↵ untuk kirim • Shift+Enter baris baru':'Press Enter to send • Shift+Enter for a new line','Dilindungi Anti-Slop Filter & Standard Battle Assumptions':'Protected by the Anti-Slop Filter & Standard Battle Assumptions','Kutipan epistemik & sumber rujukan berhasil disalin!':'Epistemic quote and source reference copied!','Kueri konsensus VSB Wiki aktif. Seluruh perhitungan tiering 1-A hingga 1-S dapat dikalkulasikan secara real-time.':'VSB Wiki consensus query is active. Tiering calculations from 1-A to 1-S can be calculated in real time.','Semua Gateway Beroperasi Normal':'All Gateways Operating Normally','Gunakan Cache Lokal':'Use Local Cache','Coba Lagi':'Try Again','Kuota Harian Terpenuhi (25/25)':'Daily Quota Reached (25/25)','Analisis dialihkan ke Mode Ringkas untuk meminimalkan beban token komputasi. Kuota audit mendalam reset otomatis dalam 3 jam 18 menit.':'Analysis switched to Brief Mode to reduce token usage. The deep-audit quota resets automatically in 3 hours 18 minutes.','Nullifikasi & Resistansi Kausalitas':'Causality Nullification & Resistance','Platform Epistemik VSB':'VSB Epistemic Platform','Sistem Audit Komparatif Independen':'Independent Comparative Audit System','Jawaban AI':'AI Answer','Salin Jawaban':'Copy Answer','Tersalin':'Copied','Halaman VSB Wiki':'VSB Wiki Page','Tema Terang':'Light Theme','Tema Gelap':'Dark Theme','Tema Sistem':'System Theme','Terverifikasi':'Verified','VSB Studio':'VSB Studio','Belum memiliki akun analis?':'Don’t have an analyst account?','Daftar Sekarang':'Register Now','Lupa kata sandi?':'Forgot password?','Masuk ke Workspace VSB':'Sign in to VSB Workspace','Daftar Akun':'Create Account','Verifikasi Email':'Verify Email','Pemulihan':'Recovery','Kirim Ulang Email Verifikasi':'Resend Verification Email','Kembali ke Halaman Masuk':'Back to Sign In','Semua Gateway Beroperasi Normal':'All Gateways Operating Normally'
 };
 function read(key,fallback){try{return localStorage.getItem(key)||fallback}catch(_){return fallback}}
 function write(key,value){try{localStorage.setItem(key,value)}catch(_){}}
