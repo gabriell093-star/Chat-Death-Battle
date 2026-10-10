@@ -442,7 +442,7 @@ async function runBattle(){
   const res=await fetch(ENDPOINT,{method:'POST',headers:{'Authorization':'Bearer '+data.session.access_token,'apikey':KEY,'Content-Type':'application/json'},body:JSON.stringify({message,mode:'battle',language:window.CDB_SITE_LANGUAGE==='en'?'en':'id',characterA:a,characterB:b,rules:{standard_battle_assumptions:rulesText,custom_instructions:custom},sessionId})});
   const payload=await res.json().catch(()=>({}));
   if(!res.ok)throw new Error(payload.error||('Permintaan gagal ('+res.status+').'));
-  renderResult(payload);showStatus('success','Analisis selesai. Periksa sumber dan keterbatasan di bawah hasil.');
+  renderResult(payload);showStatus('success','Analisis selesai. Periksa sumber dan keterbatasan di bawah hasil.'+(payload.provider?' Penyedia AI: '+payload.provider+'.':''));
  }catch(error){showStatus('error',error.message||'Analisis battle gagal. Coba lagi.')}
  finally{run.disabled=false;run.classList.remove('opacity-60')}
 }
