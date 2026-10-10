@@ -786,9 +786,12 @@ async function getClientUser(){
 
 function syncProfileIdentity(name){
  const displayName=String(name||'').trim()||'Analis';
- safeText(document.getElementById('profileDisplayNameHeading'),displayName);
- safeText(document.getElementById('cdb-header-display-name'),displayName);
- safeText(document.getElementById('profileAvatarInitial'),Array.from(displayName)[0]?.toLocaleUpperCase('id-ID')||'A');
+ const heading=document.getElementById('profileDisplayNameHeading');
+ const headerName=document.getElementById('cdb-header-display-name');
+ const avatarInitial=document.getElementById('profileAvatarInitial');
+ if(heading)heading.textContent=displayName;
+ if(headerName)headerName.textContent=displayName;
+ if(avatarInitial)avatarInitial.textContent=Array.from(displayName)[0]?.toLocaleUpperCase('id-ID')||'A';
 }
 function readLocalPreference(key){
  try{return localStorage.getItem(key)}catch(_){return null}
