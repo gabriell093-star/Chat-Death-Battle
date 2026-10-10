@@ -309,18 +309,37 @@ let latestAnswer='';
 function showStatus(kind,message){if(!status)return;status.textContent=message;status.className='mx-space-md mt-space-md rounded-xl p-space-sm text-body-sm '+(kind==='error'?'bg-error-container text-on-error-container':kind==='success'?'bg-mint-mist text-secondary':'bg-surface-container text-ocean-blue');}
 function authRedirect(){const next=window.location.pathname.replace(/^\/+/, '')+window.location.search;window.location.replace('portal_autentikasi_epistemik_vsb_death_battle.html?next='+encodeURIComponent(next));}
 function safeLink(source){if(!source||typeof source.url!=='string'||!source.url.startsWith('https://vsbattles.fandom.com/'))return null;const a=document.createElement('a');a.href=source.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=source.title||'VS Battles Wiki';a.className='underline text-ocean-blue';return a;}
-function renderStructuredAnswer(container, raw) {
+function renderStructuredAnswer(container, raw, sourceList) {
   if (!container) return;
+  const allowedSourceUrls = new Set((Array.isArray(sourceList) ? sourceList : []).map(function(source){try{const url=new URL(source.url);return url.origin==='https://vsbattles.fandom.com'?url.href:''}catch(_){return ''}}).filter(Boolean));
   container.replaceChildren();
   const lines = String(raw || '').replace(/\r\n?/g, '\n').split('\n');
   const addInline = function (parent, value) {
-    const re = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
+    const re = /(\[[^\]]+\]\(https:\/\/vsbattles\.fandom\.com\/[^)\s]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g;
     let from = 0, match;
     while ((match = re.exec(value)) !== null) {
       if (match.index > from) parent.appendChild(document.createTextNode(value.slice(from, match.index)));
-      const token = match[0], bold = token.startsWith('**');
-      const node = document.createElement(bold ? 'strong' : 'em'); node.textContent = token.slice(bold ? 2 : 1, token.length - (bold ? 2 : 1));
-      parent.appendChild(node); from = re.lastIndex;
+      const token = match[0];
+      const linkMatch = token.match(/^\[([^\]]+)\]\((https:\/\/vsbattles\.fandom\.com\/[^)\s]+)\)$/);
+      if (linkMatch) {
+        let url = null;
+        try { url = new URL(linkMatch[2]); } catch (_) {}
+        if (url && url.protocol === 'https:' && url.hostname === 'vsbattles.fandom.com' && allowedSourceUrls.has(url.href)) {
+          const link = document.createElement('a');
+          link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+          link.className = 'underline text-ocean-blue break-words';
+          link.textContent = linkMatch[1];
+          parent.appendChild(link);
+        } else {
+          parent.appendChild(document.createTextNode(linkMatch[1]));
+        }
+      } else {
+        const bold = token.startsWith('**');
+        const node = document.createElement(bold ? 'strong' : 'em');
+        node.textContent = token.slice(bold ? 2 : 1, token.length - (bold ? 2 : 1));
+        parent.appendChild(node);
+      }
+      from = re.lastIndex;
     }
     if (from < value.length) parent.appendChild(document.createTextNode(value.slice(from)));
   };
@@ -336,7 +355,7 @@ function renderStructuredAnswer(container, raw) {
   }
 }
 function renderResult(payload){
- latestAnswer=String(payload.answer||'');renderStructuredAnswer(answer, latestAnswer);sources.replaceChildren();
+ latestAnswer=String(payload.answer||'');renderStructuredAnswer(answer, latestAnswer, payload.sources);sources.replaceChildren();
  const list=document.createElement('div');list.className='flex flex-col gap-2';
  (Array.isArray(payload.sources)?payload.sources:[]).forEach(function(s){const link=safeLink(s);if(link){const row=document.createElement('div');row.className='text-sm';row.append(link);list.append(row)}});
  if(list.children.length){const label=document.createElement('h3');label.className='font-label-md text-label-md text-ocean-blue font-bold';label.textContent=window.CDB_SITE_LANGUAGE==='en'?'VS Battles Wiki sources':'Sumber VS Battles Wiki';sources.append(label,list)}
