@@ -248,7 +248,7 @@ if(aiOutput){
 }
 }
 window.CDB_APPLY_LANGUAGE=applyLanguage;
-if(!window.__CDB_TRANSLATION_OBSERVER){const observer=new MutationObserver(function(records){if(records.some(function(record){return record.type==='childList'}))applyLanguage(read(LANGUAGE_KEY,'id'))});observer.observe(document.body,{childList:true,subtree:true});window.__CDB_TRANSLATION_OBSERVER=observer}
+// Whole-document mutation observer disabled: autocomplete uses explicit language labels and should not trigger full-page rescans on every typed character.
 document.querySelectorAll('button').forEach(function(b){const label=b.textContent.trim();if(label==='ID'||label==='EN')b.addEventListener('click',function(){const lang=label.toLowerCase();write(LANGUAGE_KEY,lang);applyLanguage(lang)});
 const icon=b.querySelector('.material-symbols-outlined');if(!icon)return;const name=icon.textContent.trim();if(['light_mode','dark_mode','desktop_windows'].includes(name))b.addEventListener('click',function(){const choice=name==='light_mode'?'light':name==='dark_mode'?'dark':'system';write(THEME_KEY,choice);applyTheme(choice)})});
 applyLanguage(read(LANGUAGE_KEY,'id'));applyTheme(read(THEME_KEY,'light'));
