@@ -48,6 +48,12 @@ body[data-cdb-theme="dark"] input:not([type="checkbox"]):not([type="radio"]),bod
 body[data-cdb-theme="dark"] .bg-surface\/90{background-color:rgba(18,31,42,.94)!important}
 body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 </style>
+<style id="cdb-autocomplete-styles">
+.cdb-autocomplete{min-width:0}
+.cdb-autocomplete [role="listbox"]{overscroll-behavior:contain}
+.cdb-autocomplete [role="option"]{min-width:0}
+.cdb-autocomplete [role="option"]:focus-visible{outline:2px solid #14b8a6;outline-offset:-2px}
+</style>
 </head><body class="bg-background font-body-md text-on-surface min-h-screen"><div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-40 hidden lg:hidden" id="mobile-drawer-backdrop" onclick="document.getElementById('sidebar-drawer').classList.add('-translate-x-full');this.classList.add('hidden');"></div><aside class="fixed left-0 top-0 h-full w-72 bg-ocean-blue text-glacier-white z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 shadow-[0_8px_24px_-4px_rgba(0,43,76,0.25)]" id="sidebar-drawer"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center justify-between border-b border-slate-blue/20"><div class="flex items-center gap-space-xs"><img alt="VSB Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Uh-Nh77hWqK1LFPpk7SS-5j_r-L06ukqv0XMeO1emfgCPq-8nJCoP084_8DBfUirP5NGtTLRZ4-FbMpd3IQ-6itEnzpwR7gwP202VIETZAMg5daF5eruY_5DQUcjaaX3vGvym_hZK8U7DLF6WHnLa-jrcFLdNAPFii7nQF1iUpW-nPyBzaQUDAwtsdE8yQeYR-_HjYzGSwagFHxB1AUaEGEUuGtF6N-Fo4a8dKAAY230sadGgAXmRfTYyl"/><span class="font-headline-sm text-headline-sm text-glacier-white tracking-tight">VSB Arena</span></div><button class="lg:hidden p-space-3xs text-secondary-fixed-dim hover:text-glacier-white" onclick="document.getElementById('sidebar-drawer').classList.add('-translate-x-full');document.getElementById('mobile-drawer-backdrop').classList.add('hidden');" type="button"><span class="material-symbols-outlined">close</span></button></div><div class="px-space-md pt-space-md pb-space-xs"><span class="font-label-sm text-label-sm text-secondary-fixed-dim uppercase tracking-wider">Navigasi Analisis</span></div><nav class="flex flex-col gap-space-3xs px-space-sm" data-active-classes="bg-ice-effect text-ocean-blue font-headline-sm"><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="beranda" href="beranda_workspace_user_dashboard.html"><span class="material-symbols-outlined text-[20px]">home</span><span>Beranda</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="konsultasi-ai" href="konsultasi_ai_powerscaling_vsb_death_battle.html"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>Konsultasi AI</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="chat-death-battle" href="simulasi_chat_death_battle_1v1_vsb_matrix.html"><span class="material-symbols-outlined text-[20px]">swords</span><span>Chat Death Battle</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="riwayat" href="riwayat_arsip_audit_epistemik_vsb_death_battle.html"><span class="material-symbols-outlined text-[20px]">history</span><span>Riwayat</span></a><a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl text-glacier-white/80 hover:bg-slate-blue/30 hover:text-glacier-white transition-all font-body-md text-body-md" data-path="profil-dan-pengaturan" href="profil_dan_pengaturan_vsb_death_battle.html"><span class="material-symbols-outlined text-[20px]">manage_accounts</span><span>Profil &amp; Pengaturan</span></a></nav></div><div class="p-space-md border-t border-slate-blue/20"><div class="bg-primary/50 rounded-xl p-space-sm flex items-center justify-between"><div class="flex flex-col"><span class="font-label-sm text-label-sm text-secondary-fixed-dim">Platform Arsitek</span><span class="font-label-md text-label-md text-glacier-white font-semibold">Creator: Ellias</span></div><span class="material-symbols-outlined text-summer-orange text-[20px]">verified</span></div></div></aside><div class="lg:pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-surface/90 backdrop-blur-xl z-30 shadow-[0_1px_8px_rgba(0,43,76,0.05)]"><div class="h-16 w-full px-space-md lg:px-space-lg flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button class="lg:hidden p-space-2xs text-ocean-blue hover:bg-surface-container rounded-lg" onclick="document.getElementById('sidebar-drawer').classList.remove('-translate-x-full');document.getElementById('mobile-drawer-backdrop').classList.remove('hidden');" type="button"><span class="material-symbols-outlined">menu</span></button><div class="flex items-center gap-space-2xs text-slate-blue font-label-md text-label-md"><span class="hover:text-ocean-blue cursor-pointer">VSB Studio</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-ocean-blue font-semibold">Audit Analisis Feat</span></div></div><div class="flex items-center gap-space-sm"><div class="flex items-center bg-surface-container-high rounded-lg p-space-3xs font-label-sm text-label-sm"><button class="px-space-2xs py-1 rounded bg-ocean-blue text-on-primary font-bold" type="button">ID</button><button class="px-space-2xs py-1 rounded text-on-surface-variant hover:text-on-surface" type="button">EN</button></div><div class="flex items-center bg-surface-container-high rounded-lg p-space-3xs text-on-surface-variant"><button class="p-1 rounded bg-surface text-ocean-blue shadow-sm" type="button"><span class="material-symbols-outlined text-[18px]">light_mode</span></button><button class="p-1 rounded hover:text-ocean-blue" type="button"><span class="material-symbols-outlined text-[18px]">dark_mode</span></button></div><div class="flex items-center gap-space-xs pl-space-2xs border-l border-outline-variant/30"><div class="flex flex-col items-end hidden sm:flex"><span class="font-label-md text-label-md text-on-surface font-semibold">Analis Utama</span><span class="font-label-sm text-label-sm text-summer-orange font-bold uppercase">Tier 1-A Auditor</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_6px_rgba(0,43,76,0.15)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1umNN9tF9qoOgtzbffaUZK6KTMkkcyazEwkBgwiDr8vN8oF4Fje9aQpTQi-Yj4t7OUB9EdJOalsiqUM9ckTJNxxxjOePb_eHqyD4bVVy0DyDc3KpSZYyQ16pNOMbRKKsGMZMC0Fu3Dvxdaxz5c5lIC-PnUU94xQE6Hua7nz9cw0vHAoQoRPLIvyhzmuCVQA_XDQugp7X2Ew2tLVPekzj63G0ZR77xrLbMxIoV3gicc2sahMR6PiY7og"/></div></div></div></header><main class="relative pt-16 w-full flex-1 bg-glacier-white"><div class="flex flex-col w-full">
 <!-- Top Micro Context Bar & Actions -->
 <section class="w-full px-space-md lg:px-space-lg py-space-sm bg-surface-container-low shadow-sm">
@@ -87,15 +93,15 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 <section id="combatant-selection-zone" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
  <div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-3">
   <label class="font-label-md text-label-md text-ocean-blue font-bold" for="battle-character-a">Karakter A</label>
-  <input id="battle-character-a" maxlength="160" required value="Son Goku" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Nama karakter pertama"/>
+  <div class="relative w-full cdb-autocomplete" data-cdb-search-type="character"><input id="battle-character-a" maxlength="160" required value="Son Goku" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="battle-character-a-suggestions" placeholder="Nama karakter pertama"/><div id="battle-character-a-suggestions" role="listbox" aria-label="Saran karakter" class="hidden absolute left-0 right-0 top-full z-50 mt-1 max-h-64 overflow-y-auto rounded-xl border border-outline-variant bg-surface-container-lowest shadow-xl"></div></div>
   <label class="font-label-sm text-label-sm text-slate-blue" for="battle-version-a">Form / versi / inkarnasi A</label>
-  <input id="battle-version-a" maxlength="160" value="Cell Games Saga (SSJ Full Power)" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Versi spesifik karakter"/>
+  <div class="relative w-full cdb-autocomplete" data-cdb-search-type="form"><input id="battle-version-a" maxlength="160" value="Cell Games Saga (SSJ Full Power)" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="battle-version-a-suggestions" placeholder="Versi spesifik karakter"/><div id="battle-version-a-suggestions" role="listbox" aria-label="Saran form atau inkarnasi" class="hidden absolute left-0 right-0 top-full z-50 mt-1 max-h-64 overflow-y-auto rounded-xl border border-outline-variant bg-surface-container-lowest shadow-xl"></div></div>
  </div>
  <div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-3">
   <label class="font-label-md text-label-md text-ocean-blue font-bold" for="battle-character-b">Karakter B</label>
-  <input id="battle-character-b" maxlength="160" required value="Superman" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Nama karakter kedua"/>
+  <div class="relative w-full cdb-autocomplete" data-cdb-search-type="character"><input id="battle-character-b" maxlength="160" required value="Superman" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="battle-character-b-suggestions" placeholder="Nama karakter kedua"/><div id="battle-character-b-suggestions" role="listbox" aria-label="Saran karakter" class="hidden absolute left-0 right-0 top-full z-50 mt-1 max-h-64 overflow-y-auto rounded-xl border border-outline-variant bg-surface-container-lowest shadow-xl"></div></div>
   <label class="font-label-sm text-label-sm text-slate-blue" for="battle-version-b">Form / versi / inkarnasi B</label>
-  <input id="battle-version-b" maxlength="160" value="Post-Crisis (Base)" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Versi spesifik karakter"/>
+  <div class="relative w-full cdb-autocomplete" data-cdb-search-type="form"><input id="battle-version-b" maxlength="160" value="Post-Crisis (Base)" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="battle-version-b-suggestions" placeholder="Versi spesifik karakter"/><div id="battle-version-b-suggestions" role="listbox" aria-label="Saran form atau inkarnasi" class="hidden absolute left-0 right-0 top-full z-50 mt-1 max-h-64 overflow-y-auto rounded-xl border border-outline-variant bg-surface-container-lowest shadow-xl"></div></div>
  </div>
 </section>
 <!-- Standard Battle Assumptions: editable and passed to the server -->
@@ -104,11 +110,11 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
   <h2 class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Aturan pertarungan</h2>
   <p class="text-sm text-slate-blue mt-1">Ubah kondisi untuk simulasi ini. AI harus menyebutkan asumsi dan ketidakpastian; hasil bukan putusan kanon resmi.</p>
  </div>
- <textarea id="battle-rules" maxlength="1800" rows="4" class="w-full rounded-xl bg-surface-container-low p-3 text-ocean-blue resize-y" placeholder="Aturan SBA, jarak awal, pengetahuan lawan, equalized speed, kondisi menang...">Standard Battle Assumptions: arena netral tanpa bantuan pihak ketiga; kedua karakter menggunakan perlengkapan standar untuk versi yang dipilih; kondisi menang KO, mati, atau tidak mampu bertarung. Jangan menyamakan statistik tanpa dasar sumber.</textarea>
- <textarea id="battle-custom-instructions" maxlength="1800" rows="3" class="w-full rounded-xl bg-surface-container-low p-3 text-ocean-blue resize-y" placeholder="Instruksi tambahan (opsional), misalnya equalized speed atau batas arena..."></textarea>
+ <textarea id="battle-rules" maxlength="6000" aria-describedby="cdb-battle-input-counter" rows="4" class="w-full rounded-xl bg-surface-container-low p-3 text-ocean-blue resize-y" placeholder="Aturan SBA, jarak awal, pengetahuan lawan, equalized speed, kondisi menang...">Standard Battle Assumptions: arena netral tanpa bantuan pihak ketiga; kedua karakter menggunakan perlengkapan standar untuk versi yang dipilih; kondisi menang KO, mati, atau tidak mampu bertarung. Jangan menyamakan statistik tanpa dasar sumber.</textarea>
+ <textarea id="battle-custom-instructions" maxlength="6000" aria-describedby="cdb-battle-input-counter" rows="3" class="w-full rounded-xl bg-surface-container-low p-3 text-ocean-blue resize-y" placeholder="Instruksi tambahan (opsional), misalnya equalized speed atau batas arena..."></textarea>
  <div class="flex flex-wrap items-center gap-3">
   <button id="btn-run-battle" type="button" class="inline-flex items-center gap-2 rounded-xl bg-summer-orange px-5 py-3 font-semibold text-ocean-blue shadow-sm hover:opacity-90"><span class="material-symbols-outlined">swords</span>Jalankan analisis battle</button>
-  <span class="text-xs text-slate-blue">Batas input: 4.000 karakter per permintaan</span>
+  <span id="cdb-battle-input-counter" class="text-xs text-slate-blue" aria-live="polite">Instruksi 0/6.000 karakter</span>
  </div>
 </section>
 <!-- Live AI result panel -->
@@ -364,6 +370,80 @@ function renderResult(payload){
  const url=new URL(window.location.href);if(payload.sessionId){sessionId=payload.sessionId;url.searchParams.set('sessionId',sessionId);history.replaceState({},'',url)}
 }
 async function clientReady(){if(window.CDB_AUTH_CLIENT)return window.CDB_AUTH_CLIENT;if(!window.supabase)return null;const client=window.supabase.createClient(URL,KEY,{auth:{autoRefreshToken:true,persistSession:true,detectSessionInUrl:true}});window.CDB_AUTH_CLIENT=client;return client}
+const battleInputs={rules:document.getElementById('battle-rules'),custom:document.getElementById('battle-custom-instructions'),counter:document.getElementById('cdb-battle-input-counter')};
+function updateBattleInputCounter(activeField){
+ const rules=battleInputs.rules,custom=battleInputs.custom,counter=battleInputs.counter;
+ if(!rules||!custom||!counter)return;
+ let total=rules.value.length+custom.value.length;
+ if(total>6000&&activeField){const excess=total-6000;activeField.value=activeField.value.slice(0,Math.max(0,activeField.value.length-excess))}
+ total=rules.value.length+custom.value.length;
+ counter.textContent='Instruksi '+total.toLocaleString('id-ID')+'/6.000 karakter';
+ counter.classList.toggle('text-error',total>=6000);
+}
+[battleInputs.rules,battleInputs.custom].forEach(function(field){if(field)field.addEventListener('input',function(){updateBattleInputCounter(field)})});
+updateBattleInputCounter();
+function safeSuggestionUrl(value){try{const url=new URL(value);return url.protocol==='https:'&&url.hostname==='vsbattles.fandom.com'?url.href:null}catch(_){return null}}
+function attachWikiAutocomplete(inputId,type,relatedCharacterId){
+ const input=document.getElementById(inputId),panel=document.getElementById(inputId+'-suggestions');
+ const related=relatedCharacterId?document.getElementById(relatedCharacterId):null;
+ if(!input||!panel)return;
+ let timer=null,requestNumber=0,controller=null;
+ function close(){panel.classList.add('hidden');panel.replaceChildren();input.setAttribute('aria-expanded','false')}
+ function showMessage(message){
+  panel.replaceChildren();const el=document.createElement('p');el.className='px-3 py-3 text-sm text-slate-blue';el.textContent=message;
+  panel.appendChild(el);panel.classList.remove('hidden');input.setAttribute('aria-expanded','true');
+ }
+ function drawResults(items,number){
+  if(number!==requestNumber)return;
+  panel.replaceChildren();
+  if(!Array.isArray(items)||!items.length){showMessage(type==='form'?'Tidak ada form/versi cocok yang ditemukan pada sumber VSB.':'Tidak ada karakter cocok pada judul halaman VSB.');return}
+  items.slice(0,8).forEach(function(item){
+   const row=document.createElement('div');row.className='flex items-stretch border-b border-outline-variant last:border-b-0';
+   const pick=document.createElement('button');pick.type='button';pick.setAttribute('role','option');pick.className='flex-1 min-w-0 text-left px-3 py-2 hover:bg-surface-container focus:bg-surface-container';
+   const title=document.createElement('span');title.className='block break-words text-sm font-semibold text-ocean-blue';title.textContent=String(item.title||'');
+   const meta=document.createElement('span');meta.className='block text-xs text-slate-blue mt-0.5';meta.textContent='VS Battles Wiki';
+   pick.append(title,meta);
+   pick.addEventListener('click',function(){
+    const previous=input.value.trim();input.value=String(item.title||'');close();
+    input.dispatchEvent(new Event('change',{bubbles:true}));
+    if(type==='character'&&related&&previous!==input.value.trim())related.value='';
+   });
+   row.appendChild(pick);
+   const href=safeSuggestionUrl(item.url);
+   if(href){const link=document.createElement('a');link.href=href;link.target='_blank';link.rel='noopener noreferrer';link.className='self-center px-3 text-xs text-ocean-blue underline';link.textContent='Sumber';link.setAttribute('aria-label','Buka sumber VSB untuk '+String(item.title||''));row.appendChild(link)}
+   panel.appendChild(row);
+  });
+  panel.classList.remove('hidden');input.setAttribute('aria-expanded','true');
+ }
+ async function search(){
+  const query=input.value.trim(),character=related?related.value.trim():'';
+  if(type==='character'&&query.length<2){close();return}
+  if(type==='form'&&!character){showMessage('Isi nama karakter terlebih dahulu agar saran form dicari khusus untuk karakter tersebut.');return}
+  if(type==='form'&&query.length===0&&character.length<2){close();return}
+  const number=++requestNumber;
+  if(controller)controller.abort();
+  const thisController=new AbortController();controller=thisController;
+  showMessage('Mencari '+(type==='character'?'karakter':'form/versi')+' dari VS Battles Wiki…');
+  try{
+   const client=await clientReady();if(!client)throw new Error('Sesi belum siap');
+   const {data,error}=await client.auth.getSession();if(error||!data.session)throw new Error('Sesi login berakhir');
+   const response=await fetch(ENDPOINT,{method:'POST',headers:{'Authorization':'Bearer '+data.session.access_token,'apikey':KEY,'Content-Type':'application/json'},body:JSON.stringify({action:'autocomplete',searchType:type,query,character}),signal:thisController.signal});
+   const payload=await response.json().catch(function(){return {}});
+   if(!response.ok)throw new Error(payload.error||'Pencarian VSB gagal.');
+   drawResults(payload.results,number);
+  }catch(error){if(error&&error.name==='AbortError')return;if(number===requestNumber)showMessage(error.message||'Pencarian belum tersedia. Coba beberapa saat lagi.')}
+ }
+ function schedule(){if(timer)clearTimeout(timer);timer=setTimeout(search,type==='character'?260:230)}
+ input.addEventListener('input',schedule);
+ input.addEventListener('focus',function(){if(type==='form'||input.value.trim().length>=2)schedule()});
+ input.addEventListener('keydown',function(event){if(event.key==='Escape')close();if(event.key==='ArrowDown'&&!panel.classList.contains('hidden')){const first=panel.querySelector('[role="option"]');if(first){event.preventDefault();first.focus()}}});
+ document.addEventListener('click',function(event){if(event.target!==input&&!panel.contains(event.target))close()});
+}
+attachWikiAutocomplete('battle-character-a','character','battle-version-a');
+attachWikiAutocomplete('battle-character-b','character','battle-version-b');
+attachWikiAutocomplete('battle-version-a','form','battle-character-a');
+attachWikiAutocomplete('battle-version-b','form','battle-character-b');
+
 async function runBattle(){
  const a=document.getElementById('battle-character-a').value.trim(),av=document.getElementById('battle-version-a').value.trim();
  const b=document.getElementById('battle-character-b').value.trim(),bv=document.getElementById('battle-version-b').value.trim();
