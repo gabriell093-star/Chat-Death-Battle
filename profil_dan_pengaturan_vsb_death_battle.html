@@ -582,25 +582,26 @@ main .grid { grid-template-columns:minmax(0,1fr)!important; }
   }
 
   function selectTheme(mode) {
-    const light = document.getElementById('themeLightBtn');
-    const dark = document.getElementById('themeDarkBtn');
-    const system = document.getElementById('themeSystemBtn');
-
-    [light, dark, system].forEach(el => {
-      el.classList.remove('ring-2', 'ring-ocean-blue');
-      el.classList.add('opacity-70');
-    });
-
-    if (mode === 'light') {
-      light.classList.add('ring-2', 'ring-ocean-blue');
-      light.classList.remove('opacity-70');
-    } else if (mode === 'dark') {
-      dark.classList.add('ring-2', 'ring-ocean-blue');
-      dark.classList.remove('opacity-70');
-    } else {
-      system.classList.add('ring-2', 'ring-ocean-blue');
-      system.classList.remove('opacity-70');
+    const selected = ['light', 'dark', 'system'].includes(mode) ? mode : 'light';
+    try { localStorage.setItem('cdb_theme', selected); } catch (_) {}
+    if (typeof window.CDB_APPLY_THEME === 'function') {
+      window.CDB_APPLY_THEME(selected);
+      return;
     }
+    const choices = {
+      light: document.getElementById('themeLightBtn'),
+      dark: document.getElementById('themeDarkBtn'),
+      system: document.getElementById('themeSystemBtn')
+    };
+    Object.keys(choices).forEach(function(key) {
+      const button = choices[key];
+      if (!button) return;
+      const active = key === selected;
+      button.classList.toggle('ring-2', active);
+      button.classList.toggle('ring-ocean-blue', active);
+      button.classList.toggle('opacity-70', !active);
+      button.setAttribute('aria-pressed', String(active));
+    });
   }
 
   function toggleSetting(checkbox) {
@@ -652,7 +653,10 @@ function applyTheme(choice){
 const valid=['light','dark','system'].includes(choice)?choice:'light',systemDark=!!(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches),effective=valid==='system'?(systemDark?'dark':'light'):valid;
 document.body.setAttribute('data-cdb-theme',effective);document.documentElement.style.colorScheme=effective;
 document.querySelectorAll('button .material-symbols-outlined').forEach(function(icon){const b=icon.closest('button'),n=icon.textContent.trim(),t=n==='light_mode'?'light':n==='dark_mode'?'dark':n==='desktop_windows'?'system':null;if(t){b.dataset.cdbActive=String(t===valid);b.setAttribute('aria-pressed',String(t===valid))}});
+const choices={light:document.getElementById('themeLightBtn'),dark:document.getElementById('themeDarkBtn'),system:document.getElementById('themeSystemBtn')};
+Object.keys(choices).forEach(function(key){const button=choices[key];if(!button)return;const active=key===valid;button.classList.toggle('ring-2',active);button.classList.toggle('ring-ocean-blue',active);button.classList.toggle('opacity-70',!active);button.setAttribute('aria-pressed',String(active))});
 }
+window.CDB_APPLY_THEME=applyTheme;
 function applyLanguage(language){
 const lang=language==='en'?'en':'id';document.documentElement.lang=lang;window.CDB_SITE_LANGUAGE=lang;
 const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;
