@@ -93,15 +93,13 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
 <section id="combatant-selection-zone" class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
  <div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-3">
   <label class="font-label-md text-label-md text-ocean-blue font-bold" for="battle-character-a">Karakter A</label>
-  <div class="relative w-full cdb-autocomplete"><input id="battle-character-a" maxlength="160" required value="Son Goku" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" autocomplete="off" aria-autocomplete="list" aria-expanded="false" placeholder="Nama karakter pertama"/></div>
-  <label class="font-label-sm text-label-sm text-slate-blue" for="battle-version-a">Form / versi / inkarnasi A</label>
-  <div class="relative w-full"><input id="battle-version-a" maxlength="160" value="Cell Games Saga (SSJ Full Power)" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" autocomplete="off" placeholder="Versi spesifik karakter"/></div>
+  <div class="relative w-full cdb-autocomplete"><input id="battle-character-a" maxlength="160" required value="Son Goku" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" autocomplete="off" aria-autocomplete="list" aria-expanded="false" placeholder="Cari nama karakter pertama"/></div>
+  <p class="text-xs leading-relaxed text-slate-blue">Pilih halaman karakter yang cocok dari VS Battles Wiki. Versi atau inkarnasi yang cocok akan tampil dalam daftar pencarian yang sama.</p>
  </div>
  <div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-3">
   <label class="font-label-md text-label-md text-ocean-blue font-bold" for="battle-character-b">Karakter B</label>
-  <div class="relative w-full cdb-autocomplete"><input id="battle-character-b" maxlength="160" required value="Superman" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" autocomplete="off" aria-autocomplete="list" aria-expanded="false" placeholder="Nama karakter kedua"/></div>
-  <label class="font-label-sm text-label-sm text-slate-blue" for="battle-version-b">Form / versi / inkarnasi B</label>
-  <div class="relative w-full"><input id="battle-version-b" maxlength="160" value="Post-Crisis (Base)" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" autocomplete="off" placeholder="Versi spesifik karakter"/></div>
+  <div class="relative w-full cdb-autocomplete"><input id="battle-character-b" maxlength="160" required value="Superman" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" autocomplete="off" aria-autocomplete="list" aria-expanded="false" placeholder="Cari nama karakter kedua"/></div>
+  <p class="text-xs leading-relaxed text-slate-blue">Gunakan satu kolom ini untuk nama karakter atau halaman versi yang ditemukan di VS Battles Wiki.</p>
  </div>
 </section>
 <!-- Standard Battle Assumptions: editable and passed to the server -->
@@ -384,8 +382,8 @@ function updateBattleInputCounter(activeField){
 updateBattleInputCounter();
 function safeSuggestionUrl(value){try{const url=new URL(value);return url.protocol==='https:'&&url.hostname==='vsbattles.fandom.com'?url.href:null}catch(_){return null}}
 async function runBattle(){
- const a=document.getElementById('battle-character-a').value.trim(),av=document.getElementById('battle-version-a').value.trim();
- const b=document.getElementById('battle-character-b').value.trim(),bv=document.getElementById('battle-version-b').value.trim();
+ const a=document.getElementById('battle-character-a').value.trim();
+ const b=document.getElementById('battle-character-b').value.trim();
  const rulesText=document.getElementById('battle-rules').value.trim();
  const custom=document.getElementById('battle-custom-instructions').value.trim();
  if(!a||!b){showStatus('error','Isi kedua nama karakter sebelum menjalankan battle.');return}
@@ -397,8 +395,8 @@ async function runBattle(){
   const {data,error}=await client.auth.getSession();
   if(error||!data.session||!data.session.user){authRedirect();return}
   showStatus('info','Mengambil sumber VSB Wiki dan menyusun analisis battle…');
-  const message='Analisis battle untuk '+a+' ('+(av||'versi tidak ditentukan')+') melawan '+b+' ('+(bv||'versi tidak ditentukan')+'). '+(custom||'Bandingkan bukti AP, speed, durability, abilities, resistances, dan win condition. Jangan mengarang statistik atau kemenangan.')+' Jawab dengan pemisahan sumber, inferensi, asumsi, dan keterbatasan.';
-  const res=await fetch(ENDPOINT,{method:'POST',headers:{'Authorization':'Bearer '+data.session.access_token,'apikey':KEY,'Content-Type':'application/json'},body:JSON.stringify({message,mode:'battle',language:window.CDB_SITE_LANGUAGE==='en'?'en':'id',characterA:a,characterAVersion:av,characterB:b,characterBVersion:bv,rules:{standard_battle_assumptions:rulesText,custom_instructions:custom},sessionId})});
+  const message='Analisis battle untuk '+a+' melawan '+b+'. Instruksi tambahan: '+(custom||'Bandingkan bukti AP, speed, durability, abilities, resistances, dan win condition. Jangan mengarang statistik atau kemenangan.')+' Jawab dengan pemisahan sumber, inferensi, asumsi, dan keterbatasan.';
+  const res=await fetch(ENDPOINT,{method:'POST',headers:{'Authorization':'Bearer '+data.session.access_token,'apikey':KEY,'Content-Type':'application/json'},body:JSON.stringify({message,mode:'battle',language:window.CDB_SITE_LANGUAGE==='en'?'en':'id',characterA:a,characterB:b,rules:{standard_battle_assumptions:rulesText,custom_instructions:custom},sessionId})});
   const payload=await res.json().catch(()=>({}));
   if(!res.ok)throw new Error(payload.error||('Permintaan gagal ('+res.status+').'));
   renderResult(payload);showStatus('success','Analisis selesai. Periksa sumber dan keterbatasan di bawah hasil.');
@@ -420,7 +418,7 @@ document.getElementById('btn-copy-battle-answer')?.addEventListener('click',asyn
 });
 document.getElementById('btn-new-sim')?.addEventListener('click',function(){
  sessionId=null;latestAnswer='';
- ['battle-character-a','battle-character-b','battle-version-a','battle-version-b','battle-custom-instructions'].forEach(id=>{const input=document.getElementById(id);if(input)input.value=''});
+ ['battle-character-a','battle-character-b',undefined'battle-custom-instructions'].forEach(id=>{const input=document.getElementById(id);if(input)input.value=''});
  document.getElementById('battle-rules').value='Standard Battle Assumptions: arena netral tanpa bantuan pihak ketiga; kedua karakter menggunakan perlengkapan standar untuk versi yang dipilih; kondisi menang KO, mati, atau tidak mampu bertarung. Jangan menyamakan statistik tanpa dasar sumber.';
  updateBattleInputCounter();
  result.classList.add('hidden');answer.textContent='';sources.replaceChildren();quota.textContent='';
@@ -439,10 +437,10 @@ if(sessionId){clientReady().then(async function(client){
  const sessionResult=await client.from('chat_sessions').select('id,title,character_a,character_a_version,character_b,character_b_version,battle_rules').eq('id',sessionId).maybeSingle();
  if(sessionResult.error||!sessionResult.data){showStatus('error','Sesi battle tidak ditemukan atau tidak dapat diakses.');return}
  const s=sessionResult.data;
- document.getElementById('battle-character-a').value=s.character_a||'';
- document.getElementById('battle-version-a').value=s.character_a_version||'';
- document.getElementById('battle-character-b').value=s.character_b||'';
- document.getElementById('battle-version-b').value=s.character_b_version||'';
+ document.getElementById('battle-character-a').value=s.character_a_version?(s.character_a+' ('+s.character_a_version+')'):(s.character_a||'');
+ 
+ document.getElementById('battle-character-b').value=s.character_b_version?(s.character_b+' ('+s.character_b_version+')'):(s.character_b||'');
+ 
  if(s.battle_rules&&typeof s.battle_rules.standard_battle_assumptions==='string')document.getElementById('battle-rules').value=s.battle_rules.standard_battle_assumptions;
  if(s.battle_rules&&typeof s.battle_rules.custom_instructions==='string')document.getElementById('battle-custom-instructions').value=s.battle_rules.custom_instructions;
  updateBattleInputCounter();
@@ -451,7 +449,7 @@ if(sessionId){clientReady().then(async function(client){
  const rows=r.data||[];
  if(rows.length){answer.textContent=rows.map(m=>(m.role==='user'?'Anda':'AI')+':\n'+m.content).join('\n\n');latestAnswer=rows.filter(m=>m.role==='assistant').map(m=>m.content).join('\n\n');result.classList.remove('hidden');showStatus('success','Riwayat battle berhasil dimuat. Kirim ulang untuk melanjutkan analisis.')}
  }).catch(function(){showStatus('error','Riwayat battle tidak dapat dimuat.')})}
-['battle-character-a','battle-character-b','battle-version-a','battle-version-b','battle-rules','battle-custom-instructions'].forEach(function(id){
+['battle-character-a','battle-character-b',undefined'battle-rules','battle-custom-instructions'].forEach(function(id){
  document.getElementById(id)?.addEventListener('change',function(){
   if(!sessionId)return;
   sessionId=null;
