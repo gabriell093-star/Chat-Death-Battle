@@ -230,6 +230,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
   const questionInput = document.getElementById('consult-question');
   const submitButton = document.getElementById('consult-submit');
   let activeSessionId = new URLSearchParams(window.location.search).get('sessionId') || null;
+  let consultInFlight = false;
   let answerStyle = (function(){ try { return localStorage.getItem('cdb_answer_style') === 'brief' ? 'brief' : 'deep'; } catch (_) { return 'deep'; } })();
   if (!questionInput || !submitButton) return;
 
@@ -264,6 +265,7 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
     bubble.append(label, content);
     output.appendChild(bubble);
     output.classList.remove('hidden');
+    return bubble;
   }
 
   async function loadExistingConversation(client) {
@@ -401,7 +403,9 @@ const heading = line.match(/^(#{1,3})\s+(.+)$/);
   }
 }
 
-function renderAnswer(payload) {
+function renderAnswer(payload, targetContainer) {
+    const target = targetContainer || output;
+    if (targetContainer) targetContainer.replaceChildren();
     const header = document.createElement('div');
     header.className = 'flex items-center justify-between gap-3 mb-3';
     const heading = document.createElement('h2');
@@ -432,7 +436,7 @@ function renderAnswer(payload) {
     const answer = document.createElement('div');
     answer.className = 'font-body-md text-body-md text-on-surface whitespace-pre-wrap leading-relaxed';
     renderStructuredAnswer(answer, payload.answer || 'AI tidak mengembalikan jawaban.', payload.sources);
-    output.append(header, answer);
+    target.append(header, answer);
     if (Array.isArray(payload.sources) && payload.sources.length) {
       const sourceHeading = document.createElement('h3');
       sourceHeading.className = 'font-label-md text-label-md text-ocean-blue font-bold mt-4 mb-2';
@@ -452,15 +456,17 @@ function renderAnswer(payload) {
         if (source.cached) item.append(' (cache)');
         list.appendChild(item);
       });
-      if (list.children.length) output.append(sourceHeading, list);
+      if (list.children.length) target.append(sourceHeading, list);
     }
     if (payload.quota && Number.isFinite(payload.quota.used) && Number.isFinite(payload.quota.limit)) {
       const quota = document.createElement('p');
       quota.className = 'font-caption-meta text-caption-meta text-slate-blue mt-3';
       quota.textContent = (window.CDB_SITE_LANGUAGE === 'en' ? 'Daily quota: ' : 'Kuota harian: ') + payload.quota.used + '/' + payload.quota.limit;
-      output.appendChild(quota);
+      target.appendChild(quota);
     }
+    target.classList.remove('hidden');
     output.classList.remove('hidden');
+    if (targetContainer) targetContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   function redirectToConsultLogin() {
@@ -522,24 +528,36 @@ function renderAnswer(payload) {
   }).catch(function(){});
 
   async function sendConsult() {
+    if (consultInFlight) return;
     const message = questionInput.value.trim();
     if (!message) {
       showStatus('error', 'Tulis pertanyaan terlebih dahulu.');
       questionInput.focus();
       return;
     }
+    consultInFlight = true;
     submitButton.disabled = true;
     submitButton.classList.add('opacity-60');
+    let pendingAnswer = null;
     showStatus('info', 'Memeriksa sesi dan mengambil data VSB Wiki, lalu meminta analisis AI...');
     try {
       const client = await authClientPromise;
       if (!client) return;
       const { data, error } = await client.auth.getSession();
       if (error || !data.session || !data.session.user) {
-        showStatus('error', 'Sesi berakhir atau email belum diverifikasi. Silakan masuk kembali.');
+        showStatus('error', 'Sesi berakhir atau tidak valid. Silakan masuk kembali.');
         window.location.replace('portal_autentikasi_epistemik_vsb_death_battle.html');
         return;
       }
+      renderUserMessage(message);
+      questionInput.value = '';
+      pendingAnswer = document.createElement('div');
+      pendingAnswer.className = 'my-3 rounded-2xl bg-surface-container-low p-space-md text-on-surface leading-relaxed';
+      pendingAnswer.textContent = window.CDB_SITE_LANGUAGE === 'en' ? 'Preparing the answer for this question…' : 'Menyiapkan jawaban untuk pertanyaan ini…';
+      output.appendChild(pendingAnswer);
+      output.classList.remove('hidden');
+      pendingAnswer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
       const response = await fetch(CDB_CHAT_ENDPOINT, {
         method: 'POST',
         headers: {
@@ -557,12 +575,19 @@ function renderAnswer(payload) {
         currentUrl.searchParams.set('sessionId', activeSessionId);
         window.history.replaceState({}, '', currentUrl);
       }
-      renderUserMessage(message);
-      renderAnswer(payload);
+      renderAnswer(payload, pendingAnswer);
       showStatus('success', (window.CDB_SITE_LANGUAGE === 'en' ? 'Analysis complete. Review the answer and sources below.' : 'Analisis selesai. Periksa jawaban dan sumber di bawah.') + (payload.provider ? (window.CDB_SITE_LANGUAGE === 'en' ? ' AI provider: ' : ' Penyedia AI: ') + payload.provider + '.' : ''));
     } catch (error) {
+      if (pendingAnswer) {
+        pendingAnswer.replaceChildren();
+        pendingAnswer.textContent = (window.CDB_SITE_LANGUAGE === 'en' ? 'This question could not be answered: ' : 'Pertanyaan ini belum berhasil dijawab: ') +
+          (error && error.message ? error.message : 'Terjadi kesalahan saat menghubungi layanan AI.');
+        pendingAnswer.classList.add('text-status-error');
+        pendingAnswer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
       showStatus('error', error && error.message ? error.message : 'Terjadi kesalahan saat menghubungi layanan AI.');
     } finally {
+      consultInFlight = false;
       submitButton.disabled = false;
       submitButton.classList.remove('opacity-60');
     }
