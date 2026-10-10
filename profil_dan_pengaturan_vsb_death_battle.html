@@ -176,8 +176,9 @@ main .grid { grid-template-columns:minmax(0,1fr)!important; }
 <div class="flex flex-col sm:flex-row items-center gap-space-md p-space-sm rounded-2xl bg-surface-container-lowest shadow-[inset_1px_1px_2px_rgba(255,255,255,0.9)]">
 <div class="relative group">
 <!-- Clay Avatar Circle -->
-<div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-ice-effect via-secondary-fixed to-mint-mist flex items-center justify-center text-ocean-blue shadow-[0_8px_20px_rgba(0,43,76,0.12),inset_2px_2px_4px_rgba(255,255,255,0.9)] transform group-hover:scale-105 transition-transform duration-300">
-<span id="profileAvatarInitial" class="font-display-hero text-display-hero font-extrabold text-ocean-blue select-none">E</span>
+<div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-ice-effect via-secondary-fixed to-mint-mist flex items-center justify-center text-ocean-blue shadow-[0_8px_20px_rgba(0,43,76,0.12),inset_2px_2px_4px_rgba(255,255,255,0.9)] transform group-hover:scale-105 transition-transform duration-300 relative overflow-hidden">
+<img id="profileAvatarImage" alt="Foto profil" class="hidden absolute inset-0 z-10 h-full w-full object-cover" loading="lazy" decoding="async"/>
+<span id="profileAvatarInitial" class="font-display-hero text-display-hero font-extrabold text-ocean-blue select-none relative z-0">E</span>
 </div>
 <div class="absolute -bottom-2 -right-2 w-8 h-8 rounded-xl bg-summer-orange text-ocean-blue flex items-center justify-center font-bold text-caption-meta shadow-[0_2px_8px_rgba(245,158,113,0.4)]" title="Rank: Tier 1-A Auditor">
                 1-A
@@ -190,8 +191,15 @@ main .grid { grid-template-columns:minmax(0,1fr)!important; }
 </div>
 <span class="font-label-md text-label-md text-slate-blue">Auditor Epistemik Tier 1-A • Lead Verificator</span>
 <p class="font-caption-meta text-caption-meta text-slate-blue mt-1">
-                Avatar dihitung secara prosedural berdasarkan identitas kunci kriptografis VSB Studio.
+                Foto profil tersimpan secara pribadi. Format JPG, PNG, WebP, atau GIF; ukuran maksimal 5 MB.
               </p>
+<div class="mt-2 flex flex-wrap items-center justify-center sm:justify-start gap-2">
+<input id="profileAvatarGalleryInput" class="hidden" type="file" accept="image/jpeg,image/png,image/webp,image/gif"/>
+<input id="profileAvatarCameraInput" class="hidden" type="file" accept="image/jpeg,image/png,image/webp,image/gif" capture="user"/>
+<button id="profileAvatarGalleryButton" type="button" class="inline-flex items-center gap-2 rounded-xl bg-surface-container-low px-3 py-2 text-sm font-semibold text-ocean-blue hover:opacity-80"><span class="material-symbols-outlined text-[18px]">photo_library</span>Pilih dari Galeri</button>
+<button id="profileAvatarCameraButton" type="button" class="inline-flex items-center gap-2 rounded-xl bg-surface-container-low px-3 py-2 text-sm font-semibold text-ocean-blue hover:opacity-80"><span class="material-symbols-outlined text-[18px]">photo_camera</span>Ambil Foto</button>
+</div>
+<p id="profileAvatarHelp" class="mt-2 text-xs text-slate-blue" role="status" aria-live="polite"></p>
 </div>
 </div>
 <!-- Form Fields -->
@@ -788,18 +796,101 @@ function readLocalPreference(key){
 function writeLocalPreference(key,value){
  try{localStorage.setItem(key,value)}catch(_){}
 }
+let currentAvatarPath=null;
+const AVATAR_BUCKET='user-avatars';
+function showAvatarFallback(){
+ const image=document.getElementById('profileAvatarImage');
+ const initial=document.getElementById('profileAvatarInitial');
+ if(image){image.classList.add('hidden');image.removeAttribute('src')}
+ if(initial)initial.classList.remove('hidden');
+}
+function setAvatarSource(src){
+ const image=document.getElementById('profileAvatarImage');
+ const initial=document.getElementById('profileAvatarInitial');
+ if(!image)return;
+ image.onload=function(){image.classList.remove('hidden');if(initial)initial.classList.add('hidden')};
+ image.onerror=function(){showAvatarFallback()};
+ image.src=src;
+}
+async function loadSavedAvatar(client,path){
+ currentAvatarPath=typeof path==='string'?path:'';
+ if(!currentAvatarPath){showAvatarFallback();return}
+ try{
+  const {data,error}=await client.storage.from(AVATAR_BUCKET).createSignedUrl(currentAvatarPath,3600);
+  if(error||!data?.signedUrl){showAvatarFallback();return}
+  setAvatarSource(data.signedUrl);
+ }catch(_){showAvatarFallback()}
+}
+function setAvatarBusy(busy,message){
+ const gallery=document.getElementById('profileAvatarGalleryButton');
+ const camera=document.getElementById('profileAvatarCameraButton');
+ const help=document.getElementById('profileAvatarHelp');
+ [gallery,camera].forEach(function(button){if(button){button.disabled=busy;button.classList.toggle('opacity-60',busy);button.classList.toggle('cursor-wait',busy)}});
+ if(help)help.textContent=message||'';
+}
+async function uploadProfileAvatar(input){
+ const file=input&&input.files?input.files[0]:null;
+ if(input)input.value='';
+ if(!file)return;
+ const allowed={'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'};
+ if(!Object.prototype.hasOwnProperty.call(allowed,file.type)){
+  showProfileMessage('error','Format foto tidak didukung. Gunakan JPG, PNG, WebP, atau GIF.');return;
+ }
+ if(file.size>5*1024*1024){
+  showProfileMessage('error','Foto terlalu besar. Ukuran maksimum 5 MB.');return;
+ }
+ let uploadedPath='';
+ setAvatarBusy(true,'Mengunggah foto profil…');
+ try{
+  const {client,user}=await getClientUser();
+  const extension=allowed[file.type];
+  uploadedPath=user.id+'/'+Date.now()+'-'+Math.random().toString(36).slice(2,10)+'.'+extension;
+  const {error:uploadError}=await client.storage.from(AVATAR_BUCKET).upload(uploadedPath,file,{cacheControl:'3600',upsert:false,contentType:file.type});
+  if(uploadError)throw uploadError;
+  const {data:signed,error:signedError}=await client.storage.from(AVATAR_BUCKET).createSignedUrl(uploadedPath,3600);
+  if(signedError||!signed?.signedUrl)throw (signedError||new Error('Foto berhasil diunggah, tetapi pratinjau belum dapat dibuat.'));
+  const previousPath=currentAvatarPath;
+  const {error:profileError}=await client.from('profiles').upsert({id:user.id,avatar_path:uploadedPath},{onConflict:'id'});
+  if(profileError)throw profileError;
+  currentAvatarPath=uploadedPath;
+  setAvatarSource(signed.signedUrl);
+  if(previousPath&&previousPath!==uploadedPath&&previousPath.startsWith(user.id+'/')){
+   client.storage.from(AVATAR_BUCKET).remove([previousPath]).catch(function(){});
+  }
+  showProfileMessage('success','Foto profil berhasil diperbarui.');
+  setAvatarBusy(false,'Foto profil berhasil diperbarui.');
+ }catch(error){
+  if(uploadedPath){
+   try{const {client,user}=await getClientUser();if(uploadedPath.startsWith(user.id+'/'))await client.storage.from(AVATAR_BUCKET).remove([uploadedPath])}catch(_){}
+  }
+  setAvatarBusy(false,'');
+  showProfileMessage('error',error&&error.message?error.message:'Foto profil gagal diunggah. Coba lagi.');
+ }
+}
+function bindAvatarControls(){
+ const galleryButton=document.getElementById('profileAvatarGalleryButton');
+ const cameraButton=document.getElementById('profileAvatarCameraButton');
+ const galleryInput=document.getElementById('profileAvatarGalleryInput');
+ const cameraInput=document.getElementById('profileAvatarCameraInput');
+ if(galleryButton&&galleryInput)galleryButton.addEventListener('click',function(){galleryInput.click()});
+ if(cameraButton&&cameraInput)cameraButton.addEventListener('click',function(){cameraInput.click()});
+ if(galleryInput)galleryInput.addEventListener('change',function(){uploadProfileAvatar(galleryInput)});
+ if(cameraInput)cameraInput.addEventListener('change',function(){uploadProfileAvatar(cameraInput)});
+}
+bindAvatarControls();
 async function loadProfile(){
  try{
   const {client,user}=await getClientUser();
   safeText(document.getElementById('userEmail'),user.email);
   safeText(document.getElementById('cdb-profile-header-email'),user.email||'Email tidak tersedia');
-  const {data,error}=await client.from('profiles').select('display_name,preferred_language,theme,specialty,timezone,answer_style').eq('id',user.id).maybeSingle();
+  const {data,error}=await client.from('profiles').select('display_name,preferred_language,theme,specialty,timezone,answer_style,avatar_path').eq('id',user.id).maybeSingle();
   if(error)throw error;
 
   const fallbackName=(user.user_metadata?.display_name||String(user.email||'').split('@')[0]||'Analis').trim();
   const displayName=(data?.display_name||fallbackName||'Analis').trim();
   safeText(document.getElementById('displayName'),displayName);
   syncProfileIdentity(displayName);
+  await loadSavedAvatar(client,data?.avatar_path);
   const specialty=document.getElementById('epistemicSpecialty');
   if(specialty&&data?.specialty)specialty.value=data.specialty;
   safeText(document.getElementById('timezone'),data?.timezone||'Asia/Jakarta');
