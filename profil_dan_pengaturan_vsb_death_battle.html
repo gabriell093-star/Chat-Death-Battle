@@ -801,7 +801,7 @@ const AVATAR_BUCKET='user-avatars';
 function showAvatarFallback(){
  const image=document.getElementById('profileAvatarImage');
  const initial=document.getElementById('profileAvatarInitial');
- if(image){image.classList.add('hidden');image.removeAttribute('src')}
+ if(image){image.onload=null;image.onerror=null;image.classList.add('hidden');image.removeAttribute('src')}
  if(initial)initial.classList.remove('hidden');
 }
 function setAvatarSource(src){
