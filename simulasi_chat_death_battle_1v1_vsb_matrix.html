@@ -88,13 +88,13 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
  <div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-3">
   <label class="font-label-md text-label-md text-ocean-blue font-bold" for="battle-character-a">Karakter A</label>
   <input id="battle-character-a" maxlength="160" required value="Son Goku" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Nama karakter pertama"/>
-  <label class="font-label-sm text-label-sm text-slate-blue" for="battle-version-a">Versi / inkarnasi A</label>
+  <label class="font-label-sm text-label-sm text-slate-blue" for="battle-version-a">Form / versi / inkarnasi A</label>
   <input id="battle-version-a" maxlength="160" value="Cell Games Saga (SSJ Full Power)" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Versi spesifik karakter"/>
  </div>
  <div class="rounded-2xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-3">
   <label class="font-label-md text-label-md text-ocean-blue font-bold" for="battle-character-b">Karakter B</label>
   <input id="battle-character-b" maxlength="160" required value="Superman" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Nama karakter kedua"/>
-  <label class="font-label-sm text-label-sm text-slate-blue" for="battle-version-b">Versi / inkarnasi B</label>
+  <label class="font-label-sm text-label-sm text-slate-blue" for="battle-version-b">Form / versi / inkarnasi B</label>
   <input id="battle-version-b" maxlength="160" value="Post-Crisis (Base)" class="w-full px-3 py-3 rounded-xl bg-surface-container-low text-ocean-blue" placeholder="Versi spesifik karakter"/>
  </div>
 </section>
@@ -438,6 +438,125 @@ if(sessionId){clientReady().then(async function(client){
   showStatus('info','Parameter karakter berubah. Analisis berikutnya akan disimpan sebagai sesi battle baru.');
  });
 });
+})();
+</script>
+
+<script id="cdb-vsb-autocomplete">
+(function(){
+'use strict';
+const API='https://wfczzmajuhrlpdmhnkpm.supabase.co/functions/v1/vsb-search';
+const KEY='sb_publishable_gIX5KsthWfuY689W9H8IxA_IMN6_MbR';
+const CACHE=new Map(),CACHE_MS=45000,states=[];
+const english=()=>window.CDB_SITE_LANGUAGE==='en';
+const tr=(id,en)=>english()?en:id;
+async function getSuggestions(mode,query,character,signal){
+ const key=[mode,query.trim().toLowerCase(),(character||'').trim().toLowerCase()].join('|');
+ const cached=CACHE.get(key);
+ if(cached&&Date.now()-cached.at<CACHE_MS)return cached.items;
+ const client=window.CDB_AUTH_CLIENT;
+ if(!client)throw new Error(tr('Sesi login belum siap. Muat ulang halaman.','Sign-in is not ready. Reload the page.'));
+ const {data,error}=await client.auth.getSession();
+ if(error||!data?.session?.access_token)throw new Error(tr('Sesi berakhir. Silakan masuk kembali.','Session expired. Please sign in again.'));
+ const response=await fetch(API,{method:'POST',signal,headers:{'Authorization':'Bearer '+data.session.access_token,'apikey':KEY,'Content-Type':'application/json'},body:JSON.stringify({mode,query:query.trim().slice(0,100),character:(character||'').trim().slice(0,160)})});
+ const payload=await response.json().catch(()=>({}));
+ if(!response.ok)throw new Error(payload.error||tr('Pencarian VSB Wiki gagal.','VSB Wiki search failed.'));
+ const items=Array.isArray(payload.results)?payload.results:[];
+ CACHE.set(key,{at:Date.now(),items});
+ if(CACHE.size>100){for(const [k,v] of CACHE){if(Date.now()-v.at>CACHE_MS)CACHE.delete(k)}}
+ return items;
+}
+function versionLabel(title,character){
+ const t=String(title||'').trim(),c=String(character||'').trim();
+ if(c&&t.toLowerCase().startsWith(c.toLowerCase()+' (')&&t.endsWith(')'))return t.slice(c.length+2,-1).trim()||t;
+ if(c&&t.toLowerCase().startsWith(c.toLowerCase()+' - '))return t.slice(c.length+3).trim()||t;
+ return t;
+}
+function createPanel(input,kind,characterInput){
+ const panel=document.createElement('div');
+ panel.className='hidden w-full rounded-xl border border-slate-200 bg-white shadow-lg text-left';
+ panel.style.cssText='max-height:260px;overflow-y:auto;position:relative;z-index:25;overscroll-behavior:contain';
+ panel.setAttribute('role','listbox');
+ panel.setAttribute('aria-label',kind==='character'?tr('Saran karakter dari VS Battles Wiki','Character suggestions from VS Battles Wiki'):tr('Saran form dan versi dari VS Battles Wiki','Form and version suggestions from VS Battles Wiki'));
+ input.insertAdjacentElement('afterend',panel);
+ input.setAttribute('autocomplete','off');input.setAttribute('aria-autocomplete','list');input.setAttribute('aria-expanded','false');
+ const state={input,panel,kind,characterInput,timer:null,controller:null,sequence:0,lastKey:null};
+ states.push(state);
+ function close(){panel.classList.add('hidden');input.setAttribute('aria-expanded','false')}
+ function render(items,query){
+  panel.replaceChildren();
+  if(!items.length){
+   if(query.length>=2){const empty=document.createElement('p');empty.className='px-3 py-3 text-sm text-slate-500';empty.textContent=tr('Tidak ada kecocokan. Coba ejaan atau istilah lain.','No matches found. Try another spelling or term.');panel.appendChild(empty);panel.classList.remove('hidden');input.setAttribute('aria-expanded','true')}
+   else close();
+   return;
+  }
+  const label=document.createElement('div');label.className='sticky top-0 bg-slate-50 px-3 py-2 text-xs font-semibold tracking-wide text-slate-500';label.textContent=tr('HASIL DARI VS BATTLES WIKI','RESULTS FROM VS BATTLES WIKI');panel.appendChild(label);
+  items.slice(0,8).forEach(item=>{
+   const row=document.createElement('div');row.className='border-t border-slate-100 px-3 py-2';
+   const choose=document.createElement('button');choose.type='button';choose.className='block w-full text-left text-sm font-semibold text-slate-800 hover:text-sky-700';choose.setAttribute('role','option');choose.textContent=item.title;
+   choose.addEventListener('click',()=>{
+    if(kind==='character'){
+     input.value=item.title;input.dispatchEvent(new Event('change',{bubbles:true}));close();
+     const version=states.find(s=>s.kind==='form'&&s.characterInput===input);
+     if(version){version.input.value='';version.lastKey=null;version.input.focus();version.refresh(true)}
+    }else{input.value=versionLabel(item.title,characterInput.value);input.dispatchEvent(new Event('change',{bubbles:true}));close()}
+   });
+   row.appendChild(choose);
+   if(item.snippet){const snippet=document.createElement('p');snippet.className='mt-1 text-xs leading-relaxed text-slate-500';snippet.textContent=item.snippet.slice(0,180);row.appendChild(snippet)}
+   const source=document.createElement('a');source.className='mt-1 inline-block text-xs text-sky-700 underline';source.href=item.url;source.target='_blank';source.rel='noopener noreferrer';source.textContent=tr('Buka sumber ↗','Open source ↗');source.addEventListener('click',e=>e.stopPropagation());row.appendChild(source);
+   panel.appendChild(row);
+  });
+  panel.classList.remove('hidden');input.setAttribute('aria-expanded','true');
+ }
+ function schedule(force){if(state.timer)clearTimeout(state.timer);state.timer=setTimeout(()=>runSearch(force),280)}
+ async function runSearch(force){
+  const query=input.value.trim(),character=characterInput?characterInput.value.trim():'';
+  const currentKey=kind==='form'?character.toLowerCase()+'|'+query.toLowerCase():query.toLowerCase();
+  if(kind==='character'&&query.length<2){close();return}
+  if(kind==='form'&&character.length<2){close();return}
+  if(!force&&state.lastKey===currentKey)return;
+  state.lastKey=currentKey;
+  if(state.controller)state.controller.abort();
+  const controller=new AbortController();state.controller=controller;const seq=++state.sequence;
+  panel.replaceChildren();const loading=document.createElement('p');loading.className='px-3 py-3 text-sm text-slate-500';loading.textContent=tr('Mencari di VSB Wiki…','Searching VSB Wiki…');panel.appendChild(loading);panel.classList.remove('hidden');input.setAttribute('aria-expanded','true');
+  try{
+   const items=await getSuggestions(kind,query,character,controller.signal);
+   if(seq!==state.sequence)return;
+   render(items,query);
+  }catch(error){
+   if(controller.signal.aborted||seq!==state.sequence)return;
+   panel.replaceChildren();const note=document.createElement('p');note.className='px-3 py-3 text-sm text-rose-700';note.textContent=error.message||tr('Pencarian tidak tersedia.','Search is unavailable.');panel.appendChild(note);panel.classList.remove('hidden');input.setAttribute('aria-expanded','true');
+  }
+ }
+ input.addEventListener('focus',()=>schedule(false));
+ input.addEventListener('input',()=>schedule(false));
+ input.addEventListener('change',()=>{state.lastKey=null;schedule(true)});
+ document.addEventListener('click',e=>{if(e.target!==input&&!panel.contains(e.target))close()});
+ state.refresh=force=>schedule(!!force);
+ return state;
+}
+function init(){
+ [
+  {id:'battle-character-a',kind:'character'},
+  {id:'battle-character-b',kind:'character'},
+  {id:'battle-version-a',kind:'form',characterId:'battle-character-a'},
+  {id:'battle-version-b',kind:'form',characterId:'battle-character-b'}
+ ].forEach(item=>{
+  const input=document.getElementById(item.id);if(!input)return;
+  const characterInput=item.characterId?document.getElementById(item.characterId):null;
+  createPanel(input,item.kind,characterInput);
+  if(item.kind==='character'){
+   input.addEventListener('input',()=>{
+    const related=states.find(s=>s.kind==='form'&&s.characterInput===input);
+    if(related){related.lastKey=null;related.refresh(true)}
+   });
+   input.addEventListener('change',()=>{
+    const related=states.find(s=>s.kind==='form'&&s.characterInput===input);
+    if(related){related.lastKey=null;related.input.value='';related.refresh(true)}
+   });
+  }
+ });
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
 </script>
 </body></html>
