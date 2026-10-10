@@ -378,9 +378,9 @@
 
   function authCooldownMessage(group) {
     if (group === 'email') {
-      return 'Supabase menolak pengiriman email karena batas pengiriman bawaan tercapai. Aplikasi tidak menambahkan jeda buatan. Agar pendaftaran email/password langsung tanpa email verifikasi, pemilik proyek perlu menonaktifkan Confirm email di Authentication > Providers. Jika verifikasi email tetap wajib, gunakan SMTP khusus.';
+      return 'Supabase menolak pendaftaran karena batas pengiriman email bawaan telah tercapai (sekitar 2 email per jam). Ini bukan kesalahan kata sandi. Untuk situs publik, sambungkan SMTP khusus di Supabase > Authentication > SMTP Settings. Jika Anda tetap memilih pendaftaran tanpa verifikasi email, nonaktifkan Confirm email di Authentication > Providers > Email, lalu coba lagi.';
     }
-    return 'Supabase menolak sementara permintaan autentikasi karena pembatasan keamanan. Aplikasi tidak menambahkan jeda buatan; tunggu sampai layanan mengizinkan permintaan berikutnya.';
+    return 'Supabase membatasi permintaan autentikasi sementara. Tunggu beberapa menit dan hindari mengirim permintaan berulang. Jika tetap gagal, periksa Authentication > Rate Limits pada dashboard Supabase.';
   }
 
   function beginAuthRequest(form, action, busyText) {
@@ -480,14 +480,25 @@
   }
 
   function friendlyAuthError(error) {
-    const message = String(error?.message || '').toLowerCase();
-    if (message.includes('invalid login credentials')) return 'Email atau kata sandi tidak cocok.';
-    if (message.includes('email not confirmed')) return 'Email belum terverifikasi. Periksa email Anda atau buka tab Verifikasi Email.';
-    if (message.includes('user already registered')) return 'Pendaftaran tidak dapat diselesaikan. Coba masuk atau gunakan alamat email lain.';
-    if (message.includes('password should be at least') || message.includes('weak password')) return 'Kata sandi belum memenuhi persyaratan keamanan Supabase.';
-    if (message.includes('rate limit') || message.includes('too many requests')) return 'Terlalu banyak permintaan. Tunggu beberapa saat sebelum mencoba lagi.';
+    const message = String(error?.message || error?.msg || '').toLowerCase();
+    const code = String(error?.code || error?.error_code || '').toLowerCase();
+    const status = Number(error?.status || error?.statusCode || 0);
+    const combined = code + ' ' + message;
+    if (code === 'invalid_credentials' || message.includes('invalid login credentials')) return 'Email atau kata sandi tidak cocok.';
+    if (code === 'email_not_confirmed' || message.includes('email not confirmed')) return 'Email belum terverifikasi. Periksa email Anda atau buka tab Verifikasi Email.';
+    if (code === 'user_already_exists' || code === 'email_exists' || message.includes('user already registered')) return 'Email ini mungkin sudah terdaftar. Coba masuk menggunakan akun tersebut.';
+    if (code === 'email_address_invalid' || (message.includes('email address') && message.includes('invalid'))) return 'Format alamat email tidak valid. Periksa kembali alamat email Anda.';
+    if (code === 'email_address_not_authorized' || /email.{0,30}not authorized|not authorized.{0,30}email/.test(combined)) return 'Supabase belum mengizinkan pengiriman email ke alamat ini. Untuk pendaftaran publik, sambungkan SMTP khusus pada pengaturan Authentication Supabase.';
+    if (code === 'over_email_send_rate_limit' || message.includes('email rate limit exceeded')) return 'Batas pengiriman email Supabase telah tercapai. Gunakan SMTP khusus untuk pendaftaran publik atau nonaktifkan Confirm email jika Anda memang memilih pendaftaran tanpa verifikasi.';
+    if (code === 'over_request_rate_limit' || status === 429 || message.includes('too many requests') || message.includes('rate limit')) return 'Supabase membatasi permintaan sementara. Tunggu beberapa menit dan hindari mengirim ulang berkali-kali.';
+    if (code === 'signup_disabled' || message.includes('signups not allowed')) return 'Pendaftaran sedang dinonaktifkan pada pengaturan Supabase.';
+    if (code === 'weak_password' || message.includes('password should be at least') || message.includes('weak password')) return 'Kata sandi belum memenuhi persyaratan keamanan Supabase.';
+    if (code.includes('captcha') || message.includes('captcha')) return 'Pemeriksaan CAPTCHA gagal. Muat ulang halaman dan coba kembali.';
     if (message.includes('fetch') || message.includes('network')) return 'Tidak dapat terhubung ke Supabase. Periksa koneksi internet dan coba lagi.';
-    return 'Permintaan autentikasi gagal. Periksa data Anda lalu coba lagi.';
+    const safeCode = /^[a-z0-9_]{2,80}$/.test(code) ? code : '';
+    const safeStatus = status >= 400 ? String(status) : '';
+    const detail = safeCode ? ' Kode: ' + safeCode + '.' : (safeStatus ? ' Kode HTTP: ' + safeStatus + '.' : '');
+    return 'Autentikasi ditolak oleh Supabase.' + detail + ' Periksa email, kebijakan kata sandi, dan pengaturan konfirmasi email/SMTP.';
   }
 
   function scheduleWorkspaceRedirect(message) {
@@ -581,11 +592,13 @@
       if (data.session) {
         window.sessionStorage.setItem('cdb_auth_email', email);
         scheduleWorkspaceRedirect('Akun berhasil dibuat. Membuka workspace...');
+      } else if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+        showAuthStatus('error', 'Email ini mungkin sudah terdaftar. Coba masuk atau gunakan fitur pemulihan kata sandi.');
       } else {
         setVerifyEmail(email);
         window.sessionStorage.setItem('cdb_auth_email', email);
         switchAuthTab('verify');
-        showAuthStatus('error', 'Akun telah dibuat, tetapi Supabase masih meminta konfirmasi email. Pemilik situs perlu mematikan Confirm email di Authentication > Providers agar pendaftaran langsung aktif.');
+        showAuthStatus('info', 'Akun berhasil dibuat, tetapi Confirm email masih aktif. Periksa email untuk verifikasi; jika pendaftaran memang harus langsung aktif, nonaktifkan Confirm email di Authentication > Providers > Email pada dashboard Supabase.');
       }
     } catch (error) {
       showAuthFailure(error, 'register');
