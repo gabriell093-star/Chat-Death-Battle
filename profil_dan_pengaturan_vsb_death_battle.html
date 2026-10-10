@@ -234,15 +234,8 @@ main .grid { grid-template-columns:minmax(0,1fr)!important; }
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
 <div class="flex flex-col gap-1">
 <label class="font-label-md text-label-md text-ocean-blue font-semibold" for="epistemicSpecialty">Gelar • Spesialisasi</label>
-<div class="relative">
-<select class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container-lowest text-ocean-blue font-body-md text-body-md shadow-[inset_0px_2px_4px_rgba(0,43,76,0.06)] focus:outline-none focus:ring-2 focus:ring-summer-orange appearance-none pr-9 cursor-pointer" id="epistemicSpecialty">
-<option selected="" value="tier-1a">Tier 1-A Auditor</option>
-<option value="dimensional">Dimensional Tiering Specialist</option>
-<option value="canonical">Kanonikal Calc Reviewer</option>
-<option value="cosmology">Transfinite Cosmology Analyst</option>
-</select>
-<span class="material-symbols-outlined absolute right-3 top-3 text-slate-blue text-[20px] pointer-events-none">expand_more</span>
-</div>
+<input class="w-full px-space-sm py-space-xs rounded-xl bg-surface-container-lowest text-ocean-blue font-body-md text-body-md shadow-[inset_0px_2px_4px_rgba(0,43,76,0.06)] focus:outline-none focus:ring-2 focus:ring-summer-orange transition-all placeholder-slate-blue" id="epistemicSpecialty" type="text" maxlength="80" autocomplete="off" placeholder="Contoh: Tier 1-A Auditor, Cosmology Analyst" value="Tier 1-A Auditor"/>
+<span class="font-caption-meta text-caption-meta text-slate-blue">Isi gelar atau spesialisasi Anda sendiri, maksimal 80 karakter.</span>
 </div>
 <div class="flex flex-col gap-1">
 <label class="font-label-md text-label-md text-ocean-blue font-semibold" for="timezone">Zona Waktu Komputasi</label>
@@ -800,28 +793,55 @@ function writeLocalPreference(key,value){
  try{localStorage.setItem(key,value)}catch(_){}
 }
 let currentAvatarPath=null;
+let currentAvatarObjectUrl=null;
 const AVATAR_BUCKET='user-avatars';
+
 function showAvatarFallback(){
  const image=document.getElementById('profileAvatarImage');
  const initial=document.getElementById('profileAvatarInitial');
+ if(currentAvatarObjectUrl){try{URL.revokeObjectURL(currentAvatarObjectUrl)}catch(_){}currentAvatarObjectUrl=null}
  if(image){image.onload=null;image.onerror=null;image.classList.add('hidden');image.removeAttribute('src')}
  if(initial)initial.classList.remove('hidden');
 }
-function setAvatarSource(src){
+function setAvatarSource(src,isTemporary,onError){
  const image=document.getElementById('profileAvatarImage');
  const initial=document.getElementById('profileAvatarInitial');
- if(!image)return;
- image.onload=function(){image.classList.remove('hidden');if(initial)initial.classList.add('hidden')};
- image.onerror=function(){showAvatarFallback()};
+ if(!image){if(isTemporary){try{URL.revokeObjectURL(src)}catch(_){}}return}
+ const previousObjectUrl=currentAvatarObjectUrl;
+ currentAvatarObjectUrl=isTemporary?src:null;
+ let settled=false;
+ function releasePrevious(){if(previousObjectUrl&&previousObjectUrl!==currentAvatarObjectUrl){try{URL.revokeObjectURL(previousObjectUrl)}catch(_){}}}
+ image.onload=function(){
+  if(settled)return;settled=true;image.classList.remove('hidden');if(initial)initial.classList.add('hidden');
+  image.onload=null;image.onerror=null;releasePrevious();
+ };
+ image.onerror=function(){
+  if(settled)return;settled=true;image.onload=null;image.onerror=null;releasePrevious();
+  if(isTemporary&&currentAvatarObjectUrl===src){try{URL.revokeObjectURL(src)}catch(_){}currentAvatarObjectUrl=null}
+  if(typeof onError==='function'){onError();return}
+  showAvatarFallback();
+ };
  image.src=src;
+ if(image.complete&&image.naturalWidth>0&&typeof image.onload==='function')image.onload();
+}
+async function loadAvatarByDownload(client,path){
+ const {data,error}=await client.storage.from(AVATAR_BUCKET).download(path);
+ if(error||!data)throw(error||new Error('File foto profil tidak dapat dibaca.'));
+ const blobUrl=URL.createObjectURL(data);
+ setAvatarSource(blobUrl,true);
 }
 async function loadSavedAvatar(client,path){
  currentAvatarPath=typeof path==='string'?path:'';
  if(!currentAvatarPath){showAvatarFallback();return}
  try{
   const {data,error}=await client.storage.from(AVATAR_BUCKET).createSignedUrl(currentAvatarPath,3600);
-  if(error||!data?.signedUrl){showAvatarFallback();return}
-  setAvatarSource(data.signedUrl);
+  if(!error&&data&&data.signedUrl){
+   setAvatarSource(data.signedUrl,false,function(){
+    loadAvatarByDownload(client,currentAvatarPath).catch(function(){showAvatarFallback()});
+   });
+   return;
+  }
+  await loadAvatarByDownload(client,currentAvatarPath);
  }catch(_){showAvatarFallback()}
 }
 function setAvatarBusy(busy,message){
@@ -842,32 +862,43 @@ async function uploadProfileAvatar(input){
  if(file.size>5*1024*1024){
   showProfileMessage('error','Foto terlalu besar. Ukuran maksimum 5 MB.');return;
  }
- let uploadedPath='';
- setAvatarBusy(true,'Mengunggah foto profil…');
+ const previousPath=currentAvatarPath;
+ const previewUrl=URL.createObjectURL(file);
+ setAvatarSource(previewUrl,true);
+ let uploadedPath='',client=null,user=null;
+ setAvatarBusy(true,'Menampilkan pratinjau dan menyimpan foto profil…');
  try{
-  const {client,user}=await getClientUser();
+  const auth=await getClientUser();client=auth.client;user=auth.user;
   const extension=allowed[file.type];
   uploadedPath=user.id+'/'+Date.now()+'-'+Math.random().toString(36).slice(2,10)+'.'+extension;
-  const {error:uploadError}=await client.storage.from(AVATAR_BUCKET).upload(uploadedPath,file,{cacheControl:'3600',upsert:false,contentType:file.type});
+  const {error:uploadError}=await client.storage.from(AVATAR_BUCKET).upload(
+   uploadedPath,file,{cacheControl:'3600',upsert:false,contentType:file.type}
+  );
   if(uploadError)throw uploadError;
-  const {data:signed,error:signedError}=await client.storage.from(AVATAR_BUCKET).createSignedUrl(uploadedPath,3600);
-  if(signedError||!signed?.signedUrl)throw (signedError||new Error('Foto berhasil diunggah, tetapi pratinjau belum dapat dibuat.'));
-  const previousPath=currentAvatarPath;
-  const {error:profileError}=await client.from('profiles').upsert({id:user.id,avatar_path:uploadedPath},{onConflict:'id'});
-  if(profileError)throw profileError;
-  currentAvatarPath=uploadedPath;
-  setAvatarSource(signed.signedUrl);
-  if(previousPath&&previousPath!==uploadedPath&&previousPath.startsWith(user.id+'/')){
-   client.storage.from(AVATAR_BUCKET).remove([previousPath]).catch(function(){});
+  const {data:updatedProfile,error:profileUpdateError}=await client.from('profiles')
+   .update({avatar_path:uploadedPath}).eq('id',user.id).select('id').maybeSingle();
+  if(profileUpdateError)throw profileUpdateError;
+  if(!updatedProfile){
+   const fallbackName=String(user.user_metadata?.display_name||String(user.email||'').split('@')[0]||'Analis').trim().slice(0,32)||'Analis';
+   const {error:profileInsertError}=await client.from('profiles').insert({
+    id:user.id,display_name:fallbackName,avatar_path:uploadedPath
+   });
+   if(profileInsertError)throw profileInsertError;
   }
+  currentAvatarPath=uploadedPath;
+  setAvatarBusy(false,'Foto profil berhasil disimpan.');
   showProfileMessage('success','Foto profil berhasil diperbarui.');
-  setAvatarBusy(false,'Foto profil berhasil diperbarui.');
+  if(previousPath&&previousPath!==uploadedPath&&previousPath.startsWith(user.id+'/')){
+   try{await client.storage.from(AVATAR_BUCKET).remove([previousPath])}catch(_){}
+  }
  }catch(error){
-  if(uploadedPath){
-   try{const {client,user}=await getClientUser();if(uploadedPath.startsWith(user.id+'/'))await client.storage.from(AVATAR_BUCKET).remove([uploadedPath])}catch(_){}
+  if(uploadedPath&&client&&user&&uploadedPath.startsWith(user.id+'/')){
+   try{await client.storage.from(AVATAR_BUCKET).remove([uploadedPath])}catch(_){}
   }
   setAvatarBusy(false,'');
-  showProfileMessage('error',error&&error.message?error.message:'Foto profil gagal diunggah. Coba lagi.');
+  if(previousPath&&client)await loadSavedAvatar(client,previousPath);
+  else if(!previousPath)showAvatarFallback();
+  showProfileMessage('error',error&&error.message?error.message:'Foto profil gagal disimpan. Periksa koneksi dan izin penyimpanan lalu coba lagi.');
  }
 }
 function bindAvatarControls(){
@@ -895,7 +926,8 @@ async function loadProfile(){
   syncProfileIdentity(displayName);
   await loadSavedAvatar(client,data?.avatar_path);
   const specialty=document.getElementById('epistemicSpecialty');
-  if(specialty&&data?.specialty)specialty.value=data.specialty;
+  const specialtyLabels={'tier-1a':'Tier 1-A Auditor','dimensional':'Dimensional Tiering Specialist','canonical':'Kanonikal Calc Reviewer','cosmology':'Transfinite Cosmology Analyst'};
+  if(specialty){specialty.value=data?.specialty?(specialtyLabels[data.specialty]||data.specialty):'Tier 1-A Auditor';}
   safeText(document.getElementById('timezone'),data?.timezone||'Asia/Jakarta');
   if(typeof window.switchVerification==='function')window.switchVerification(true);
 
@@ -933,9 +965,9 @@ window.handleProfileSubmit=async function(event){
  event.preventDefault();
  const form=event.currentTarget;
  const name=document.getElementById('displayName')?.value.trim()||'';
- const specialty=document.getElementById('epistemicSpecialty')?.value||'tier-1a';
+ const specialty=document.getElementById('epistemicSpecialty')?.value.trim()||'';
  if(name.length<3||name.length>32){showProfileMessage('error','Nama tampilan harus berisi 3–32 karakter.');return;}
- if(!['tier-1a','dimensional','canonical','cosmology'].includes(specialty)){showProfileMessage('error','Spesialisasi yang dipilih tidak valid.');return;}
+ if(!specialty||specialty.length>80){showProfileMessage('error','Gelar atau spesialisasi harus diisi dan maksimal 80 karakter.');return;}
  const button=form.querySelector('button[type="submit"]');
  const originalHtml=button?.innerHTML;
  if(button){button.disabled=true;button.classList.add('opacity-60','cursor-wait');button.textContent='Menyimpan profil…';}
