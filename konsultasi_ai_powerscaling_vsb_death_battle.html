@@ -559,7 +559,7 @@ function renderAnswer(payload) {
       }
       renderUserMessage(message);
       renderAnswer(payload);
-      showStatus('success', window.CDB_SITE_LANGUAGE === 'en' ? 'Analysis complete. Review the answer and sources below.' : 'Analisis selesai. Periksa jawaban dan sumber di bawah.');
+      showStatus('success', (window.CDB_SITE_LANGUAGE === 'en' ? 'Analysis complete. Review the answer and sources below.' : 'Analisis selesai. Periksa jawaban dan sumber di bawah.') + (payload.provider ? (window.CDB_SITE_LANGUAGE === 'en' ? ' AI provider: ' : ' Penyedia AI: ') + payload.provider + '.' : ''));
     } catch (error) {
       showStatus('error', error && error.message ? error.message : 'Terjadi kesalahan saat menghubungi layanan AI.');
     } finally {
