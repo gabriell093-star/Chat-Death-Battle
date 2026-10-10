@@ -220,7 +220,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 <h3 id="profileDisplayNameHeading" class="font-headline-sm text-headline-sm text-ocean-blue font-bold">Ellias</h3>
 <span class="material-symbols-outlined text-ocean-blue text-[18px]">verified</span>
 </div>
-<span class="font-label-md text-label-md text-slate-blue">Auditor Epistemik Tier 1-A • Lead Verificator</span>
+<span id="profileSpecialtyHeading" class="font-label-md text-label-md text-slate-blue">Tier 1-A Auditor</span>
 <p class="font-caption-meta text-caption-meta text-slate-blue mt-1">
                 Foto profil tersimpan secara pribadi. Format JPG, PNG, WebP, atau GIF; ukuran maksimal 5 MB.
               </p>
@@ -616,10 +616,7 @@ button,a{-webkit-tap-highlight-color:transparent}
   function selectTheme(mode) {
     const selected = ['light', 'dark', 'system'].includes(mode) ? mode : 'light';
     try { localStorage.setItem('cdb_theme', selected); } catch (_) {}
-    if (typeof window.CDB_APPLY_THEME === 'function') {
-      window.CDB_APPLY_THEME(selected);
-      return;
-    }
+    if (typeof window.CDB_APPLY_THEME === 'function') window.CDB_APPLY_THEME(selected);
     const choices = {
       light: document.getElementById('themeLightBtn'),
       dark: document.getElementById('themeDarkBtn'),
@@ -808,13 +805,16 @@ async function getClientUser(){
  return {client,user:data.user};
 }
 
-function syncProfileIdentity(name){
+function syncProfileIdentity(name,specialty){
  const displayName=String(name||'').trim()||'Analis';
+ const displaySpecialty=String(specialty||'').trim()||'Spesialisasi belum diatur';
  const heading=document.getElementById('profileDisplayNameHeading');
  const headerName=document.getElementById('cdb-header-display-name');
+ const specialtyHeading=document.getElementById('profileSpecialtyHeading');
  const avatarInitial=document.getElementById('profileAvatarInitial');
  if(heading)heading.textContent=displayName;
  if(headerName)headerName.textContent=displayName;
+ if(specialtyHeading)specialtyHeading.textContent=displaySpecialty;
  if(avatarInitial)avatarInitial.textContent=Array.from(displayName)[0]?.toLocaleUpperCase('id-ID')||'A';
 }
 function readLocalPreference(key){
@@ -954,7 +954,8 @@ async function loadProfile(){
   const fallbackName=(user.user_metadata?.display_name||String(user.email||'').split('@')[0]||'Analis').trim();
   const displayName=(data?.display_name||fallbackName||'Analis').trim();
   safeText(document.getElementById('displayName'),displayName);
-  syncProfileIdentity(displayName);
+  const specialtyValue=String(data?.specialty||'Tier 1-A Auditor').trim();
+  syncProfileIdentity(displayName,specialtyValue);
   await loadSavedAvatar(client,data?.avatar_path);
   const specialty=document.getElementById('epistemicSpecialty');
   const specialtyLabels={'tier-1a':'Tier 1-A Auditor','dimensional':'Dimensional Tiering Specialist','canonical':'Kanonikal Calc Reviewer','cosmology':'Transfinite Cosmology Analyst'};
@@ -1013,7 +1014,7 @@ window.handleProfileSubmit=async function(event){
   },{onConflict:'id'});
   if(profileError)throw profileError;
   const {error:metadataError}=await client.auth.updateUser({data:{display_name:name}});
-  syncProfileIdentity(name);
+  syncProfileIdentity(name,specialty);
   if(metadataError){
    showProfileMessage('warning','Nama dan spesialisasi tersimpan di profil. Sinkronisasi nama ke metadata akun belum berhasil.');
   }else{
