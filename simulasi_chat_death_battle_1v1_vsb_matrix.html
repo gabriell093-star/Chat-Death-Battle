@@ -395,7 +395,7 @@ async function runBattle(){
   const {data,error}=await client.auth.getSession();
   if(error||!data.session||!data.session.user){authRedirect();return}
   showStatus('info','Mengambil sumber VSB Wiki dan menyusun analisis battle…');
-  const message='Analisis battle untuk '+a+' melawan '+b+'. Instruksi tambahan: '+(custom||'Bandingkan bukti AP, speed, durability, abilities, resistances, dan win condition. Jangan mengarang statistik atau kemenangan.')+' Jawab dengan pemisahan sumber, inferensi, asumsi, dan keterbatasan.';
+  const message='Analisis battle untuk '+a+' melawan '+b+'. Bandingkan bukti AP, speed, durability, abilities, resistances, dan win condition sesuai aturan yang diberikan. Pisahkan sumber, inferensi, asumsi, dan keterbatasan. Jangan mengarang statistik atau kemenangan.';
   const res=await fetch(ENDPOINT,{method:'POST',headers:{'Authorization':'Bearer '+data.session.access_token,'apikey':KEY,'Content-Type':'application/json'},body:JSON.stringify({message,mode:'battle',language:window.CDB_SITE_LANGUAGE==='en'?'en':'id',characterA:a,characterB:b,rules:{standard_battle_assumptions:rulesText,custom_instructions:custom},sessionId})});
   const payload=await res.json().catch(()=>({}));
   if(!res.ok)throw new Error(payload.error||('Permintaan gagal ('+res.status+').'));
