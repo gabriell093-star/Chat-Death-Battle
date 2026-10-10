@@ -486,6 +486,7 @@
     const combined = code + ' ' + message;
     if (code === 'invalid_credentials' || message.includes('invalid login credentials')) return 'Email atau kata sandi tidak cocok.';
     if (code === 'email_not_confirmed' || message.includes('email not confirmed')) return 'Email belum terverifikasi. Periksa email Anda atau buka tab Verifikasi Email.';
+    if (code === 'email_provider_disabled' || message.includes('email_provider_disabled') || message.includes('email logins are disabled') || message.includes('signups are disabled for email and password') || message.includes('email provider is disabled')) return 'Provider Email/password sedang dinonaktifkan atau pendaftaran Email dimatikan pada proyek Supabase. Buka https://supabase.com/dashboard/project/wfczzmajuhrlpdmhnkpm/auth/providers, pilih Authentication > Providers > Email, aktifkan provider Email dan izin pendaftaran pengguna baru (Allow new users to sign up), lalu simpan. Confirm email boleh tetap OFF. Pastikan pengaturan ini di proyek Chat Death Battle yang sama dengan aplikasi, lalu muat ulang halaman dan coba lagi.';
     if (code === 'user_already_exists' || code === 'email_exists' || message.includes('user already registered')) return 'Email ini mungkin sudah terdaftar. Coba masuk menggunakan akun tersebut.';
     if (code === 'email_address_invalid' || (message.includes('email address') && message.includes('invalid'))) return 'Format alamat email tidak valid. Periksa kembali alamat email Anda.';
     if (code === 'email_address_not_authorized' || /email.{0,30}not authorized|not authorized.{0,30}email/.test(combined)) return 'Supabase belum mengizinkan pengiriman email ke alamat ini. Untuk pendaftaran publik, sambungkan SMTP khusus pada pengaturan Authentication Supabase.';
@@ -498,7 +499,7 @@
     const safeCode = /^[a-z0-9_]{2,80}$/.test(code) ? code : '';
     const safeStatus = status >= 400 ? String(status) : '';
     const detail = safeCode ? ' Kode: ' + safeCode + '.' : (safeStatus ? ' Kode HTTP: ' + safeStatus + '.' : '');
-    return 'Autentikasi ditolak oleh Supabase.' + detail + ' Periksa email, kebijakan kata sandi, dan pengaturan konfirmasi email/SMTP.';
+    return 'Autentikasi ditolak oleh Supabase.' + detail + ' Pastikan metode Email aktif pada Authentication > Providers > Email di proyek yang sama dengan aplikasi. Jika kode email_provider_disabled muncul, aktifkan provider Email dan izin pendaftaran pengguna baru; pengaturan Confirm email adalah opsi yang berbeda.';
   }
 
   function scheduleWorkspaceRedirect(message) {
