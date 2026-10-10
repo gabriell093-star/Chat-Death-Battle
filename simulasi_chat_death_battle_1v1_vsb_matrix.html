@@ -314,9 +314,9 @@ if(window.matchMedia){const mq=window.matchMedia('(prefers-color-scheme: dark)')
 <script id="cdb-battle-live-integration">
 (function(){
 'use strict';
-const URL='https://wfczzmajuhrlpdmhnkpm.supabase.co';
+const SUPABASE_URL='https://wfczzmajuhrlpdmhnkpm.supabase.co';
 const KEY='sb_publishable_gIX5KsthWfuY689W9H8IxA_IMN6_MbR';
-const ENDPOINT=URL+'/functions/v1/chat-ai';
+const ENDPOINT=SUPABASE_URL+'/functions/v1/chat-ai';
 const status=document.getElementById('cdb-battle-status');
 const run=document.getElementById('btn-run-battle');
 const result=document.getElementById('cdb-battle-result');
@@ -425,7 +425,7 @@ function renderResult(payload){
  result.classList.remove('hidden');
  const url=new URL(window.location.href);if(payload.sessionId){sessionId=payload.sessionId;url.searchParams.set('sessionId',sessionId);history.replaceState({},'',url)}
 }
-async function clientReady(){if(window.CDB_AUTH_CLIENT)return window.CDB_AUTH_CLIENT;if(!window.supabase)return null;const client=window.supabase.createClient(URL,KEY,{auth:{autoRefreshToken:true,persistSession:true,detectSessionInUrl:true}});window.CDB_AUTH_CLIENT=client;return client}
+async function clientReady(){if(window.CDB_AUTH_CLIENT)return window.CDB_AUTH_CLIENT;if(!window.supabase)return null;const client=window.supabase.createClient(SUPABASE_URL,KEY,{auth:{autoRefreshToken:true,persistSession:true,detectSessionInUrl:true}});window.CDB_AUTH_CLIENT=client;return client}
 const battleInputs={rules:document.getElementById('battle-rules'),custom:document.getElementById('battle-custom-instructions'),counter:document.getElementById('cdb-battle-input-counter')};
 const BATTLE_CUSTOM_WORD_LIMIT=10000;
 const BATTLE_CUSTOM_CHAR_LIMIT=100000;
