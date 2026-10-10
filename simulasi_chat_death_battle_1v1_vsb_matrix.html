@@ -479,7 +479,7 @@ function createPanel(input,kind,characterInput){
  panel.setAttribute('aria-label',kind==='character'?tr('Saran karakter dari VS Battles Wiki','Character suggestions from VS Battles Wiki'):tr('Saran form dan versi dari VS Battles Wiki','Form and version suggestions from VS Battles Wiki'));
  input.insertAdjacentElement('afterend',panel);
  input.setAttribute('autocomplete','off');input.setAttribute('aria-autocomplete','list');input.setAttribute('aria-expanded','false');
- const state={input,panel,kind,characterInput,timer:null,controller:null,sequence:0,lastKey:null};
+ const state={input,panel,kind,characterInput,timer:null,controller:null,sequence:0,lastKey:null,selecting:false};
  states.push(state);
  function close(){panel.classList.add('hidden');input.setAttribute('aria-expanded','false')}
  function render(items,query){
@@ -495,10 +495,10 @@ function createPanel(input,kind,characterInput){
    const choose=document.createElement('button');choose.type='button';choose.className='block w-full text-left text-sm font-semibold text-slate-800 hover:text-sky-700';choose.setAttribute('role','option');choose.textContent=item.title;
    choose.addEventListener('click',()=>{
     if(kind==='character'){
-     input.value=item.title;input.dispatchEvent(new Event('change',{bubbles:true}));close();
+     input.value=item.title;state.selecting=true;input.dispatchEvent(new Event('change',{bubbles:true}));state.selecting=false;close();
      const version=states.find(s=>s.kind==='form'&&s.characterInput===input);
      if(version){version.input.value='';version.lastKey=null;version.input.focus();version.refresh(true)}
-    }else{input.value=versionLabel(item.title,characterInput.value);input.dispatchEvent(new Event('change',{bubbles:true}));close()}
+    }else{input.value=versionLabel(item.title,characterInput.value);state.selecting=true;input.dispatchEvent(new Event('change',{bubbles:true}));state.selecting=false;close()}
    });
    row.appendChild(choose);
    if(item.snippet){const snippet=document.createElement('p');snippet.className='mt-1 text-xs leading-relaxed text-slate-500';snippet.textContent=item.snippet.slice(0,180);row.appendChild(snippet)}
@@ -529,7 +529,7 @@ function createPanel(input,kind,characterInput){
  }
  input.addEventListener('focus',()=>schedule(false));
  input.addEventListener('input',()=>schedule(false));
- input.addEventListener('change',()=>{state.lastKey=null;schedule(true)});
+ input.addEventListener('change',()=>{if(state.selecting){close();return}state.lastKey=null;schedule(true)});
  document.addEventListener('click',e=>{if(e.target!==input&&!panel.contains(e.target))close()});
  state.refresh=force=>schedule(!!force);
  return state;
@@ -547,7 +547,7 @@ function init(){
   if(item.kind==='character'){
    input.addEventListener('input',()=>{
     const related=states.find(s=>s.kind==='form'&&s.characterInput===input);
-    if(related){related.lastKey=null;related.refresh(true)}
+    if(related){related.input.value='';related.lastKey=null;related.refresh(true)}
    });
    input.addEventListener('change',()=>{
     const related=states.find(s=>s.kind==='form'&&s.characterInput===input);
