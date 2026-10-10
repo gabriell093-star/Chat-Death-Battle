@@ -483,6 +483,7 @@ document.getElementById('btn-new-sim')?.addEventListener('click',function(){
  sessionId=null;latestAnswer='';
  ['battle-character-a','battle-character-b','battle-version-a','battle-version-b','battle-custom-instructions'].forEach(id=>{const input=document.getElementById(id);if(input)input.value=''});
  document.getElementById('battle-rules').value='Standard Battle Assumptions: arena netral tanpa bantuan pihak ketiga; kedua karakter menggunakan perlengkapan standar untuk versi yang dipilih; kondisi menang KO, mati, atau tidak mampu bertarung. Jangan menyamakan statistik tanpa dasar sumber.';
+ updateBattleInputCounter();
  result.classList.add('hidden');answer.textContent='';sources.replaceChildren();quota.textContent='';
  const url=new URL(window.location.href);url.searchParams.delete('sessionId');window.history.replaceState({},'',url);
  showStatus('info','Battle baru siap. Masukkan kedua karakter dan jalankan analisis.');
@@ -505,6 +506,7 @@ if(sessionId){clientReady().then(async function(client){
  document.getElementById('battle-version-b').value=s.character_b_version||'';
  if(s.battle_rules&&typeof s.battle_rules.standard_battle_assumptions==='string')document.getElementById('battle-rules').value=s.battle_rules.standard_battle_assumptions;
  if(s.battle_rules&&typeof s.battle_rules.custom_instructions==='string')document.getElementById('battle-custom-instructions').value=s.battle_rules.custom_instructions;
+ updateBattleInputCounter();
  const r=await client.from('chat_messages').select('role,content,created_at').eq('session_id',sessionId).order('created_at',{ascending:true}).limit(100);
  if(r.error){showStatus('error','Riwayat sesi tidak dapat dimuat.');return}
  const rows=r.data||[];
