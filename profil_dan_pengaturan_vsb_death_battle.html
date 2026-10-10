@@ -756,7 +756,7 @@ async function getClientUser(){
  const client=window.CDB_AUTH_CLIENT;
  if(!client)throw new Error('Sesi autentikasi belum siap. Muat ulang halaman.');
  const {data,error}=await client.auth.getUser();
- if(error||!data.user||!data.user.email_confirmed_at)throw new Error('Sesi berakhir atau email belum diverifikasi.');
+ if(error||!data.user)throw new Error('Sesi berakhir. Silakan masuk kembali.');
  return {client,user:data.user};
 }
 async function loadProfile(){
