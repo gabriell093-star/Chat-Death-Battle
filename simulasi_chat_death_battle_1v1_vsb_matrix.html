@@ -418,7 +418,7 @@ document.getElementById('btn-copy-battle-answer')?.addEventListener('click',asyn
 });
 document.getElementById('btn-new-sim')?.addEventListener('click',function(){
  sessionId=null;latestAnswer='';
- ['battle-character-a','battle-character-b',undefined'battle-custom-instructions'].forEach(id=>{const input=document.getElementById(id);if(input)input.value=''});
+ ['battle-character-a','battle-character-b','battle-custom-instructions'].forEach(id=>{const input=document.getElementById(id);if(input)input.value=''});
  document.getElementById('battle-rules').value='Standard Battle Assumptions: arena netral tanpa bantuan pihak ketiga; kedua karakter menggunakan perlengkapan standar untuk versi yang dipilih; kondisi menang KO, mati, atau tidak mampu bertarung. Jangan menyamakan statistik tanpa dasar sumber.';
  updateBattleInputCounter();
  result.classList.add('hidden');answer.textContent='';sources.replaceChildren();quota.textContent='';
@@ -449,7 +449,7 @@ if(sessionId){clientReady().then(async function(client){
  const rows=r.data||[];
  if(rows.length){answer.textContent=rows.map(m=>(m.role==='user'?'Anda':'AI')+':\n'+m.content).join('\n\n');latestAnswer=rows.filter(m=>m.role==='assistant').map(m=>m.content).join('\n\n');result.classList.remove('hidden');showStatus('success','Riwayat battle berhasil dimuat. Kirim ulang untuk melanjutkan analisis.')}
  }).catch(function(){showStatus('error','Riwayat battle tidak dapat dimuat.')})}
-['battle-character-a','battle-character-b',undefined'battle-rules','battle-custom-instructions'].forEach(function(id){
+['battle-character-a','battle-character-b','battle-rules','battle-custom-instructions'].forEach(function(id){
  document.getElementById(id)?.addEventListener('change',function(){
   if(!sessionId)return;
   sessionId=null;
