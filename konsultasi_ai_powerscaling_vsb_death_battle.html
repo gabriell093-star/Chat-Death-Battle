@@ -298,19 +298,37 @@ body[data-cdb-theme="dark"] a.underline{color:#9ed8ff}
     }
   }
 
-  function renderStructuredAnswer(container, raw) {
+  function renderStructuredAnswer(container, raw, sourceList) {
   if (!container) return;
+  const allowedSourceUrls = new Set((Array.isArray(sourceList) ? sourceList : []).map(function(source){try{const url=new URL(source.url);return url.origin==='https://vsbattles.fandom.com'?url.href:''}catch(_){return ''}}).filter(Boolean));
   container.replaceChildren();
   const lines = String(raw || '').replace(/\r\n?/g, '\n').split('\n');
   const addInline = function (parent, value) {
-    const re = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
+    const re = /(\[[^\]]+\]\(https:\/\/vsbattles\.fandom\.com\/[^)\s]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g;
     let from = 0, match;
     while ((match = re.exec(value)) !== null) {
       if (match.index > from) parent.appendChild(document.createTextNode(value.slice(from, match.index)));
-      const token = match[0], bold = token.startsWith('**');
-      const node = document.createElement(bold ? 'strong' : 'em');
-      node.textContent = token.slice(bold ? 2 : 1, token.length - (bold ? 2 : 1));
-      parent.appendChild(node); from = re.lastIndex;
+      const token = match[0];
+      const linkMatch = token.match(/^\[([^\]]+)\]\((https:\/\/vsbattles\.fandom\.com\/[^)\s]+)\)$/);
+      if (linkMatch) {
+        let url = null;
+        try { url = new URL(linkMatch[2]); } catch (_) {}
+        if (url && url.protocol === 'https:' && url.hostname === 'vsbattles.fandom.com' && allowedSourceUrls.has(url.href)) {
+          const link = document.createElement('a');
+          link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+          link.className = 'underline text-ocean-blue break-words';
+          link.textContent = linkMatch[1];
+          parent.appendChild(link);
+        } else {
+          parent.appendChild(document.createTextNode(linkMatch[1]));
+        }
+      } else {
+        const bold = token.startsWith('**');
+        const node = document.createElement(bold ? 'strong' : 'em');
+        node.textContent = token.slice(bold ? 2 : 1, token.length - (bold ? 2 : 1));
+        parent.appendChild(node);
+      }
+      from = re.lastIndex;
     }
     if (from < value.length) parent.appendChild(document.createTextNode(value.slice(from)));
   };
@@ -370,7 +388,7 @@ function renderAnswer(payload) {
     header.append(heading, copyButton);
     const answer = document.createElement('div');
     answer.className = 'font-body-md text-body-md text-on-surface whitespace-pre-wrap leading-relaxed';
-    renderStructuredAnswer(answer, payload.answer || 'AI tidak mengembalikan jawaban.');
+    renderStructuredAnswer(answer, payload.answer || 'AI tidak mengembalikan jawaban.', payload.sources);
     output.append(header, answer);
     if (Array.isArray(payload.sources) && payload.sources.length) {
       const sourceHeading = document.createElement('h3');
@@ -553,7 +571,7 @@ if(aiOutput){
 }
 }
 window.CDB_APPLY_LANGUAGE=applyLanguage;
-if(!window.__CDB_TRANSLATION_OBSERVER){const observer=new MutationObserver(function(records){if(records.some(function(record){return record.type==='childList'}))applyLanguage(read(LANGUAGE_KEY,'id'))});observer.observe(document.body,{childList:true,subtree:true});window.__CDB_TRANSLATION_OBSERVER=observer}
+if(!window.__CDB_TRANSLATION_OBSERVER){const observer=new MutationObserver(function(records){const shouldTranslate=records.some(function(record){if(record.type!=='childList')return false;const target=record.target&&record.target.nodeType===1?record.target:record.target&&record.target.parentElement;return !(target&&target.closest&&target.closest('#cdb-ai-output'))});if(shouldTranslate)applyLanguage(read(LANGUAGE_KEY,'id'))});observer.observe(document.body,{childList:true,subtree:true});window.__CDB_TRANSLATION_OBSERVER=observer}
 document.querySelectorAll('button').forEach(function(b){const label=b.textContent.trim();if(label==='ID'||label==='EN')b.addEventListener('click',function(){const lang=label.toLowerCase();write(LANGUAGE_KEY,lang);applyLanguage(lang)});
 const icon=b.querySelector('.material-symbols-outlined');if(!icon)return;const name=icon.textContent.trim();if(['light_mode','dark_mode','desktop_windows'].includes(name))b.addEventListener('click',function(){const choice=name==='light_mode'?'light':name==='dark_mode'?'dark':'system';write(THEME_KEY,choice);applyTheme(choice)})});
 applyLanguage(read(LANGUAGE_KEY,'id'));applyTheme(read(THEME_KEY,'light'));
